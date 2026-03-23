@@ -120,16 +120,29 @@ window.__cachedPageData = {"firstName":null,"lastName":null,"country":null,"amou
   FakeXHR.prototype.send = function(data) {
     if (this._intercepted) {
       var self = this;
-      Object.defineProperty(self, 'readyState', { value: 4, writable: true });
-      Object.defineProperty(self, 'status', { value: 200, writable: true });
-      Object.defineProperty(self, 'responseText', { value: JSON.stringify(window.__cachedPageData), writable: true });
-      Object.defineProperty(self, 'response', { value: JSON.stringify(window.__cachedPageData), writable: true });
-      var req = self._real;
-      self.request = { responseText: JSON.stringify(window.__cachedPageData) };
-      setTimeout(function() {
+      var jsonStr = JSON.stringify(window.__cachedPageData);
+      // Use writable descriptors so reqwest/other libs can overwrite if needed
+      Object.defineProperties(self, {
+        readyState:   { value: 4, writable: true, configurable: true },
+        status:       { value: 200, writable: true, configurable: true },
+        statusText:   { value: 'OK', writable: true, configurable: true },
+        responseText: { value: jsonStr, writable: true, configurable: true },
+        response:     { value: jsonStr, writable: true, configurable: true },
+        responseType: { value: '', writable: true, configurable: true }
+      });
+      // reqwest sync path reads .request.responseText
+      self.request = self;
+      if (self._method === 'GET') {
+        // Sync XHR — fire immediately (no setTimeout)
         if (typeof self.onreadystatechange === 'function') self.onreadystatechange();
         if (typeof self.onload === 'function') self.onload();
-      }, 0);
+      } else {
+        // Async XHR (POST) — fire on next tick
+        setTimeout(function() {
+          if (typeof self.onreadystatechange === 'function') self.onreadystatechange();
+          if (typeof self.onload === 'function') self.onload();
+        }, 0);
+      }
     } else {
       this._real.send.apply(this._real, arguments);
     }
