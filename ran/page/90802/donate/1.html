@@ -98,6 +98,59 @@
 <link href="https://act.ran.org/pageassets/css/enPage.css?v=4.0.0" rel="stylesheet" type="text/css">
 <script nonce="">var pageJson = {"clientId":10042,"campaignPageId":90802,"campaignId":205693,"pageNumber":1,"pageCount":2,"pageName":"Evergreen - Donation - Homepage Test Nov 2025 Option A - 90802","pageType":"donation","externalReference6":"gen","locale":"en-US","redirectPresent":false,"giftProcess":false};</script>
 <script src="https://act.ran.org/page/90802/pagedata.js?locale=en-US&amp;ea.profile.id=0"></script>
+<script>
+// Cache pagedata locally to avoid CORS issues when running as a static mirror
+window.__cachedPageData = {"firstName":null,"lastName":null,"country":null,"amount":"50","emailAddress":null,"upsellEvent":null,"currency":null,"feeCover":"N","recurrfreq":"ONETIME","paymenttype":null,"recurrpay":"","paycurrency":null};
+(function() {
+  var RealXHR = XMLHttpRequest;
+  function FakeXHR() { this._real = new RealXHR(); }
+  var proto = RealXHR.prototype;
+  FakeXHR.prototype = Object.create(proto);
+  FakeXHR.prototype.constructor = FakeXHR;
+  FakeXHR.prototype.open = function(method, url) {
+    this._url = url;
+    this._method = method;
+    if (typeof url === 'string' && url.indexOf('/pagedata') !== -1) {
+      this._intercepted = true;
+    } else {
+      this._intercepted = false;
+      this._real.open.apply(this._real, arguments);
+    }
+  };
+  FakeXHR.prototype.send = function(data) {
+    if (this._intercepted) {
+      var self = this;
+      Object.defineProperty(self, 'readyState', { value: 4, writable: true });
+      Object.defineProperty(self, 'status', { value: 200, writable: true });
+      Object.defineProperty(self, 'responseText', { value: JSON.stringify(window.__cachedPageData), writable: true });
+      Object.defineProperty(self, 'response', { value: JSON.stringify(window.__cachedPageData), writable: true });
+      var req = self._real;
+      self.request = { responseText: JSON.stringify(window.__cachedPageData) };
+      setTimeout(function() {
+        if (typeof self.onreadystatechange === 'function') self.onreadystatechange();
+        if (typeof self.onload === 'function') self.onload();
+      }, 0);
+    } else {
+      this._real.send.apply(this._real, arguments);
+    }
+  };
+  FakeXHR.prototype.setRequestHeader = function() {
+    if (!this._intercepted) this._real.setRequestHeader.apply(this._real, arguments);
+  };
+  FakeXHR.prototype.getResponseHeader = function(h) {
+    if (this._intercepted) return h.toLowerCase() === 'content-type' ? 'application/json' : null;
+    return this._real.getResponseHeader.apply(this._real, arguments);
+  };
+  FakeXHR.prototype.getAllResponseHeaders = function() {
+    if (this._intercepted) return 'content-type: application/json\r\n';
+    return this._real.getAllResponseHeaders.apply(this._real, arguments);
+  };
+  FakeXHR.prototype.abort = function() {
+    if (!this._intercepted) this._real.abort.apply(this._real, arguments);
+  };
+  window.XMLHttpRequest = FakeXHR;
+})();
+</script>
 <script src="../../../../pageassets/js/enPage.js?v=4.0.0"></script>
 <script src="https://js.stripe.com/v3/"></script>
 <script src="https://cdn.plaid.com/link/v2/stable/link-initialize.js"></script>
