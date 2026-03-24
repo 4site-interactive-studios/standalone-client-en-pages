@@ -102,66 +102,36 @@
 // Cache pagedata locally to avoid CORS issues when running as a static mirror
 window.__cachedPageData = {"firstName":null,"lastName":null,"country":null,"amount":"50","emailAddress":null,"upsellEvent":null,"currency":null,"feeCover":"N","recurrfreq":"ONETIME","paymenttype":null,"recurrpay":"","paycurrency":null};
 (function() {
-  var RealXHR = XMLHttpRequest;
-  function FakeXHR() { this._real = new RealXHR(); }
-  var proto = RealXHR.prototype;
-  FakeXHR.prototype = Object.create(proto);
-  FakeXHR.prototype.constructor = FakeXHR;
-  FakeXHR.prototype.open = function(method, url) {
-    this._url = url;
-    this._method = method;
-    if (typeof url === 'string' && url.indexOf('/pagedata') !== -1) {
-      this._intercepted = true;
-    } else {
-      this._intercepted = false;
-      this._real.open.apply(this._real, arguments);
-    }
+  var _open = XMLHttpRequest.prototype.open;
+  var _send = XMLHttpRequest.prototype.send;
+  XMLHttpRequest.prototype.open = function(method, url) {
+    this.__pagedata = (typeof url === 'string' && url.indexOf('/pagedata') !== -1);
+    this.__method = method;
+    if (!this.__pagedata) return _open.apply(this, arguments);
   };
-  FakeXHR.prototype.send = function(data) {
-    if (this._intercepted) {
-      var self = this;
-      var jsonStr = JSON.stringify(window.__cachedPageData);
-      // Use writable descriptors so reqwest/other libs can overwrite if needed
-      Object.defineProperties(self, {
-        readyState:   { value: 4, writable: true, configurable: true },
-        status:       { value: 200, writable: true, configurable: true },
-        statusText:   { value: 'OK', writable: true, configurable: true },
-        responseText: { value: jsonStr, writable: true, configurable: true },
-        response:     { value: jsonStr, writable: true, configurable: true },
-        responseType: { value: '', writable: true, configurable: true }
-      });
-      // reqwest sync path reads .request.responseText
-      self.request = self;
-      if (self._method === 'GET') {
-        // Sync XHR — fire immediately (no setTimeout)
+  XMLHttpRequest.prototype.send = function(data) {
+    if (!this.__pagedata) return _send.apply(this, arguments);
+    var self = this;
+    var jsonStr = JSON.stringify(window.__cachedPageData);
+    Object.defineProperties(self, {
+      readyState:   { value: 4, writable: true, configurable: true },
+      status:       { value: 200, writable: true, configurable: true },
+      statusText:   { value: 'OK', writable: true, configurable: true },
+      responseText: { value: jsonStr, writable: true, configurable: true },
+      response:     { value: jsonStr, writable: true, configurable: true },
+      responseType: { value: '', writable: true, configurable: true }
+    });
+    self.request = self;
+    if (self.__method === 'GET') {
+      if (typeof self.onreadystatechange === 'function') self.onreadystatechange();
+      if (typeof self.onload === 'function') self.onload();
+    } else {
+      setTimeout(function() {
         if (typeof self.onreadystatechange === 'function') self.onreadystatechange();
         if (typeof self.onload === 'function') self.onload();
-      } else {
-        // Async XHR (POST) — fire on next tick
-        setTimeout(function() {
-          if (typeof self.onreadystatechange === 'function') self.onreadystatechange();
-          if (typeof self.onload === 'function') self.onload();
-        }, 0);
-      }
-    } else {
-      this._real.send.apply(this._real, arguments);
+      }, 0);
     }
   };
-  FakeXHR.prototype.setRequestHeader = function() {
-    if (!this._intercepted) this._real.setRequestHeader.apply(this._real, arguments);
-  };
-  FakeXHR.prototype.getResponseHeader = function(h) {
-    if (this._intercepted) return h.toLowerCase() === 'content-type' ? 'application/json' : null;
-    return this._real.getResponseHeader.apply(this._real, arguments);
-  };
-  FakeXHR.prototype.getAllResponseHeaders = function() {
-    if (this._intercepted) return 'content-type: application/json\r\n';
-    return this._real.getAllResponseHeaders.apply(this._real, arguments);
-  };
-  FakeXHR.prototype.abort = function() {
-    if (!this._intercepted) this._real.abort.apply(this._real, arguments);
-  };
-  window.XMLHttpRequest = FakeXHR;
 })();
 </script>
 <script src="../../../../pageassets/js/enPage.js?v=4.0.0"></script>
