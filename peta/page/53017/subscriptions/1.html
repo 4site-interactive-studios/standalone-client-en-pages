@@ -1,0 +1,1094 @@
+<!doctype html>
+<html lang="en">
+<head>
+<script type="text/javascript" src="https://resources.peta.org/global/_shared/peta-resource-change.js"></script>
+<!-- Prevent Pre-Migration Code -->
+<script>
+    dataLayer = (typeof dataLayer !== "undefined" && Array.isArray(dataLayer))?dataLayer:[];
+    dataLayer.push({'blockCustomCodeInGTM': 'yes'});
+</script>
+<!-- End Prevent Pre-Migration Code -->
+<title>Manage Your E-Mail Subscriptions | PETA</title>
+<!-- begin Convert Experiences code--><script type="text/javascript" src="//cdn-4.convertexperiments.com/js/10041335-10042655.js"></script><!-- end Convert Experiences code -->
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+<meta name="referrer" content="no-referrer-when-downgrade">
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<meta http-equiv="Content-Script-Type" content="text/javascript" />
+<meta name="format-detection" content="telephone=no">
+<script language="javascript" type="text/javascript" src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
+
+<!--favicon -->
+<link rel="apple-touch-icon" sizes="180x180" href="https://resources.peta.org/engaging-networks/pages/_shared/images/favicons/apple-touch-icon.png">
+<link rel="icon" type="image/png" sizes="32x32" href="https://resources.peta.org/engaging-networks/pages/_shared/images/favicons/favicon-32x32.png">
+<link rel="icon" type="image/png" sizes="16x16" href="https://resources.peta.org/engaging-networks/pages/_shared/images/favicons/favicon-16x16.png">
+<link rel="shortcut icon" href="https://resources.peta.org/engaging-networks/pages/_shared/images/favicons/favicon.ico">
+<link rel="manifest" href="https://resources.peta.org/engaging-networks/pages/_shared/images/favicons/site.webmanifest">
+<link rel="mask-icon" href="https://resources.peta.org/engaging-networks/pages/_shared/images/favicons/safari-pinned-tab.svg" color="#5bbad5">
+<meta name="msapplication-TileColor" content="#64c0dd">
+<meta name="theme-color" content="#ffffff">
+<!--end favicon -->
+
+<script>
+if(document.location.search.indexOf("mode=DEMO")!= -1)
+document.head.insertAdjacentHTML( "beforeEnd", "<meta name='robots' content='noindex' />" );
+</script>
+
+<link rel="stylesheet" id="peta-gbt-main-css" href="https://resources.peta.org/engaging-networks/pages/peta/wordpress-theme/styles/wp-styles/style-index.css?v=1.1.0" media="all" />
+<link href="https://resources.peta.org/engaging-networks/pages/peta/wordpress-theme/styles/app.min.css?v=1.1.2" rel="stylesheet" type="text/css" media="all" />
+
+<meta property="og:type" content="website" />
+<meta property="fb:app_id" content="402422384068130" />
+<meta name="twitter:card" content="summary_large_image" />
+<meta name="twitter:site" content="@your-handle" />
+<meta name="twitter:creator" content="@your-handle" />
+
+<!-- https://github.com/4site-interactive-studios/peta-revamped-unsubscribe -->
+<style>
+body[data-custom-js="loaded"]{
+    transition: opacity 0.5s;  
+}
+
+body:not(#en__pagebuilder):not([data-custom-js="loaded"]) {
+    opacity: 0;
+}
+</style>
+
+<!--START GOOGLE ANALYTICS-->
+<script language="javascript" type="text/javascript" src="https://resources.peta.org/googleAnalytics/global/ga_constants.js"></script>
+<script language="javascript" type="text/javascript" src="https://resources.peta.org/googleAnalytics/petaUS/peta/gaBase.js"></script>
+<!-- END GOOGLE ANALYTICS -->
+
+<!-- Email Validation -->
+<script id="email-validation-script" src="https://services.peta.org/validate.js?v=1.10"></script>
+<link href="https://services.peta.org/validate.css?v=1.10" media="all" rel="stylesheet"/>
+<!-- Email Validation END -->
+
+<!-- START PETA CUSTOM CODE -->
+<script language="javascript" type="text/javascript" src="https://resources.peta.org/engaging-networks/pages/peta/js/instance-variables.js"></script>
+<script language="javascript" type="text/javascript" src="https://resources.peta.org/engaging-networks/pages/_shared/peta-js/peta-en-shared.js"></script>
+<script language="javascript" type="text/javascript" src="https://resources.peta.org/engaging-networks/pages/_shared/peta-js/tip-jar.js"></script>
+<script>
+    //PAGE SETUP - BEFORE FORM IS CREATED
+    pageInitialization.afterHeadLoad();
+</script>
+<!-- END PETA CUSTOM CODE -->
+
+
+<!-- Start Data Layer -->
+<script type="text/javascript">// <![CDATA[
+//Donation TY page
+function checkIsSent(ref) {
+    var cookiename = 'gaSaleSent_' + ref;   
+    var ca = document.cookie.split(';');
+    for(var i=0; i<ca.length; i++) {
+        var c = ca[i];
+        while (c.charAt(0)==' ') c = c.substring(1);
+        if (c.indexOf(cookiename + '=') != -1){
+            return true;
+        }
+    }    
+    var d = new Date();
+    d.setTime(d.getTime() + (90*24*60*60*1000));
+    var expires = "expires="+d.toGMTString();
+    document.cookie = cookiename + '=1; ' + expires;
+    
+    return false;  
+}
+
+ 
+
+petaEN.utility.whenAvailable("pageJson.pageName",function() { 
+    if(window.location.href.toLowerCase().indexOf('/donate/2') > 0 || window.location.href.toLowerCase().indexOf('/donation/2') > 0)
+    {                           
+        var transactionID =  '{receipt_data~txId}';
+        var isRepeating = false;
+        
+        if(!checkIsSent(transactionID)){ 
+            var transactionType = pageJson.transactionType;
+
+            if(transactionType == 'FCS' || transactionType == 'FBS' || transactionType == 'ACS'){
+                transactionType = 'Single Gift';
+                isRepeating = false;
+            }
+            else if(transactionType == 'FCR' || transactionType == 'FUR' || transactionType == 'FBR' || transactionType == 'ACR'){
+                transactionType = 'Recurring Gift';
+                isRepeating = true;
+            }
+            else if(transactionType == 'FIM'){
+                transactionType = 'Memorial Gift';
+                isRepeating = false;
+            }
+
+            (function() {
+                dataLayer = dataLayer || [];
+                dataLayer.push({
+                    'event': 'transactionSubmittedEvent',
+                    'transactionId': '{receipt_data~txId}',
+                    'transactionTotal': +('{receipt_data~amount}'.replace( /(\$|,)/g, '' )),
+                    'transactionProducts': [{
+                          'name': transactionType,
+                          'sku': 'id:'+ pageJson.campaignPageId + ' ' + pageJson.pageName,
+                          'price': +('{receipt_data~amount}'.replace( /(\$|,)/g, '' )),
+                          'quantity': 1}]
+                });
+            })();
+            
+            care2Targeting({
+                clientid: '154',
+                email: '{user_data~EMail Address}',
+                value: '{receipt_data~amount}'.replace('$',''),
+                repeating: isRepeating
+            });
+        }
+    }
+});
+</script>
+<!-- End Data Layer -->
+
+<!-- Make supporter data available to external scripts -->
+<script language="javascript" type="text/javascript">
+    (
+        function() 
+        {
+            if('{user_data~EMail Address}' != ""
+                &&  '{user_data~EMail Address}' != ('{user_data~EM'+'ail Address}')) //Need to split replacement variable, to ensure we actually got something
+            {
+                supporterData = {
+                    'emailAddress': '{user_data~EMail Address}',
+                    'firstName': '{user_data~First Name}',
+                    'lastName': '{user_data~Last Name}',
+                    'mobilePhone': '{user_data~Mobile Phone}',
+                    'city': '{user_data~City}',
+                    'state': '{user_data~State Region}',
+                    'country': '{user_data~Country}',
+                    'zipCode': '{user_data~ZIP Postal Code}',
+                    'dateOfBirth': '{user_data~Date of Birth}',
+                };
+                //console.debug("Supporter Data From EN: " + JSON.stringify(supporterData));
+                pageInitialization.loadSupporterData(supporterData);
+            };
+        }
+    )();
+</script>
+<!-- END Make supporter data available to external scripts -->
+
+<!-- Google Tag Manager -->
+<script>(function(w,d,s,l,i){w[l]=w[l]||[];w[l].push({'gtm.start':
+new Date().getTime(),event:'gtm.js'});var f=d.getElementsByTagName(s)[0],
+j=d.createElement(s),dl=l!='dataLayer'?'&l='+l:'';j.async=true;j.src=
+'https://www.googletagmanager.com/gtm.js?id='+i+dl;f.parentNode.insertBefore(j,f);
+})(window,document,'script','dataLayer','GTM-K76L3F');</script>
+<!-- End Google Tag Manager -->
+
+<meta name="title" content="Take Action for Animals"/>
+<meta property="og:title" content="Take Action for Animals"/>
+<meta property="og:description" content="PETA operates under the simple principle that animals are not ours to eat, wear, experiment on, or use for entertainment. "/>
+<meta name="description" content="PETA operates under the simple principle that animals are not ours to eat, wear, experiment on, or use for entertainment. "/>
+<meta property="og:image" content="https://resources.peta.org/engaging-networks/pages/peta/images/social-media-thumbnail-peta-v01.jpg"/>
+<link rel="canonical" href="https://support.peta.org/page/53017/data/1?locale=en-US"/>
+<meta property="og:url" content="https://support.peta.org/page/53017/data/1?locale=en-US"/>
+<link rel="image_src" href="https://resources.peta.org/engaging-networks/pages/peta/images/social-media-thumbnail-peta-v01.jpg"/>
+<link href='https://support.peta.org/pageassets/css/enPage.css?v=4.0.0' rel='stylesheet' type='text/css' />
+<script nonce='fa3c9f97-64c0-4ab8-866b-8b7245ccf983'>var pageJson = {"clientId":10003,"campaignPageId":53017,"campaignId":118814,"pageNumber":1,"pageCount":1,"pageName":"PE SUB Unsubscribe From E-Mail - 2023 DCF Short Cold GIT","pageType":"otherdatacapture","externalReference8":"GEN::devo::EN::E-News::PE Manage Your E-Mail Subscriptions Cold","externalReference9":"peta","locale":"en-US","redirectPresent":true,"giftProcess":false};</script>
+<script src='https://support.peta.org/page/53017/pagedata.js?locale=en-US&ea.profile.id=0'></script>
+<script>
+window.__cachedPageData = {"firstName":null,"lastName":null,"country":null,"amount":null,"emailAddress":null,"upsellEvent":null,"currency":null,"feeCover":null,"recurrfreq":null,"paymenttype":null,"recurrpay":null,"paycurrency":null};
+(function() {
+  var _open = XMLHttpRequest.prototype.open;
+  var _send = XMLHttpRequest.prototype.send;
+  var _setRequestHeader = XMLHttpRequest.prototype.setRequestHeader;
+  XMLHttpRequest.prototype.open = function(method, url) {
+    this.__pagedata = (typeof url === 'string' && url.indexOf('/pagedata') !== -1);
+    this.__method = method;
+    if (!this.__pagedata) return _open.apply(this, arguments);
+  };
+  XMLHttpRequest.prototype.setRequestHeader = function() {
+    if (!this.__pagedata) return _setRequestHeader.apply(this, arguments);
+  };
+  XMLHttpRequest.prototype.send = function(data) {
+    if (!this.__pagedata) return _send.apply(this, arguments);
+    var self = this;
+    var jsonStr = JSON.stringify(window.__cachedPageData);
+    Object.defineProperties(self, {
+      readyState:   { value: 4, writable: true, configurable: true },
+      status:       { value: 200, writable: true, configurable: true },
+      statusText:   { value: 'OK', writable: true, configurable: true },
+      responseText: { value: jsonStr, writable: true, configurable: true },
+      response:     { value: jsonStr, writable: true, configurable: true },
+      responseType: { value: '', writable: true, configurable: true }
+    });
+    self.request = self;
+    if (self.__method === 'GET') {
+      if (typeof self.onreadystatechange === 'function') self.onreadystatechange();
+      if (typeof self.onload === 'function') self.onload();
+    } else {
+      setTimeout(function() {
+        if (typeof self.onreadystatechange === 'function') self.onreadystatechange();
+        if (typeof self.onload === 'function') self.onload();
+      }, 0);
+    }
+  };
+})();
+</script>
+<script src='../../../../pageassets/js/enPage.js?v=4.0.0'></script>
+
+</head>
+<body>
+<!--fb embed -->
+<div id="fb-root"></div>
+<script>(function(d, s, id) {
+  var js, fjs = d.getElementsByTagName(s)[0];
+  if (d.getElementById(id)) return;
+  js = d.createElement(s); js.id = id;
+  js.src = 'https://connect.facebook.net/en_US/sdk.js#xfbml=1&version=v3.2&appId=1525501187525084&autoLogAppEvents=1';
+  fjs.parentNode.insertBefore(js, fjs);
+}(document, 'script', 'facebook-jssdk'));</script>
+<svg style="display:none;" xmlns="http://www.w3.org/2000/svg" width="1792" height="10476.113">
+  <symbol id="peta-svg-2-arrows" viewBox="0 0 78.64 53.31">
+    <path d="M44.74 52a2.4 2.4 0 0 0 0-4L14.4 23.9c-1.38-1.09-2.33-.54-2.33 1.22v49.76c0 1.76.95 2.31 2.33 1.22Zm44.93 0a2.41 2.41 0 0 0 0-4l-30.4-24.1c-1.38-1.09-2.38-.54-2.38 1.22v49.76c0 1.76 1 2.31 2.38 1.22Z" transform="translate(-12.07 -23.34)" style="fill:currentColor" id="Layer_1" data-name="Layer 1" />
+  </symbol>
+  <symbol id="peta-svg-bunny" viewBox="0 0 161.716 82.084">
+    <path data-name="Path 9" d="M161.16 71.924s-2.679-3.89-32.708-10.5c0 0 10.5-5.855 8.792-20.74 0 0 14.647 1.707 13.437-5.855 0 0-6.113-14.885-20.026-15.62 0 0-11.948-21-22.209-19.034 0 0-3.434 2.441 14.647 23.916a18.14 18.14 0 0 0-5.855 7.582s-37.332-9.764-67.361-3.433c0 0-7.8-7.8-13.417 1.707 0 0-3.176 7.324 5.121 10.737 0 0-1.707 3.414-2.918 11.71 0 0-5.617 1.231-10.976 7.582 0 0-8.058-1.965-11-1.231 0 0-8.3 5.359-16.592 19.53 0 0 .238 3.91 2.937 3.672 0 0 1.211 2.679 15.62-12.444 0 0 6.827.5 10.5-1.211 0 0 61.507-11.968 96.16 5.359 0 0 21.733.715 29.533 5.121-.016-.001 9.511 2.44 6.315-6.848Zm-24.65-44.657a2.2 2.2 0 1 1-2.2 2.2 2.211 2.211 0 0 1 2.2-2.2Z" transform="translate(-.1 -.046)" style="fill:#e4eefa" />
+  </symbol>
+  <symbol id="peta-svg-chevron-down-thin" viewBox="0 0 512 512">
+    <path d="M233.4 406.6c12.5 12.5 32.8 12.5 45.3 0l192-192c12.5-12.5 12.5-32.8 0-45.3s-32.8-12.5-45.3 0L256 338.7 86.6 169.4c-12.5-12.5-32.8-12.5-45.3 0s-12.5 32.8 0 45.3l192 192z" />
+  </symbol>
+  <symbol id="peta-svg-chevron-down" viewBox="0 0 1792 1792">
+    <path d="m109 562.5 166-165c12.67-12.67 27.67-19 45-19s32.33 6.33 45 19l531 531 531-531c12.67-12.67 27.67-19 45-19s32.33 6.33 45 19l166 165c12.67 12.67 19 27.83 19 45.5s-6.33 32.83-19 45.5l-742 741c-12.67 12.67-27.67 19-45 19s-32.33-6.33-45-19l-742-741c-12.67-12.67-19-27.83-19-45.5s6.33-32.83 19-45.5z" />
+  </symbol>
+  <symbol id="peta-svg-chevron-up-thin" viewBox="0 0 512 512">
+    <path d="M278.6 169.3c-12.5-12.5-32.8-12.5-45.3 0l-192 192c-12.5 12.5-12.5 32.8 0 45.3s32.8 12.5 45.3 0L256 237.2l169.4 169.3c12.5 12.5 32.8 12.5 45.3 0s12.5-32.8 0-45.3l-192-192-.1.1z" />
+  </symbol>
+  <symbol id="peta-svg-chevron-up" viewBox="0 0 1792 1792">
+    <path d="m1683 1229.5-166 165c-12.67 12.67-27.67 19-45 19s-32.33-6.33-45-19l-531-531-531 531c-12.67 12.67-27.67 19-45 19s-32.33-6.33-45-19l-166-165c-12.67-12.67-19-27.83-19-45.5s6.33-32.83 19-45.5l742-741c12.67-12.67 27.67-19 45-19s32.33 6.33 45 19l742 741c12.67 12.67 19 27.83 19 45.5s-6.33 32.83-19 45.5z" />
+  </symbol>
+  <symbol id="peta-svg-icon-magnifying-glass" viewBox="0 0 24 24">
+    <path d="M1.09 22.41a2 2 0 0 0 2.82 0l5.31-5.3A8.89 8.89 0 0 0 14 18.5a9 9 0 1 0-9-9 8.89 8.89 0 0 0 1.39 4.78l-5.3 5.31a2 2 0 0 0 0 2.82ZM14 15.5a6 6 0 1 1 6-6 6 6 0 0 1-6 6Z" />
+  </symbol>
+  <symbol id="peta-svg-impossible-burger" viewBox="0 0 448 512">
+    <!--!Font Awesome Free 6.5.1 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free Copyright 2024 Fonticons, Inc.-->
+    <path d="M16 132h416c8.8 0 16-7.2 16-16V76c0-8.8-7.2-16-16-16H16C7.2 60 0 67.2 0 76v40c0 8.8 7.2 16 16 16zm0 160h416c8.8 0 16-7.2 16-16v-40c0-8.8-7.2-16-16-16H16c-8.8 0-16 7.2-16 16v40c0 8.8 7.2 16 16 16zm0 160h416c8.8 0 16-7.2 16-16v-40c0-8.8-7.2-16-16-16H16c-8.8 0-16 7.2-16 16v40c0 8.8 7.2 16 16 16z" />
+  </symbol>
+  <symbol id="peta-svg-more-arrow" viewBox="0 0 24 24">
+    <path d="M14.47 4.75 23 11l-8.53 6.3v-3c-.43 0-7.88-.51-13 4 2.02-6.38 8.53-9.41 13-10.54z" />
+  </symbol>
+  <symbol style="enable-background:new 0 0 116.2 117.1" id="peta-svg-peta-logo" viewBox="0 0 116.2 117.1">
+    <ellipse fill="#2375C9" cx="58.1" cy="58.6" rx="58.1" ry="58.6" />
+    <path d="M17.9 0H9L0 33.7h7.5l3.6-13.1-.4 1.7c5 .4 16.1.5 17.7-11.8C30-1.3 17.9 0 17.9 0zm.8 14.1c-2.5 2.4-6.1 1.5-6.1 1.5l1-3.8 1.4-5c.5 0 4.2-.4 5.2.4 1 1 .2 5.3-1.5 6.9zM51 2.6c-.6-.9-1.5-1.7-2.5-2C42-1.5 36.8 3.4 33.1 8.1c-3.7 5-5.8 11-6 17.2.2 3.7 1.1 7.8 4.8 9.2 6.1 1.5 10.7-3.7 14-8 .4-.6 1-1.1 1-1.9-.3-.1-.5-.4-.8-.4-.7 1-1.5 2-2.3 3-2.1 2.1-4.8 3.7-7.9 3-3.4-1.5-3.5-5.5-3.2-9 .2-1.3.5-2.6.9-3.9l2.3-.7c5.1-1.7 11.1-2 14.5-7.2 1-1.7 2-4.7.6-6.8zM39.6 13.9c-6.9 2.3-5.2 1.3-5.2 1.3s5.3-15.8 10.7-14c5.5 1.9 1.5 10.5-5.5 12.7zM54.9.2 77.1 0l-1.9 7.3-7.3.1-7.4 26.3h-8.1l7.1-26.3h-6.7L54.9.2zM83.6.1 67.4 33.7h8.4l2.6-5.5h7.5v5.5h7.3V0l-9.6.1zm-2.3 21.4 4.4-9.6v-.1 9.7h-4.4z" transform="translate(11.534 42.593)" fill="#FFF" />
+  </symbol>
+  <symbol style="enable-background:new 0 0 100 37.8" id="peta-svg-peta-text-logo-blue" viewBox="0 0 100 37.8">
+    <path d="M19 0H9.7L0 36h8l3.9-14-.4 1.8c5.4.4 17.1.5 18.8-12.6C32-1.4 19 0 19 0zm.9 15.1c-2.7 2.6-6.6 1.6-6.6 1.6l1.1-4 1.5-5.3c.5-.1 4.4-.4 5.5.4 1.3 1 .3 5.6-1.5 7.3zM54.3 2.8c-.6-1-1.6-1.8-2.7-2.2-6.8-2.3-12.5 3-16.4 8.1-3.9 5.4-6.3 11.3-6.5 18.3.2 3.9 1.2 8.3 5.2 9.9 6.6 1.6 11.4-3.9 14.8-8.5.3-.6 1.1-1.3 1.1-1.9-.3-.1-.5-.4-.9-.3-.8 1.1-1.5 2.2-2.5 3.1-2.3 2.2-5.2 3.9-8.5 3.2-3.7-1.6-3.8-5.9-3.4-9.6.3-1.4.3-2.9 1-4.2l2.5-.8c5.5-1.8 11.8-2.2 15.5-7.6 1.4-2.1 2.3-5.2.8-7.5zm-12 12.1c-7.4 2.4-5.6 1.4-5.6 1.4S42.4-.6 48.1 1.4c5.9 2 1.6 11.1-5.8 13.5zM58.5.3 82.2.2l-2 7.6-7.8.2-7.9 28h-8.7l7.6-28.1h-7.1c.1 0 2.2-7.6 2.2-7.6zM89.1.2 71.9 35.9h8.8l2.7-5.9h8.1v5.8h7.9V.2H89.1zM86.7 23l4.7-10.2v-.1 10.4l-4.7-.1z" style="fill:#2375c9" />
+  </symbol>
+  <symbol id="peta-svg-peta-text-logo-white" viewBox="0 0 100 37.8">
+    <path fill="#FFF" d="M19 0H9.7L0 36h8l3.9-14-.4 1.8c5.4.4 17.1.5 18.8-12.6C32-1.4 19 0 19 0zm.9 15.1c-2.7 2.6-6.6 1.6-6.6 1.6l1.1-4 1.5-5.3c.5-.1 4.4-.4 5.5.4 1.3 1 .3 5.6-1.5 7.3zM54.3 2.8c-.6-1-1.6-1.8-2.7-2.2-6.8-2.3-12.5 3-16.4 8.1-3.9 5.4-6.3 11.3-6.5 18.3.2 3.9 1.2 8.3 5.2 9.9 6.6 1.6 11.4-3.9 14.8-8.5.3-.6 1.1-1.3 1.1-1.9-.3-.1-.5-.4-.9-.3-.8 1.1-1.5 2.2-2.5 3.1-2.3 2.2-5.2 3.9-8.5 3.2-3.7-1.6-3.8-5.9-3.4-9.6.3-1.4.3-2.9 1-4.2l2.5-.8c5.5-1.8 11.8-2.2 15.5-7.6 1.4-2.1 2.3-5.2.8-7.5zm-12 12.1c-7.4 2.4-5.6 1.4-5.6 1.4S42.4-.6 48.1 1.4c5.9 2 1.6 11.1-5.8 13.5zM58.5.3 82.2.2l-2 7.6-7.8.2-7.9 28h-8.7l7.6-28.1h-7.1c.1 0 2.2-7.6 2.2-7.6zM89.1.2 71.9 35.9h8.8l2.7-5.9h8.1v5.8h7.9V.2H89.1zM86.7 23l4.7-10.2v-.1 10.4h-4.7V23z" />
+  </symbol>
+  <symbol id="peta-svg-social-donate" viewBox="0 0 24 24">
+    <path d="M12 .5A11.5 11.5 0 1 0 23.5 12 11.5 11.5 0 0 0 12 .5Zm.88 17.58v1.14a.93.93 0 0 1-.25.64.79.79 0 0 1-.61.25h-.21a.79.79 0 0 1-.61-.25.73.73 0 0 1-.21-.61V18.2a8.3 8.3 0 0 1-3.38-.87L8.2 15a6.91 6.91 0 0 0 3.3.86c1.12 0 1.89-.43 1.89-1.23s-.64-1.24-2.1-1.72c-2.13-.7-3.59-1.68-3.59-3.63a3.67 3.67 0 0 1 3.36-3.54v-1a.87.87 0 0 1 .87-.85h.18a.89.89 0 0 1 .64.25.79.79 0 0 1 .25.61v.87a7.4 7.4 0 0 1 2.88.67l-.57 2.21a6.78 6.78 0 0 0-2.86-.67c-1.31 0-1.72.57-1.72 1.12s.69 1.08 2.38 1.72c2.37.85 3.31 1.94 3.31 3.73a3.8 3.8 0 0 1-3.54 3.68Z" />
+  </symbol>
+</svg><form method="post" id="pb_53017" name="pb_PE_SUB_Unsubscribe_From_EMail__2023_DCF_Short_Cold_GIT" action="https://support.peta.org/page/53017/data/2" class="en__component en__component--page">
+	<input type="hidden" name="hidden" class="en__hiddenFields" value="">
+	<input type="hidden" name="sessionId" value="57accbc0c8c84405b8dd5210765e55c0-use2-prd1-web1">
+    
+	
+	
+	
+	
+	
+	<ul role="alert" class="en__errorList">
+	</ul>
+
+		<div class="en__component en__component--row en__component--row--1">
+		<div class="en__component en__component en__component--column en__component--column--1">
+		<div class="en__component en__component--copyblock hdr"
+
+style="
+
+
+
+
+
+
+
+"
+>
+	<div aria-hidden="true" class="site-mobile-menu" id="site-mobile-menu">
+<div class="site-mobile-menu__header"><button aria-label="Close menu" class="site-mobile-menu__close-button medium" type="button"><span class="visually-hidden">Close Mobile Menu</span></button>
+<div class="site-mobile-menu__logo"><a href="https://www.peta.org" target="_parent" title=""><svg aria-hidden="true" style="width: 100%;aspect-ratio: 100 / 37.8" viewbox="0 0 100 37.8"> <use xlink:href="#peta-svg-peta-text-logo-blue"></use> </svg> <span class="visually-hidden">PETA</span> </a></div>
+<a class="site-mobile-menu__donate-button button yellow" href="https://support.peta.org/page/27010/donate/1?en_txn7=Navigation::mobile-donate-now-button" target="_parent"><span>Donate</span><span>&nbsp;Now</span></a></div>
+
+<div class="site-mobile-menu__navigation">
+<ul class="menu" id="menu-main-menu">
+	<li class="nav-action menu-item menu-item-type-post_type_archive menu-item-object-peta-action menu-item-has-children">
+	<div class="menu-item-wrap"><a href="https://www.peta.org/actioncenter/" target="_parent" title="Help Animals">Help Animals</a><button aria-expanded="false" aria-label="Toggle Submenu" class="parent-arrow" role="button"><svg aria-hidden="true" style="width: 100%;aspect-ratio: 1 / 1" viewbox="0 0 24 24"> <use xlink:href="#peta-svg-chevron-down-thin"></use> </svg></button></div>
+
+	<ul class="sub-menu">
+		<li class="menu-item menu-item-type-post_type_archive menu-item-object-alert"><a href="https://www.peta.org/action/action-alerts/" target="_parent" title="Urgent Alerts">Urgent Alerts</a></li>
+		<li class="menu-item menu-item-type-post_type menu-item-object-peta-action"><a href="https://www.peta.org/action/campaigns/" target="_parent" title="Our Campaigns">Our Campaigns</a></li>
+		<li class="menu-item menu-item-type-post_type menu-item-object-peta-action"><a href="https://www.peta.org/action/action-team/" target="_parent" title="Action Team">Action Team</a></li>
+		<li class="menu-item menu-item-type-post_type menu-item-object-peta-action"><a href="https://www.peta.org/action/activism-guide/everyday-activism/" target="_parent" title="Activist Guide">Activist Guide</a></li>
+		<li class="menu-item menu-item-type-post_type menu-item-object-peta-action"><a href="https://www.peta.org/action/get-active-online/" target="_parent" title="Get Active Online">Get Active Online</a></li>
+		<li class="menu-item menu-item-type-custom menu-item-object-custom"><a href="https://www.petaliterature.com/" target="_parent" title="Leaflets &amp; Stickers">Leaflets &amp; Stickers</a></li>
+	</ul>
+	</li>
+	<li class="nav-blog menu-item menu-item-type-post_type menu-item-object-page menu-item-has-children">
+	<div class="menu-item-wrap"><a href="https://www.peta.org/news/" target="_parent" title="News">News</a><button aria-expanded="false" aria-label="Toggle Submenu" class="parent-arrow" role="button"><svg aria-hidden="true" style="width: 100%;aspect-ratio: 1 / 1" viewbox="0 0 24 24"> <use xlink:href="#peta-svg-chevron-down-thin"></use> </svg></button></div>
+
+	<ul class="sub-menu">
+		<li class="menu-item menu-item-type-post_type menu-item-object-page"><a href="/features/" target="_parent" title="Features">Features</a></li>
+		<li class="menu-item menu-item-type-post_type menu-item-object-page menu-item-has-children"><a href="https://www.peta.org/videos/" target="_parent" title="Videos">Videos</a></li>
+		<li class="menu-item menu-item-type-taxonomy menu-item-object-category"><a href="https://www.peta.org/category/miscellaneous-parent/adoptable/" target="_parent" title="Adoptable Animals">Adoptable Animals</a></li>
+		<li class="menu-item menu-item-type-taxonomy menu-item-object-category"><a href="https://www.peta.org/category/miscellaneous-parent/rescued/" target="_parent" title="Rescue Stories">Rescue Stories</a></li>
+	</ul>
+	</li>
+	<li class="nav-investigations menu-item menu-item-type-post_type menu-item-object-page menu-item-has-children">
+	<div class="menu-item-wrap"><a href="https://www.peta.org/investigations/" target="_parent" title="Investigations">Investigations</a><button aria-expanded="false" aria-label="Toggle Submenu" class="parent-arrow" role="button"><svg aria-hidden="true" style="width: 100%;aspect-ratio: 1 / 1" viewbox="0 0 24 24"> <use xlink:href="#peta-svg-chevron-down-thin"></use> </svg></button></div>
+
+	<ul class="sub-menu">
+		<li class="menu-item menu-item-type-custom menu-item-object-custom"><a href="https://support.peta.org/page/43696/donate/1?en_txn7=Navigation::main-top-investigations-subnav&amp;supporter.appealCode=IXXXWBXXXXR" target="_parent" title="Investigations &amp; Rescue Fund">Investigations &amp; Rescue Fund</a></li>
+		<li class="menu-item menu-item-type-post_type menu-item-object-about"><a href="https://www.peta.org/about-peta/contact-peta/report-cruelty/" target="_parent" title="Report Cruelty to Animals">Report Cruelty to Animals</a></li>
+	</ul>
+	</li>
+	<li class="nav-issues menu-item menu-item-type-post_type_archive menu-item-object-issue menu-item-has-children">
+	<div class="menu-item-wrap"><a href="https://www.peta.org/issues/" target="_parent" title="Animal Rights Issues">Animal Rights Issues</a><button aria-expanded="false" aria-label="Toggle Submenu" class="parent-arrow" role="button"><svg aria-hidden="true" style="width: 100%;aspect-ratio: 1 / 1" viewbox="0 0 24 24"> <use xlink:href="#peta-svg-chevron-down-thin"></use> </svg></button></div>
+
+	<ul class="sub-menu">
+		<li class="menu-item menu-item-type-post_type menu-item-object-issue"><a href="https://www.peta.org/issues/animals-used-for-experimentation/" target="_parent" title="Animals Used for Experimentation">Animals Used for Experimentation</a></li>
+		<li class="menu-item menu-item-type-post_type menu-item-object-issue"><a href="https://www.peta.org/issues/animals-used-for-food/" target="_parent" title="Food">Food</a></li>
+		<li class="menu-item menu-item-type-post_type menu-item-object-issue"><a href="https://www.peta.org/issues/animals-used-for-clothing/" target="_parent" title="Clothing">Clothing</a></li>
+		<li class="menu-item menu-item-type-post_type menu-item-object-issue"><a href="https://www.peta.org/issues/animals-in-entertainment/" target="_parent" title="Entertainment">Entertainment</a></li>
+		<li class="menu-item menu-item-type-post_type menu-item-object-issue"><a href="https://www.peta.org/issues/animal-companion-issues/" target="_parent" title="Companion Animals">Companion Animals</a></li>
+		<li class="menu-item menu-item-type-post_type menu-item-object-issue"><a href="https://www.peta.org/issues/wildlife/" target="_parent" title="Wildlife">Wildlife</a></li>
+	</ul>
+	</li>
+	<li class="nav-living menu-item menu-item-type-post_type_archive menu-item-object-living menu-item-has-children">
+	<div class="menu-item-wrap"><a href="https://www.peta.org/lifestyle/" target="_parent" title="Lifestyle">Lifestyle</a><button aria-expanded="false" aria-label="Toggle Submenu" class="parent-arrow" role="button"><svg aria-hidden="true" style="width: 100%;aspect-ratio: 1 / 1" viewbox="0 0 24 24"> <use xlink:href="#peta-svg-chevron-down-thin"></use> </svg></button></div>
+
+	<ul class="sub-menu">
+		<li class="menu-item menu-item-type-post_type menu-item-object-living"><a href="https://www.peta.org/lifestyle/lifestyle-101/" target="_parent" title="Lifestyle 101">Lifestyle 101</a></li>
+		<li class="menu-item menu-item-type-post_type menu-item-object-living"><a href="https://www.peta.org/lifestyle/personal-care-fashion/" target="_parent" title="Personal Care &amp; Fashion">Personal Care &amp; Fashion</a></li>
+		<li class="menu-item menu-item-type-post_type menu-item-object-living"><a href="https://www.peta.org/lifestyle/food/" target="_parent" title="Food &amp; Health">Food &amp; Health</a></li>
+		<li class="menu-item menu-item-type-post_type menu-item-object-page"><a href="https://www.peta.org/recipes/" target="_parent" title="Recipes">Recipes</a></li>
+		<li class="menu-item menu-item-type-custom menu-item-object-custom"><a href="https://www.petakids.com/parents/" target="_parent" title="Parents">Parents</a></li>
+		<li class="menu-item menu-item-type-post_type menu-item-object-living"><a href="https://www.peta.org/lifestyle/humane-home/" target="_parent" title="Humane Home">Humane Home</a></li>
+		<li class="menu-item menu-item-type-post_type menu-item-object-living"><a href="https://www.peta.org/lifestyle/entertainment/" target="_parent" title="Entertainment">Entertainment</a></li>
+		<li class="menu-item menu-item-type-post_type menu-item-object-living"><a href="https://www.peta.org/lifestyle/animal-companions/" target="_parent" title="Animal Companions">Animal Companions</a></li>
+	</ul>
+	</li>
+	<li class="nav-students menu-item menu-item-type-post_type_archive menu-item-object-student menu-item-has-children">
+	<div class="menu-item-wrap"><a href="https://www.peta.org/students/" target="_parent" title="Students">Students</a><button aria-expanded="false" aria-label="Toggle Submenu" class="parent-arrow" role="button"><svg aria-hidden="true" style="width: 100%;aspect-ratio: 1 / 1" viewbox="0 0 24 24"> <use xlink:href="#peta-svg-chevron-down-thin"></use> </svg></button></div>
+
+	<ul class="sub-menu">
+		<li class="menu-item menu-item-type-custom menu-item-object-custom"><a href="https://www.peta2.com" target="_blank" title="peta2">peta2</a></li>
+		<li class="menu-item menu-item-type-custom menu-item-object-custom"><a href="https://www.petakids.com/" target="_blank" title="PETA Kids">PETA Kids</a></li>
+		<li class="menu-item menu-item-type-post_type menu-item-object-page"><a href="https://www.peta.org/teachkind/" target="_parent" title="TeachKind">TeachKind</a></li>
+	</ul>
+	</li>
+	<li class="is-reverse-order menu-item menu-item-type-custom menu-item-object-custom menu-item-has-children">
+	<div class="menu-item-wrap"><a href="https://shop.peta.org" target="_parent" title="Shop">Shop</a><button aria-expanded="false" aria-label="Toggle Submenu" class="parent-arrow" role="button"><svg aria-hidden="true" style="width: 100%;aspect-ratio: 1 / 1" viewbox="0 0 24 24"> <use xlink:href="#peta-svg-chevron-down-thin"></use> </svg></button></div>
+
+	<ul class="sub-menu">
+		<li class="menu-item menu-item-type-custom menu-item-object-custom"><a href="https://shop.peta.org/?en_txn7=Navigation::Shop-Subnav" target="_parent" title="PETA SHOP">PETA SHOP</a></li>
+		<li class="menu-item menu-item-type-custom menu-item-object-custom"><a href="https://crueltyfree.peta.org/?en_txn7=Navigation::Shop-Subnav" target="_parent" title="Cruelty-Free Database">Cruelty-Free Database</a></li>
+		<li class="menu-item menu-item-type-custom menu-item-object-custom"><a href="https://www.petaliterature.com/?en_txn7=Navigation::Shop-Subnav" target="_parent" title="Literature">Literature</a></li>
+		<li class="menu-item menu-item-type-custom menu-item-object-custom"><a href="https://www.petashoppingguide.com/?en_txn7=Navigation::Shop-Subnav" target="_parent" title="PETA Shopping Guide">PETA Shopping Guide</a></li>
+		<li class="menu-item menu-item-type-custom menu-item-object-custom"><a href="https://petaapprovedvegan.peta.org/?en_txn7=Navigation::shop-subnav" target="_parent" title="PETA Approved Vegan">PETA-Approved Vegan</a></li>
+		<li class="menu-item menu-item-type-custom menu-item-object-custom"><a href="https://presents.peta.org/?en_txn7=Navigation::Shop-Subnav" target="_parent" title="PETA Presents">PETA Presents</a></li>
+	</ul>
+	</li>
+	<li class="nav-about menu-item menu-item-type-post_type_archive menu-item-object-about menu-item-has-children">
+	<div class="menu-item-wrap"><a href="https://www.peta.org/about-peta/" target="_parent" title="About">About</a><button aria-expanded="false" aria-label="Toggle Submenu" class="parent-arrow" role="button"><svg aria-hidden="true" style="width: 100%;aspect-ratio: 1 / 1" viewbox="0 0 24 24"> <use xlink:href="#peta-svg-chevron-down-thin"></use> </svg></button></div>
+
+	<ul class="sub-menu">
+		<li class="menu-item menu-item-type-post_type menu-item-object-about"><a href="https://www.peta.org/about-peta/learn-about-peta/" target="_parent" title="Our Story">Our Story</a></li>
+		<li class="menu-item menu-item-type-post_type menu-item-object-about"><a href="https://www.peta.org/about-peta/why-peta/" target="_parent" title="Our Views">Our Views</a></li>
+		<li class="menu-item menu-item-type-post_type menu-item-object-page"><a href="https://www.peta.org/about-peta/victories/" target="_parent" title="Victories">Victories</a></li>
+		<li class="menu-item menu-item-type-custom menu-item-object-custom"><a href="https://www.peta.org/about-peta/milestones/" target="_parent" title="PETA’s Milestones for Animals">Milestones</a></li>
+		<li class="menu-item menu-item-type-post_type menu-item-object-about"><a href="https://www.peta.org/about-peta/volunteer/" target="_parent" title="Volunteer">Volunteer</a></li>
+		<li class="menu-item menu-item-type-post_type menu-item-object-about"><a href="https://www.peta.org/about-peta/work-at-peta/" target="_parent" title="Work at PETA">Work at PETA</a></li>
+		<li class="menu-item menu-item-type-post_type menu-item-object-about"><a href="https://www.peta.org/about-peta/intern-at-peta/" target="_parent" title="Intern">Intern</a></li>
+		<li class="menu-item menu-item-type-post_type menu-item-object-page"><a href="https://www.peta.org/faq/" target="_parent">FAQ</a></li>
+		<li class="menu-item menu-item-type-post_type menu-item-object-about"><a href="https://www.peta.org/about-peta/contact-peta/" target="_parent" title="Contact Us">Contact Us</a></li>
+		<li class="menu-item menu-item-type-custom menu-item-object-custom"><a href="https://peta.org/magazine/" target="_parent" title="PETA Global">PETA Global</a></li>
+	</ul>
+	</li>
+	<li class="nav-donate is-reverse-order menu-item menu-item-type-custom menu-item-object-custom menu-item-has-children">
+	<div class="menu-item-wrap"><a href="https://support.peta.org/page/27010/donate/1" target="_parent" title="Donate Now"><span>Donate</span><span> Now</span></a><button aria-expanded="false" aria-label="Toggle Submenu" class="parent-arrow" role="button"><svg aria-hidden="true" style="width: 100%;aspect-ratio: 1 / 1" viewbox="0 0 24 24"> <use xlink:href="#peta-svg-chevron-down-thin"></use> </svg></button></div>
+
+	<ul class="sub-menu">
+		<li class="menu-item menu-item-type-custom menu-item-object-custom"><a href="https://support.peta.org/page/27010/donate/1?en_txn7=Navigation::mobile-top-subnav-donate-now" target="_parent" title="Donate Now">Donate Now</a></li>
+		<li class="menu-item menu-item-type-post_type menu-item-object-donate"><a href="https://www.peta.org/donate/vanguard/" target="_parent" title="Vanguard Society">Vanguard Society</a></li>
+		<li class="menu-item menu-item-type-post_type menu-item-object-donate"><a href="https://www.peta.org/donate/ways-to-support-peta/in-honor-of-and-memorial-gifts/" target="_parent" title="‘In Honor of’ and Memorial Gifts">Tribute</a></li>
+		<li class="menu-item menu-item-type-post_type menu-item-object-donate"><a href="https://www.peta.org/donate/ways-to-support-peta/" target="_parent" title="More Ways to Support">More Ways to Support</a></li>
+		<li class="menu-item menu-item-type-post_type menu-item-object-donate"><a href="https://www.peta.org/donate/membership-services/" target="_parent" title="Membership Services">Membership Services</a></li>
+		<li class="menu-item menu-item-type-custom menu-item-object-custom"><a href="https://legacy.peta.org/?en_txn7=Navigation%3A%3ADonation%20SubnavigationPETAorg-Support-PETA-Dropdown-Monthly&amp;supporter.appealCode=IXXXWBXXXXG" target="_parent" title="Your Legacy for Animals">Gifts in Wills</a></li>
+		<li class="menu-item menu-item-type-post_type menu-item-object-page"><a href="https://www.peta.org/donate/ways-to-support-peta/peta-business-friends" target="_parent">Corporate Partnerships</a></li>
+	</ul>
+	</li>
+</ul>
+</div>
+<a class="site-mobile-menu__report-cruelty" href="https://www.peta.org/about-peta/contact-peta/report-cruelty/" target="_parent">Report Cruelty to Animals </a></div>
+
+<div class="home wp-singular page-template-default page page-id-8 wp-embed-responsive wp-theme-peta site-wrap  is-front-page">
+<header class="site-header"><a class="site-header__skip-link" href="#site-content" id="main-skip-link">Skip to Content</a>
+
+<div class="mobile-top-bar top-bar-container hide-for-large" id="top-bar-block">
+<div class="mobile-nav menu-icon-wrap sticky">
+<div class="align-left"><button aria-controls="site-mobile-menu" aria-expanded="false" aria-label="Menu Button" class="menu-icon" type="button"><svg style="width: 100%;" viewbox="0 0 448 512"> <use xlink:href="#peta-svg-impossible-burger"></use> </svg> <span class="visually-hidden">Menu</span></button><span class="logo"><a href="https://www.peta.org" target="_parent" title="PETA"><svg style="width: 100%;" viewbox="0 0 100 37.8"> <use xlink:href="#peta-svg-peta-text-logo-white"></use> </svg> <span class="visually-hidden">PETA</span> </a> </span></div>
+
+<div class="align-right default"><a class="donate-link" href="https://support.peta.org/page/27010/donate/1?en_txn7=Navigation::mobile-donate-now-button" target="_parent"><span>Donate</span><span>&nbsp;Now</span></a></div>
+</div>
+</div>
+
+<div class="super-nav show-for-large">
+<div class="content-container">
+<nav class="super-nav__grid">
+<div class="logo-text"><a href="https://www.peta.org" target="_parent" title="PETA | People for the Ethical Treatment of Animals"><span>People for the Ethical Treatment of Animals</span> </a></div>
+
+<div class="report-cruelty"><a href="https://www.peta.org/about-peta/contact-peta/report-cruelty/" target="_parent">Report Cruelty to Animals <span class="arrow"> <svg style="width: 100%;" viewbox="0 0 24 24"> <use xlink:href="#peta-svg-2-arrows"></use> </svg> </span> </a></div>
+</nav>
+</div>
+</div>
+
+<div class="logo-header">
+<div class="content-container">
+<div class="logo-column hide-for-small-only">
+<div class="inner"><a href="https://www.peta.org" target="_parent" title="PETA | People for the Ethical Treatment of Animals"><img alt="PETA" height="120" src="https://www.peta.org/wp-content/themes/peta/src/assets/images/svgs/peta-logo.svg" style="width: 100%" width="120" /> </a></div>
+</div>
+
+<div class="mission">
+<div class="important"><a href="https://www.peta.org/features/what-peta-really-stands-for/" target="_parent">Animals are not ours</a></div>
+
+<div class="important__tagline"><a href="https://www.peta.org/features/what-peta-really-stands-for/" target="_parent">to experiment on, eat, wear, use for entertainment, or abuse in any other way. <span class="arrow"> <svg style="width: 100%;" viewbox="0 0 24 24"> <use xlink:href="#peta-svg-2-arrows"></use> </svg> </span> </a></div>
+</div>
+
+<div class="header-rabbit show-for-medium"><svg style="width: 100%;" viewbox="0 0 161.716 82.084"> <use xlink:href="#peta-svg-bunny"></use> </svg></div>
+</div>
+</div>
+
+<div class="nav show-for-large main-nav-bar site-header-menu">
+<div class="content-container">
+<div class="main-menu site-header-menu__navigation">
+<ul class="menu" id="menu-main-menu-1">
+	<li class="nav-action menu-item menu-item-type-post_type_archive menu-item-object-peta-action menu-item-has-children menu-item-987880" id="menu-item-987880"><a href="https://www.peta.org/actioncenter/" target="_parent"><span>Help Animals</span></a>
+
+	<div class="site-header__submenu">
+	<div class="site-header__submenu-wrap">
+	<ul class="sub-menu">
+		<li class="menu-item menu-item-type-post_type_archive menu-item-object-alert menu-item-989330" id="menu-item-989330"><a href="https://www.peta.org/action/action-alerts/" target="_parent"><span>Urgent Alerts</span></a></li>
+		<li class="menu-item menu-item-type-post_type menu-item-object-peta-action menu-item-986815" id="menu-item-986815"><a href="https://www.peta.org/action/campaigns/" target="_parent"><span>Our Campaigns</span></a></li>
+		<li class="menu-item menu-item-type-post_type menu-item-object-peta-action menu-item-986816" id="menu-item-986816"><a href="https://www.peta.org/action/action-team/" target="_parent"><span>Action Team</span></a></li>
+		<li class="menu-item menu-item-type-post_type menu-item-object-peta-action menu-item-986818" id="menu-item-986818"><a href="https://www.peta.org/action/activism-guide/everyday-activism/" target="_parent"><span>Activist Guide</span></a></li>
+		<li class="menu-item menu-item-type-post_type menu-item-object-peta-action menu-item-986820" id="menu-item-986820"><a href="https://www.peta.org/action/get-active-online/" target="_parent"><span>Get Active Online</span></a></li>
+		<li class="menu-item menu-item-type-custom menu-item-object-custom menu-item-986821" id="menu-item-986821"><a href="https://www.petaliterature.com/" target="_parent"><span>Leaflets &amp; Stickers</span></a></li>
+	</ul>
+	</div>
+	</div>
+	</li>
+	<li class="nav-blog menu-item menu-item-type-post_type menu-item-object-page menu-item-has-children menu-item-986838" id="menu-item-986838"><a href="https://www.peta.org/news/" target="_parent"><span>News</span></a>
+	<div class="site-header__submenu">
+	<div class="site-header__submenu-wrap">
+	<ul class="sub-menu">
+		<li class="menu-item menu-item-type-post_type menu-item-object-page menu-item-986840" id="menu-item-986840"><a href="https://www.peta.org/features/" target="_parent"><span>Features</span></a></li>
+		<li class="menu-item menu-item-type-post_type menu-item-object-page menu-item-986841" id="menu-item-986841"><a href="https://www.peta.org/videos/" target="_parent"><span>Videos</span></a></li>
+		<li class="menu-item menu-item-type-taxonomy menu-item-object-category menu-item-994017" id="menu-item-994017"><a href="https://www.peta.org/category/miscellaneous-parent/adoptable/" target="_parent"><span>Adoptable Animals</span></a></li>
+		<li class="menu-item menu-item-type-taxonomy menu-item-object-category menu-item-994018" id="menu-item-994018"><a href="https://www.peta.org/category/miscellaneous-parent/rescued/" target="_parent"><span>Rescue Stories</span></a></li>
+	</ul>
+	</div>
+	</div>
+	</li>
+	<li class="nav-investigations menu-item menu-item-type-post_type menu-item-object-page menu-item-has-children menu-item-986842" id="menu-item-986842"><a href="https://www.peta.org/investigations/" target="_parent"><span>Investigations</span></a>
+	<div class="site-header__submenu">
+	<div class="site-header__submenu-wrap">
+	<ul class="sub-menu">
+		<li class="menu-item menu-item-type-custom menu-item-object-custom menu-item-986843" id="menu-item-986843"><a href="https://support.peta.org/page/43696/donate/1?en_txn7=Navigation::main-top-investigations-subnav&amp;supporter.appealCode=IXXXWBXXXXR" target="_parent"><span>Investigations &amp; Rescue Fund</span></a></li>
+		<li class="menu-item menu-item-type-post_type menu-item-object-about menu-item-986844" id="menu-item-986844"><a href="https://www.peta.org/about-peta/contact-peta/report-cruelty/" target="_parent"><span>Report Cruelty to Animals</span></a></li>
+	</ul>
+	</div>
+	</div>
+	</li>
+	<li class="nav-issues menu-item menu-item-type-post_type_archive menu-item-object-issue menu-item-has-children menu-item-987881" id="menu-item-987881"><a href="https://www.peta.org/issues/" target="_parent"><span>Animal Rights Issues</span></a>
+	<div class="site-header__submenu">
+	<div class="site-header__submenu-wrap">
+	<ul class="sub-menu">
+		<li class="menu-item menu-item-type-post_type menu-item-object-issue menu-item-986846" id="menu-item-986846"><a href="https://www.peta.org/issues/animals-used-for-experimentation/" target="_parent"><span>Animals Used for Experimentation</span></a></li>
+		<li class="menu-item menu-item-type-post_type menu-item-object-issue menu-item-986847" id="menu-item-986847"><a href="https://www.peta.org/issues/animals-used-for-food/" target="_parent"><span>Food</span></a></li>
+		<li class="menu-item menu-item-type-post_type menu-item-object-issue menu-item-986848" id="menu-item-986848"><a href="https://www.peta.org/issues/animals-used-for-clothing/" target="_parent"><span>Clothing</span></a></li>
+		<li class="menu-item menu-item-type-post_type menu-item-object-issue menu-item-986849" id="menu-item-986849"><a href="https://www.peta.org/issues/animals-in-entertainment/" target="_parent"><span>Entertainment</span></a></li>
+		<li class="menu-item menu-item-type-post_type menu-item-object-issue menu-item-986850" id="menu-item-986850"><a href="https://www.peta.org/issues/animal-companion-issues/" target="_parent"><span>Companion Animals</span></a></li>
+		<li class="menu-item menu-item-type-post_type menu-item-object-issue menu-item-986851" id="menu-item-986851"><a href="https://www.peta.org/issues/wildlife/" target="_parent"><span>Wildlife</span></a></li>
+	</ul>
+	</div>
+	</div>
+	</li>
+	<li class="nav-living menu-item menu-item-type-post_type_archive menu-item-object-living menu-item-has-children menu-item-987882" id="menu-item-987882"><a href="https://www.peta.org/lifestyle/" target="_parent"><span>Lifestyle</span></a>
+	<div class="site-header__submenu">
+	<div class="site-header__submenu-wrap">
+	<ul class="sub-menu">
+		<li class="menu-item menu-item-type-post_type menu-item-object-living menu-item-986854" id="menu-item-986854"><a href="https://www.peta.org/lifestyle/lifestyle-101/" target="_parent"><span>Lifestyle 101</span></a></li>
+		<li class="menu-item menu-item-type-post_type menu-item-object-living menu-item-986856" id="menu-item-986856"><a href="https://www.peta.org/lifestyle/personal-care-fashion/" target="_parent"><span>Personal Care &amp; Fashion</span></a></li>
+		<li class="menu-item menu-item-type-post_type menu-item-object-living menu-item-986865" id="menu-item-986865"><a href="https://www.peta.org/lifestyle/food/" target="_parent"><span>Food &amp; Health</span></a></li>
+		<li class="menu-item menu-item-type-post_type menu-item-object-page menu-item-986866" id="menu-item-986866"><a href="https://www.peta.org/recipes/" target="_parent"><span>Recipes</span></a></li>
+		<li class="menu-item menu-item-type-custom menu-item-object-custom menu-item-1021801" id="menu-item-1021801"><a href="https://www.petakids.com/parents/" target="_parent"><span>Parents</span></a></li>
+		<li class="menu-item menu-item-type-post_type menu-item-object-living menu-item-986867" id="menu-item-986867"><a href="https://www.peta.org/lifestyle/humane-home/" target="_parent"><span>Humane Home</span></a></li>
+		<li class="menu-item menu-item-type-post_type menu-item-object-living menu-item-986872" id="menu-item-986872"><a href="https://www.peta.org/lifestyle/entertainment/" target="_parent"><span>Entertainment</span></a></li>
+		<li class="menu-item menu-item-type-post_type menu-item-object-living menu-item-986870" id="menu-item-986870"><a href="https://www.peta.org/lifestyle/animal-companions/" target="_parent"><span>Animal Companions</span></a></li>
+	</ul>
+	</div>
+	</div>
+	</li>
+	<li class="nav-students menu-item menu-item-type-post_type_archive menu-item-object-student menu-item-has-children menu-item-987883" id="menu-item-987883"><a href="https://www.peta.org/students/" target="_parent"><span>Students</span></a>
+	<div class="site-header__submenu">
+	<div class="site-header__submenu-wrap">
+	<ul class="sub-menu">
+		<li class="menu-item menu-item-type-custom menu-item-object-custom menu-item-1057346" id="menu-item-1057346"><a href="https://www.peta2.com" target="_blank"><span>peta2</span></a></li>
+		<li class="menu-item menu-item-type-custom menu-item-object-custom menu-item-986881" id="menu-item-986881"><a href="https://www.petakids.com/" target="_blank"><span>PETA Kids</span></a></li>
+		<li class="menu-item menu-item-type-post_type menu-item-object-page menu-item-986882" id="menu-item-986882"><a href="https://www.peta.org/teachkind/" target="_parent"><span>TeachKind</span></a></li>
+	</ul>
+	</div>
+	</div>
+	</li>
+	<li class="is-reverse-order menu-item menu-item-type-custom menu-item-object-custom menu-item-has-children menu-item-994577" id="menu-item-994577"><a href="https://shop.peta.org" target="_parent"><span>Shop</span></a>
+	<div class="site-header__submenu">
+	<div class="site-header__submenu-wrap">
+	<ul class="sub-menu">
+		<li class="menu-item menu-item-type-custom menu-item-object-custom menu-item-1005071" id="menu-item-1005071"><a href="https://shop.peta.org/?en_txn7=Navigation::Shop-Subnav" target="_parent"><span>PETA SHOP</span></a></li>
+		<li class="menu-item menu-item-type-custom menu-item-object-custom menu-item-1005067" id="menu-item-1005067"><a href="https://crueltyfree.peta.org/?en_txn7=Navigation::Shop-Subnav" target="_parent"><span>Cruelty-Free Database</span></a></li>
+		<li class="menu-item menu-item-type-custom menu-item-object-custom menu-item-1005068" id="menu-item-1005068"><a href="https://www.petaliterature.com/?en_txn7=Navigation::Shop-Subnav" target="_parent"><span>Literature</span></a></li>
+		<li class="menu-item menu-item-type-custom menu-item-object-custom menu-item-1005069" id="menu-item-1005069"><a href="https://www.petashoppingguide.com/?en_txn7=Navigation::Shop-Subnav" target="_parent"><span>PETA Shopping Guide</span></a></li>
+		<li class="menu-item menu-item-type-custom menu-item-object-custom menu-item-1087542" id="menu-item-1087542"><a href="https://petaapprovedvegan.peta.org/?en_txn7=Navigation::shop-subnav" target="_parent" title="PETA Approved Vegan"><span>PETA-Approved Vegan</span></a></li>
+		<li class="menu-item menu-item-type-custom menu-item-object-custom menu-item-1005070" id="menu-item-1005070"><a href="https://presents.peta.org/?en_txn7=Navigation::Shop-Subnav" target="_parent"><span>PETA Presents</span></a></li>
+	</ul>
+	</div>
+	</div>
+	</li>
+	<li class="nav-about menu-item menu-item-type-post_type_archive menu-item-object-about menu-item-has-children menu-item-987879" id="menu-item-987879"><a href="https://www.peta.org/about-peta/" target="_parent"><span>About</span></a>
+	<div class="site-header__submenu">
+	<div class="site-header__submenu-wrap">
+	<ul class="sub-menu">
+		<li class="menu-item menu-item-type-post_type menu-item-object-about menu-item-986888" id="menu-item-986888"><a href="https://www.peta.org/about-peta/learn-about-peta/" target="_parent"><span>Our Story</span></a></li>
+		<li class="menu-item menu-item-type-post_type menu-item-object-about menu-item-986893" id="menu-item-986893"><a href="https://www.peta.org/about-peta/why-peta/" target="_parent"><span>Our Views</span></a></li>
+		<li class="menu-item menu-item-type-post_type menu-item-object-page menu-item-986895" id="menu-item-986895"><a href="https://www.peta.org/about-peta/victories/" target="_parent"><span>Victories</span></a></li>
+		<li class="menu-item menu-item-type-custom menu-item-object-custom menu-item-1130609" id="menu-item-1130609"><a href="https://www.peta.org/about-peta/milestones/" target="_parent" title="PETA’s Milestones for Animals"><span>Milestones</span></a></li>
+		<li class="menu-item menu-item-type-post_type menu-item-object-about menu-item-986898" id="menu-item-986898"><a href="https://www.peta.org/about-peta/volunteer/" target="_parent"><span>Volunteer</span></a></li>
+		<li class="menu-item menu-item-type-post_type menu-item-object-about menu-item-986899" id="menu-item-986899"><a href="https://www.peta.org/about-peta/work-at-peta/" target="_parent"><span>Work at PETA</span></a></li>
+		<li class="menu-item menu-item-type-post_type menu-item-object-about menu-item-986905" id="menu-item-986905"><a href="https://www.peta.org/about-peta/intern-at-peta/" target="_parent"><span>Intern</span></a></li>
+		<li class="menu-item menu-item-type-post_type menu-item-object-page menu-item-1150541" id="menu-item-1150541"><a href="https://www.peta.org/faq/" target="_parent"><span>FAQ</span></a></li>
+		<li class="menu-item menu-item-type-post_type menu-item-object-about menu-item-986908" id="menu-item-986908"><a href="https://www.peta.org/about-peta/contact-peta/" target="_parent"><span>Contact Us</span></a></li>
+		<li class="menu-item menu-item-type-custom menu-item-object-custom menu-item-986910" id="menu-item-986910"><a href="https://peta.org/magazine/" target="_parent"><span>PETA Global</span></a></li>
+	</ul>
+	</div>
+	</div>
+	</li>
+	<li class="nav-donate is-reverse-order menu-item menu-item-type-custom menu-item-object-custom menu-item-has-children menu-item-986911" id="menu-item-986911"><a href="https://support.peta.org/page/27010/donate/1" target="_parent" title="Donate Now"><span><span>Donate</span><span> Now</span></span></a>
+	<div class="site-header__submenu">
+	<div class="site-header__submenu-wrap">
+	<ul class="sub-menu">
+		<li class="menu-item menu-item-type-custom menu-item-object-custom menu-item-986912" id="menu-item-986912"><a href="https://support.peta.org/page/27010/donate/1?en_txn7=Navigation::top-subnav-donate-now" target="_parent"><span>Donate Now</span></a></li>
+		<li class="menu-item menu-item-type-post_type menu-item-object-donate menu-item-986914" id="menu-item-986914"><a href="https://www.peta.org/donate/vanguard/" target="_parent"><span>Vanguard Society</span></a></li>
+		<li class="menu-item menu-item-type-post_type menu-item-object-donate menu-item-1074206" id="menu-item-1074206"><a href="https://www.peta.org/donate/ways-to-support-peta/in-honor-of-and-memorial-gifts/" target="_parent" title="‘In Honor of’ and Memorial Gifts"><span>Tribute</span></a></li>
+		<li class="menu-item menu-item-type-post_type menu-item-object-donate menu-item-986916" id="menu-item-986916"><a href="https://www.peta.org/donate/ways-to-support-peta/" target="_parent"><span>More Ways to Support</span></a></li>
+		<li class="menu-item menu-item-type-post_type menu-item-object-donate menu-item-986917" id="menu-item-986917"><a href="https://www.peta.org/donate/membership-services/" target="_parent"><span>Membership Services</span></a></li>
+		<li class="menu-item menu-item-type-custom menu-item-object-custom menu-item-986913" id="menu-item-986913"><a href="https://legacy.peta.org/?en_txn7=Navigation%3A%3ADonation%20SubnavigationPETAorg-Support-PETA-Dropdown-Monthly&amp;supporter.appealCode=IXXXWBXXXXG" target="_parent" title="Your Legacy for Animals"><span>Gifts in Wills</span></a></li>
+		<li class="menu-item menu-item-type-post_type menu-item-object-page menu-item-1178459" id="menu-item-1178459"><a href="https://www.peta.org/donate/ways-to-support-peta/peta-business-friends" target="_parent"><span>Corporate Partnerships</span></a></li>
+	</ul>
+	</div>
+	</div>
+	</li>
+</ul>
+</div>
+<!-- more-links (for responsive mobile) -->
+
+<div class="smore-links">&nbsp;</div>
+<!-- end more-links --></div>
+</div>
+
+<div aria-hidden="true" class="sticky-nav-bar" data-location="header-sticky-nav-bar" tabindex="-1">
+<div class="sticky-nav-bar__wrap">
+<div class="sticky-bar-logo"><a accesskey="1" href="https://www.peta.org" target="_parent" title=""><svg style="width: 100%;aspect-ratio: 100 / 37.8" viewbox="0 0 100 37.8"> <use xlink:href="#peta-svg-peta-text-logo-blue"></use> </svg> </a></div>
+
+<div class="main-menu site-header-menu__navigation">
+<ul class="menu" id="menu-main-menu-2">
+	<li class="nav-action menu-item menu-item-type-post_type_archive menu-item-object-peta-action menu-item-has-children menu-item-987880"><a href="https://www.peta.org/actioncenter/" target="_parent"><span>Help Animals</span></a>
+
+	<div class="site-header__submenu">
+	<div class="site-header__submenu-wrap">
+	<ul class="sub-menu">
+		<li class="menu-item menu-item-type-post_type_archive menu-item-object-alert menu-item-989330"><a href="https://www.peta.org/action/action-alerts/" target="_parent"><span>Urgent Alerts</span></a></li>
+		<li class="menu-item menu-item-type-post_type menu-item-object-peta-action menu-item-986815"><a href="https://www.peta.org/action/campaigns/" target="_parent"><span>Our Campaigns</span></a></li>
+		<li class="menu-item menu-item-type-post_type menu-item-object-peta-action menu-item-986816"><a href="https://www.peta.org/action/action-team/" target="_parent"><span>Action Team</span></a></li>
+		<li class="menu-item menu-item-type-post_type menu-item-object-peta-action menu-item-986818"><a href="https://www.peta.org/action/activism-guide/everyday-activism/" target="_parent"><span>Activist Guide</span></a></li>
+		<li class="menu-item menu-item-type-post_type menu-item-object-peta-action menu-item-986820"><a href="https://www.peta.org/action/get-active-online/" target="_parent"><span>Get Active Online</span></a></li>
+		<li class="menu-item menu-item-type-custom menu-item-object-custom menu-item-986821"><a href="https://www.petaliterature.com/" target="_parent"><span>Leaflets &amp; Stickers</span></a></li>
+	</ul>
+	</div>
+	</div>
+	</li>
+	<li class="nav-blog menu-item menu-item-type-post_type menu-item-object-page menu-item-has-children menu-item-986838"><a href="https://www.peta.org/news/" target="_parent"><span>News</span></a>
+	<div class="site-header__submenu">
+	<div class="site-header__submenu-wrap">
+	<ul class="sub-menu">
+		<li class="menu-item menu-item-type-post_type menu-item-object-page menu-item-986840"><a href="https://www.peta.org/features/" target="_parent"><span>Features</span></a></li>
+		<li class="menu-item menu-item-type-post_type menu-item-object-page menu-item-986841"><a href="https://www.peta.org/videos/" target="_parent"><span>Videos</span></a></li>
+		<li class="menu-item menu-item-type-taxonomy menu-item-object-category menu-item-994017"><a href="https://www.peta.org/category/miscellaneous-parent/adoptable/" target="_parent"><span>Adoptable Animals</span></a></li>
+		<li class="menu-item menu-item-type-taxonomy menu-item-object-category menu-item-994018"><a href="https://www.peta.org/category/miscellaneous-parent/rescued/" target="_parent"><span>Rescue Stories</span></a></li>
+	</ul>
+	</div>
+	</div>
+	</li>
+	<li class="nav-investigations menu-item menu-item-type-post_type menu-item-object-page menu-item-has-children menu-item-986842"><a href="https://www.peta.org/investigations/" target="_parent"><span>Investigations</span></a>
+	<div class="site-header__submenu">
+	<div class="site-header__submenu-wrap">
+	<ul class="sub-menu">
+		<li class="menu-item menu-item-type-custom menu-item-object-custom menu-item-986843"><a href="https://support.peta.org/page/43696/donate/1?en_txn7=Navigation::main-top-investigations-subnav&amp;supporter.appealCode=IXXXWBXXXXR" target="_parent"><span>Investigations &amp; Rescue Fund</span></a></li>
+		<li class="menu-item menu-item-type-post_type menu-item-object-about menu-item-986844"><a href="https://www.peta.org/about-peta/contact-peta/report-cruelty/" target="_parent"><span>Report Cruelty to Animals</span></a></li>
+	</ul>
+	</div>
+	</div>
+	</li>
+	<li class="nav-issues menu-item menu-item-type-post_type_archive menu-item-object-issue menu-item-has-children menu-item-987881"><a href="https://www.peta.org/issues/" target="_parent"><span>Animal Rights Issues</span></a>
+	<div class="site-header__submenu">
+	<div class="site-header__submenu-wrap">
+	<ul class="sub-menu">
+		<li class="menu-item menu-item-type-post_type menu-item-object-issue menu-item-986846"><a href="https://www.peta.org/issues/animals-used-for-experimentation/" target="_parent"><span>Animals Used for Experimentation</span></a></li>
+		<li class="menu-item menu-item-type-post_type menu-item-object-issue menu-item-986847"><a href="https://www.peta.org/issues/animals-used-for-food/" target="_parent"><span>Food</span></a></li>
+		<li class="menu-item menu-item-type-post_type menu-item-object-issue menu-item-986848"><a href="https://www.peta.org/issues/animals-used-for-clothing/" target="_parent"><span>Clothing</span></a></li>
+		<li class="menu-item menu-item-type-post_type menu-item-object-issue menu-item-986849"><a href="https://www.peta.org/issues/animals-in-entertainment/" target="_parent"><span>Entertainment</span></a></li>
+		<li class="menu-item menu-item-type-post_type menu-item-object-issue menu-item-986850"><a href="https://www.peta.org/issues/animal-companion-issues/" target="_parent"><span>Companion Animals</span></a></li>
+		<li class="menu-item menu-item-type-post_type menu-item-object-issue menu-item-986851"><a href="https://www.peta.org/issues/wildlife/" target="_parent"><span>Wildlife</span></a></li>
+	</ul>
+	</div>
+	</div>
+	</li>
+	<li class="nav-living menu-item menu-item-type-post_type_archive menu-item-object-living menu-item-has-children menu-item-987882"><a href="https://www.peta.org/lifestyle/" target="_parent"><span>Lifestyle</span></a>
+	<div class="site-header__submenu">
+	<div class="site-header__submenu-wrap">
+	<ul class="sub-menu">
+		<li class="menu-item menu-item-type-post_type menu-item-object-living menu-item-986854"><a href="https://www.peta.org/lifestyle/lifestyle-101/" target="_parent"><span>Lifestyle 101</span></a></li>
+		<li class="menu-item menu-item-type-post_type menu-item-object-living menu-item-986856"><a href="https://www.peta.org/lifestyle/personal-care-fashion/" target="_parent"><span>Personal Care &amp; Fashion</span></a></li>
+		<li class="menu-item menu-item-type-post_type menu-item-object-living menu-item-986865"><a href="https://www.peta.org/lifestyle/food/" target="_parent"><span>Food &amp; Health</span></a></li>
+		<li class="menu-item menu-item-type-post_type menu-item-object-page menu-item-986866"><a href="https://www.peta.org/recipes/" target="_parent"><span>Recipes</span></a></li>
+		<li class="menu-item menu-item-type-custom menu-item-object-custom menu-item-1021801"><a href="https://www.petakids.com/parents/" target="_parent"><span>Parents</span></a></li>
+		<li class="menu-item menu-item-type-post_type menu-item-object-living menu-item-986867"><a href="https://www.peta.org/lifestyle/humane-home/" target="_parent"><span>Humane Home</span></a></li>
+		<li class="menu-item menu-item-type-post_type menu-item-object-living menu-item-986872"><a href="https://www.peta.org/lifestyle/entertainment/" target="_parent"><span>Entertainment</span></a></li>
+		<li class="menu-item menu-item-type-post_type menu-item-object-living menu-item-986870"><a href="https://www.peta.org/lifestyle/animal-companions/" target="_parent"><span>Animal Companions</span></a></li>
+	</ul>
+	</div>
+	</div>
+	</li>
+	<li class="nav-students menu-item menu-item-type-post_type_archive menu-item-object-student menu-item-has-children menu-item-987883"><a href="https://www.peta.org/students/" target="_parent"><span>Students</span></a>
+	<div class="site-header__submenu">
+	<div class="site-header__submenu-wrap">
+	<ul class="sub-menu">
+		<li class="menu-item menu-item-type-custom menu-item-object-custom menu-item-1057346"><a href="https://www.peta2.com" target="_blank"><span>peta2</span></a></li>
+		<li class="menu-item menu-item-type-custom menu-item-object-custom menu-item-986881"><a href="https://www.petakids.com/" target="_blank"><span>PETA Kids</span></a></li>
+		<li class="menu-item menu-item-type-post_type menu-item-object-page menu-item-986882"><a href="https://www.peta.org/teachkind/" target="_parent"><span>TeachKind</span></a></li>
+	</ul>
+	</div>
+	</div>
+	</li>
+	<li class="is-reverse-order menu-item menu-item-type-custom menu-item-object-custom menu-item-has-children menu-item-994577"><a href="https://shop.peta.org" target="_parent"><span>Shop</span></a>
+	<div class="site-header__submenu">
+	<div class="site-header__submenu-wrap">
+	<ul class="sub-menu">
+		<li class="menu-item menu-item-type-custom menu-item-object-custom menu-item-1005071"><a href="https://shop.peta.org/?en_txn7=Navigation::Shop-Subnav" target="_parent"><span>PETA SHOP</span></a></li>
+		<li class="menu-item menu-item-type-custom menu-item-object-custom menu-item-1005067"><a href="https://crueltyfree.peta.org/?en_txn7=Navigation::Shop-Subnav" target="_parent"><span>Cruelty-Free Database</span></a></li>
+		<li class="menu-item menu-item-type-custom menu-item-object-custom menu-item-1005068"><a href="https://www.petaliterature.com/?en_txn7=Navigation::Shop-Subnav" target="_parent"><span>Literature</span></a></li>
+		<li class="menu-item menu-item-type-custom menu-item-object-custom menu-item-1005069"><a href="https://www.petashoppingguide.com/?en_txn7=Navigation::Shop-Subnav" target="_parent"><span>PETA Shopping Guide</span></a></li>
+		<li class="menu-item menu-item-type-custom menu-item-object-custom menu-item-1087542"><a href="https://petaapprovedvegan.peta.org/?en_txn7=Navigation::shop-subnav" target="_parent" title="PETA Approved Vegan"><span>PETA-Approved Vegan</span></a></li>
+		<li class="menu-item menu-item-type-custom menu-item-object-custom menu-item-1005070"><a href="https://presents.peta.org/?en_txn7=Navigation::Shop-Subnav" target="_parent"><span>PETA Presents</span></a></li>
+	</ul>
+	</div>
+	</div>
+	</li>
+	<li class="nav-about menu-item menu-item-type-post_type_archive menu-item-object-about menu-item-has-children menu-item-987879"><a href="https://www.peta.org/about-peta/" target="_parent"><span>About</span></a>
+	<div class="site-header__submenu">
+	<div class="site-header__submenu-wrap">
+	<ul class="sub-menu">
+		<li class="menu-item menu-item-type-post_type menu-item-object-about menu-item-986888"><a href="https://www.peta.org/about-peta/learn-about-peta/" target="_parent"><span>Our Story</span></a></li>
+		<li class="menu-item menu-item-type-post_type menu-item-object-about menu-item-986893"><a href="https://www.peta.org/about-peta/why-peta/" target="_parent"><span>Our Views</span></a></li>
+		<li class="menu-item menu-item-type-post_type menu-item-object-page menu-item-986895"><a href="https://www.peta.org/about-peta/victories/" target="_parent"><span>Victories</span></a></li>
+		<li class="menu-item menu-item-type-custom menu-item-object-custom menu-item-1130609"><a href="https://www.peta.org/about-peta/milestones/" target="_parent" title="PETA’s Milestones for Animals"><span>Milestones</span></a></li>
+		<li class="menu-item menu-item-type-post_type menu-item-object-about menu-item-986898"><a href="https://www.peta.org/about-peta/volunteer/" target="_parent"><span>Volunteer</span></a></li>
+		<li class="menu-item menu-item-type-post_type menu-item-object-about menu-item-986899"><a href="https://www.peta.org/about-peta/work-at-peta/" target="_parent"><span>Work at PETA</span></a></li>
+		<li class="menu-item menu-item-type-post_type menu-item-object-about menu-item-986905"><a href="https://www.peta.org/about-peta/intern-at-peta/" target="_parent"><span>Intern</span></a></li>
+		<li class="menu-item menu-item-type-post_type menu-item-object-page menu-item-1150541"><a href="https://www.peta.org/faq/" target="_parent"><span>FAQ</span></a></li>
+		<li class="menu-item menu-item-type-post_type menu-item-object-about menu-item-986908"><a href="https://www.peta.org/about-peta/contact-peta/" target="_parent"><span>Contact Us</span></a></li>
+		<li class="menu-item menu-item-type-custom menu-item-object-custom menu-item-986910"><a href="https://peta.org/magazine/" target="_parent"><span>PETA Global</span></a></li>
+	</ul>
+	</div>
+	</div>
+	</li>
+	<li class="nav-donate is-reverse-order menu-item menu-item-type-custom menu-item-object-custom menu-item-has-children menu-item-986911"><a href="https://support.peta.org/page/27010/donate/1" target="_parent" title="Donate Now"><span><span>Donate</span><span> Now</span></span></a>
+	<div class="site-header__submenu">
+	<div class="site-header__submenu-wrap">
+	<ul class="sub-menu">
+		<li class="menu-item menu-item-type-custom menu-item-object-custom menu-item-986912"><a href="https://support.peta.org/page/27010/donate/1?en_txn7=Navigation::top-subnav-donate-now" target="_parent"><span>Donate Now</span></a></li>
+		<li class="menu-item menu-item-type-post_type menu-item-object-donate menu-item-986914"><a href="https://www.peta.org/donate/vanguard/" target="_parent"><span>Vanguard Society</span></a></li>
+		<li class="menu-item menu-item-type-post_type menu-item-object-donate menu-item-1074206"><a href="https://www.peta.org/donate/ways-to-support-peta/in-honor-of-and-memorial-gifts/" target="_parent" title="‘In Honor of’ and Memorial Gifts"><span>Tribute</span></a></li>
+		<li class="menu-item menu-item-type-post_type menu-item-object-donate menu-item-986916"><a href="https://www.peta.org/donate/ways-to-support-peta/" target="_parent"><span>More Ways to Support</span></a></li>
+		<li class="menu-item menu-item-type-post_type menu-item-object-donate menu-item-986917"><a href="https://www.peta.org/donate/membership-services/" target="_parent"><span>Membership Services</span></a></li>
+		<li class="menu-item menu-item-type-custom menu-item-object-custom menu-item-986913"><a href="https://legacy.peta.org/?en_txn7=Navigation%3A%3ADonation%20SubnavigationPETAorg-Support-PETA-Dropdown-Monthly&amp;supporter.appealCode=IXXXWBXXXXG" target="_parent" title="Your Legacy for Animals"><span>Gifts in Wills</span></a></li>
+		<li class="menu-item menu-item-type-post_type menu-item-object-page menu-item-1178459"><a href="https://www.peta.org/donate/ways-to-support-peta/peta-business-friends" target="_parent"><span>Corporate Partnerships</span></a></li>
+	</ul>
+	</div>
+	</div>
+	</li>
+</ul>
+</div>
+</div>
+</div>
+</header>
+</div>
+
+	
+	
+</div>
+</div>
+</div>
+		<div class="en__component en__component--row en__component--row--1">
+		<div class="en__component en__component en__component--column en__component--column--1">
+		<div class="en__component en__component--copyblock email-preferences-copy"
+
+style="
+
+
+
+
+
+
+
+"
+>
+	<h1 style="text-align: center;">Update Your Email Preferences</h1>
+
+<p style="text-align: center;">E-mail is one of the most important and cost-effective ways to quickly reach PETA supporters when animals urgently need help. Please consider one of these options.</p>
+
+	
+	
+</div>
+</div>
+</div>
+		<div class="en__component en__component--row en__component--advrow dcf-receive-fewer-emails-container-and-reduce-graphic-imagery-container">
+		<div class="en__component en__component en__component--column en__component--advcolumn dcf-receive-fewer-emails-container" style="">
+		<div class="en__component en__component--formblock" style="">
+	
+	
+			<div class="en__field en__field--checkbox en__field--question en__field--1855 en__field--reduced-e-mail-program">
+	<label class="en__field__label" style="">Reduced E-Mail Program</label>
+	<div class="en__field__element en__field__element--checkbox
+	" >
+		<div class="en__field__item">
+			<input id="en__field_supporter_questions_1855" checked type="checkbox" class="en__field__input en__field__input--checkbox" value="Y" name="supporter.questions.1855" />
+			<label for="en__field_supporter_questions_1855" class="en__field__label en__field__label--item" ></label>
+		</div>
+	</div>
+</div>
+
+	
+	
+</div>
+		<div class="en__component en__component--copyblock"
+
+style="
+
+
+
+
+
+
+
+"
+>
+	<p>While we strive to send you only e-mails that are vital to our work, we understand you may want to reduce the number of messages you receive in your inbox. Selecting this option will limit your e-mail updates to items we consider particularly important or that require your urgent action.</p>
+
+	
+	
+</div>
+</div>
+		<div class="en__component en__component en__component--column en__component--advcolumn dcf-reduce-graphic-imagery-container" style="">
+		<div class="en__component en__component--formblock" style="">
+	
+	
+			<div class="en__field en__field--checkbox en__field--664086 en__field--NOT_TAGGED_134">
+	<div class="en__field__element en__field__element--checkbox
+	" >
+		<div class="en__field__item">
+			<input id="en__field_supporter_NOT_TAGGED_134" type="checkbox" class="en__field__input en__field__input--checkbox" value="Y" name="supporter.NOT_TAGGED_134" />
+			<label for="en__field_supporter_NOT_TAGGED_134" class="en__field__label en__field__label--item" >No Graphic Images</label>
+		</div>
+	</div>
+</div>
+
+	
+	
+</div>
+		<div class="en__component en__component--copyblock"
+
+style="
+
+
+
+
+
+
+
+"
+>
+	<p>We understand your concern about PETA&rsquo;s use of graphic imagery to expose the abuse and neglect of animals. If you&rsquo;d like to receive less graphic imagery from us, please select this option.</p>
+
+	
+	
+</div>
+</div>
+</div>
+		<div class="en__component en__component--row en__component--advrow">
+		<div class="en__component en__component en__component--column en__component--advcolumn center" style="">
+		<div class="en__component en__component--formblock" style="">
+	
+	
+			<div class="en__field en__field--text en__field--664081 en__field--emailAddress en__mandatory">
+	<label for="en__field_supporter_emailAddress" class="en__field__label en__field__label--positionabove" style="">E-Mail</label>
+	<div class="en__field__element en__field__element--text">
+		<input id="en__field_supporter_emailAddress" type="text" class="en__field__input en__field__input--text" name="supporter.emailAddress" value=""  />
+	 </div>
+</div>
+
+	
+	
+</div>
+</div>
+</div>
+		<div class="en__component en__component--row en__component--row--1">
+		<div class="en__component en__component en__component--column en__component--column--1">
+		<div class="en__component en__component--formblock" style="">
+	
+	
+			<div class="en__field en__field--text en__field--664088 en__field--NOT_TAGGED_16">
+	<label for="en__field_supporter_NOT_TAGGED_16" class="en__field__label" style="">IMG BOt D3t3ction</label>
+	<div class="en__field__element en__field__element--text">
+		<input id="en__field_supporter_NOT_TAGGED_16" type="text" class="en__field__input en__field__input--text" name="supporter.NOT_TAGGED_16" value=""  />
+	 </div>
+</div>
+			<input type="hidden" class="en__field__input en__field__input--hidden" name="supporter.NOT_TAGGED_2" value="" />
+
+
+	
+	<div class="en__submit"><button style="">Update My E-Mail Preferences</button></div>
+</div>
+		<div class="en__component en__component--copyblock"
+
+style="
+
+
+
+
+
+
+
+"
+>
+	<p class="unsubscribe-all-button">Unsubscribe From ALL E-Mail</p>
+
+	
+	
+</div>
+		<div class="en__component en__component--formblock" style="">
+	
+	
+			<div class="en__field en__field--checkbox en__field--question en__field--178 en__field--master-suppression-list">
+	<label class="en__field__label" style="">Master Suppression List</label>
+	<div class="en__field__element en__field__element--checkbox
+	" >
+		<div class="en__field__item">
+			<input id="en__field_supporter_questions_178" checked type="checkbox" class="en__field__input en__field__input--checkbox" value="Y" name="supporter.questions.178" />
+			<label for="en__field_supporter_questions_178" class="en__field__label en__field__label--item" ></label>
+		</div>
+	</div>
+</div>
+
+	
+	
+</div>
+</div>
+</div>
+		<div class="en__component en__component--row en__component--row--1">
+		<div class="en__component en__component en__component--column en__component--column--1">
+		<div class="en__component en__component--copyblock"
+
+style="
+
+
+
+
+
+
+
+"
+>
+	<p class="privacy-policy">By submitting this form, you&rsquo;re acknowledging that you have read and agree to our&nbsp;<a href="https://www.peta.org/about-peta/learn-about-peta/website-policies/privacy/" target="_blank">privacy policy</a> and agree to receive e-mails from us.</p>
+
+	
+	
+</div>
+</div>
+</div>
+		<div class="en__component en__component--row en__component--row--1">
+		<div class="en__component en__component en__component--column en__component--column--1">
+		<div class="en__component en__component--copyblock"
+
+style="
+
+
+
+
+
+
+
+"
+>
+	<!--FOOTER-->
+<div class="footer" id="footer">
+<div class="footer-border">
+<div class="footer-logo"><img alt="PETA" height="25" loading="lazy" src="https://resources.peta.org/engaging-networks/pages/peta/images/peta-simple-footer-logo.svg" width="65" /></div>
+
+<div class="footer-text">
+<ul>
+	<li><a href="https://www.peta.org/about-peta/contact-peta/" target="_self">Contact PETA</a></li>
+	<li><a href="https://www.peta.org/about-peta/learn-about-peta/website-policies/disclaimer/" target="_self">Disclaimer</a></li>
+	<li><a href="https://www.peta.org/about-peta/learn-about-peta/website-policies/privacy/" target="_self">Privacy Policy</a></li>
+	<li><a href="https://www.peta.org/about-peta/learn-about-peta/website-policies/contest-terms-conditions/" target="_self">Contest Terms and Conditions</a></li>
+	<li><a href="https://www.peta.org/about-peta/learn-about-peta/website-policies/texting-terms-and-conditions/" target="_self">Texting Terms and Conditions </a></li>
+	<li><a href="https://www.peta.org/about-peta/learn-about-peta/website-policies/peta-online-community-terms-of-use-agreement/" target="_self">Terms of Use</a></li>
+	<li><a href="https://headlines.peta.org/donate/?en_txn7=Navigation::footer-donate-now-button&amp;supporter.appealCode=IXXXWBXXXXG" target="_self">Donate Now</a></li>
+	<li><a href="https://www.peta.org/about-peta/contact-peta/report-website-abuse/" target="_self">Report Website Abuse</a></li>
+	<li id="last">&copy; <script>
+        if(window.EngagingNetworks)
+        {
+
+         document.write(new Date().getFullYear());
+
+        }
+        </script> PETA. <a href="https://www.peta.org/about-peta/learn-about-peta/website-policies/" target="_self">Read our full policy.</a></li>
+</ul>
+
+<p>People for the Ethical Treatment of Animals<br />
+501 Front St., Norfolk, VA 23510<br />
+757-622-PETA (7382)<br />
+757-622-0457 (fax)</p>
+
+<p>PETA is a nonprofit, tax-exempt 501(c)(3) corporation (tax ID number 52-1218336)</p>
+</div>
+
+<div id="photo-credit">&nbsp;</div>
+</div>
+</div>
+
+	
+	
+</div>
+		<div class="en__component en__component--codeblock"><!-- IMPORTANT
+---- REMINDER
+---- CHANGE
+---- BOTH
+---- LOCALS
+-->
+
+<script>
+    // Create a new script element
+    let script = document.createElement('script');
+    
+    // Create a URLSearchParams object
+    let params = new URLSearchParams(window.location.search);
+    
+    // Get current Unix timestamp in milliseconds
+    let timestamp = new Date().getTime();
+    
+    // Check the URL parameters for 'assets' and then check if its value is 'local'
+    if (params.has('assets') && params.get('assets') === 'local') {
+        // If 'assets=local' is found, use the local script and set the crossOrigin attribute
+        script.src = 'https://peta-revamped-unsubscribe.test/dist/peta-revamped-unsubscribe.js';
+        // script.crossOrigin = 'anonymous';
+    } else {
+        // If 'assets=local' is not found, use the remote script
+        script.src = `https://acb0a5d73b67fccd4bbe-c2d8138f0ea10a18dd4c43ec3aa4240a.ssl.cf5.rackcdn.com/10003/peta-revamped-unsubscribe.js?v=${timestamp}`;
+    }
+    
+    // Set the type of the script
+    script.type = 'text/javascript';
+    
+    // Append the script element to the head of the document
+    document.head.appendChild(script);
+</script>
+
+<script>
+export const setBodyAttributes = () => {
+  // This function sets custom attributes to the body based on URL and pageJson
+
+  const setBodyAttributes = () => {
+    const url = new URL(window.location.href);
+
+    // If the URL contains any of the specified page IDs, set data-page-context to "new-unsubscribe"
+    if (/48122|49041|52319|53017|55607|48210|48388|49060/.test(url.pathname)) {
+      document.body.setAttribute("data-page-context", "new-unsubscribe");
+    }
+
+    // Assuming `pageJson` is a global variable, if it exists and contains a pageType, set data-page-type to its value
+    if (window.pageJson && window.pageJson.pageType) {
+      document.body.setAttribute("data-page-type", window.pageJson.pageType);
+    }
+  };
+
+  setBodyAttributes();
+};
+</script>
+
+<style>
+    body:not(#en__pagebuilder):not([data-custom-js="loaded"]){
+        opacity: 0;
+    }
+    body[data-custom-js="loaded"]{
+        animation-delay: 1s;
+        animation: fadeInAnimation ease 250ms;
+        animation-iteration-count: 1;
+        animation-fill-mode: forwards;
+    }
+    @keyframes fadeInAnimation {
+        0% {
+            opacity: 0;
+        }
+        100% {
+            opacity: 1;
+        }
+    }
+</style></div>
+</div>
+</div>
+</form><!-- Lightbox BEGIN -->
+<script language="javascript" type="text/javascript" src="https://resources.peta.org/engaging-networks/pages/_shared/js/jquery.magnific-popup.min.js"></script> 
+<script language="javascript" type="text/javascript" src="https://resources.peta.org/engaging-networks/pages/_shared/js/magnific-scripts.js"></script>
+<!-- Lightbox END -->
+
+<script>
+(function(scriptSrc){
+        petaEN.utility.whenAvailable("Promise",function(){
+            var myScript = document.createElement("script");
+            myScript.setAttribute("src", scriptSrc);
+            document.body.appendChild(myScript);
+        });
+
+})("https://resources.peta.org/engaging-networks/pages/peta/js/4site/conversion-rate.js");
+</script>
+
+<script language="javascript" type="text/javascript" src="https://resources.peta.org/engaging-networks/pages/peta/wordpress-theme/js/enscripts.js"></script>
+<script language="javascript" type="text/javascript" src="https://resources.peta.org/engaging-networks/pages/peta/wordpress-theme/js/index-2026.js"></script>
+<script>
+    //PAGE SETUP - BEFORE FORM IS CREATED
+    pageInitialization.afterPageLoad();
+</script>
+<script type="text/javascript" src="https://h.online-metrix.net/fp/tags.js?org_id=e0j3u9ji&session_id=10003-57accbc0c8c84405b8dd5210765e55c0-use2-prd1-web1&pageid=1"></script>
+<noscript>
+<iframe style="width: 100px; height: 100px; border: 0; position: absolute; top: -5000px;" src="https://h.online-metrix.net/tags?org_id=e0j3u9ji&session_id=10003-57accbc0c8c84405b8dd5210765e55c0-use2-prd1-web1&pageid=1"></iframe>
+</noscript>
+</body>
+</html>
+<!-- PE SUB Unsubscribe From E-Mail - 2023 DCF Short Cold GIT:53017:118814:10003:compatibility:false -->

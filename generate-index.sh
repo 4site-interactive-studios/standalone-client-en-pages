@@ -33,7 +33,7 @@ cat > index.html << 'HEADER'
 HEADER
 
 # Find all mirrored HTML pages and generate cards
-find . -path './*/page/*/donate/*.html' ! -name 'index.html' ! -path './.claude/*' ! -path './node_modules/*' | sort | while read -r filepath; do
+find . \( -path './*/page/*/donate/*.html' -o -path './*/page/*/petition/*.html' -o -path './*/page/*/action/*.html' -o -path './*/page/*/data/*.html' -o -path './*/page/*/subscriptions/*.html' -o -path './*/page/*/survey/*.html' \) ! -name 'index.html' ! -path './.claude/*' ! -path './node_modules/*' | sort | while read -r filepath; do
   # Strip leading ./
   relpath="${filepath#./}"
   # Extract org name (first directory)
@@ -46,12 +46,16 @@ find . -path './*/page/*/donate/*.html' ! -name 'index.html' ! -path './.claude/
   origin=$(grep 'rel="canonical"' "$filepath" | grep -o 'href="https://[^/]*' | head -1 | sed 's/href="//')
   [ -z "$origin" ] && origin=$(grep 'og:url' "$filepath" | grep -o 'content="https://[^/]*' | head -1 | sed 's/content="//')
 
+  # Extract page type and number from path
+  pagetype=$(echo "$relpath" | sed "s|.*page/[0-9]*/||;s|/[^/]*$||")
+  pagenum=$(basename "$relpath" .html)
+
   if [ -n "$title" ]; then
     cat >> index.html << CARD
     <div class="card">
       <div class="org">${org}</div>
       <h2><a href="${relpath}">${title}</a></h2>
-      <div class="meta">Page ${pageid} &middot; <a href="${origin}/page/${pageid}/donate/1" target="_blank" rel="noopener">Live page</a></div>
+      <div class="meta">Page ${pageid} &middot; ${pagetype} &middot; <a href="${origin}/page/${pageid}/${pagetype}/${pagenum}" target="_blank" rel="noopener">Live page</a></div>
     </div>
 CARD
   fi
