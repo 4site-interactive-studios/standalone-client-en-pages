@@ -42,9 +42,9 @@ find . -path './*/page/*/donate/*.html' ! -name 'index.html' ! -path './.claude/
   title=$(grep -o '<title>[^<]*</title>' "$filepath" | head -1 | sed 's/<title>//;s/<\/title>//')
   # Extract page ID from path
   pageid=$(echo "$relpath" | grep -o 'page/[0-9]*' | head -1 | cut -d/ -f2)
-  # Extract origin from canonical URL or og:url
-  origin=$(grep -o 'content="https://[^/]*' "$filepath" | head -1 | sed 's/content="//')
-  [ -z "$origin" ] && origin=$(grep -o 'href="https://[^/]*/page/' "$filepath" | head -1 | sed 's|href="||;s|/page/||')
+  # Extract origin from canonical link or og:url (most reliable source for the actual domain)
+  origin=$(grep 'rel="canonical"' "$filepath" | grep -o 'href="https://[^/]*' | head -1 | sed 's/href="//')
+  [ -z "$origin" ] && origin=$(grep 'og:url' "$filepath" | grep -o 'content="https://[^/]*' | head -1 | sed 's/content="//')
 
   if [ -n "$title" ]; then
     cat >> index.html << CARD
