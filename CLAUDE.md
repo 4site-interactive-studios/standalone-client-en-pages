@@ -110,6 +110,28 @@ npx serve . -l 8080
 
 A launch config exists at `.claude/launch.json` for the preview server.
 
+## Landing Page
+
+After adding a new page, **always regenerate the landing page**:
+
+```bash
+./generate-index.sh
+```
+
+This scans for all `*/page/*/donate/*.html` files and generates `index.html` with cards linking to each mirrored page. The landing page is served at `http://localhost:8080/`.
+
+## Fetching HTML from Cloudflare-Protected Sites
+
+EN pages are behind Cloudflare, so curl won't work. Use browser automation:
+
+1. Navigate to the page in Chrome
+2. Fetch the HTML via JS: `fetch(location.href).then(r => r.text())`
+3. Transfer it locally. Methods that work (in order of preference):
+   - **data: URI download**: `a.href = 'data:application/octet-stream;base64,' + btoa(...)` with `a.download`
+   - **Temp Node server + sendBeacon/form POST**: Start a local Node HTTP server and POST the HTML to it from the page
+   - **navigator.sendBeacon** to localhost (may be blocked by CSP)
+4. Some pages have strict CSP that blocks outbound requests to localhost. The data URI download approach usually works regardless of CSP.
+
 ## Gotchas & Lessons Learned
 
 1. **Cloudflare blocks curl** — EN pages are behind Cloudflare. Use browser automation or view-source to fetch HTML/pagedata.
