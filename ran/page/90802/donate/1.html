@@ -104,10 +104,14 @@ window.__cachedPageData = {"firstName":null,"lastName":null,"country":null,"amou
 (function() {
   var _open = XMLHttpRequest.prototype.open;
   var _send = XMLHttpRequest.prototype.send;
+  var _setRequestHeader = XMLHttpRequest.prototype.setRequestHeader;
   XMLHttpRequest.prototype.open = function(method, url) {
     this.__pagedata = (typeof url === 'string' && url.indexOf('/pagedata') !== -1);
     this.__method = method;
     if (!this.__pagedata) return _open.apply(this, arguments);
+  };
+  XMLHttpRequest.prototype.setRequestHeader = function() {
+    if (!this.__pagedata) return _setRequestHeader.apply(this, arguments);
   };
   XMLHttpRequest.prototype.send = function(data) {
     if (!this.__pagedata) return _send.apply(this, arguments);
