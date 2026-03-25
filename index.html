@@ -63,6 +63,13 @@
     .list-view .list-note { font-size: 0.82rem; color: #888; font-style: italic; }
     .list-view .demo-badge { font-size: 0.55rem; vertical-align: middle; }
 
+    /* Filter notice banner */
+    .filter-notice { display: flex; align-items: center; gap: 0.75rem; background: #e3f2fd; border: 1px solid #90caf9; border-radius: 8px; padding: 0.65rem 1rem; margin-bottom: 1.25rem; font-size: 0.85rem; color: #1565c0; }
+    .filter-notice .notice-btn { padding: 0.25rem 0.75rem; border-radius: 4px; border: 1px solid #1a73e8; background: #1a73e8; color: #fff; font-size: 0.78rem; cursor: pointer; white-space: nowrap; }
+    .filter-notice .notice-btn:hover { background: #1557b0; }
+    .filter-notice .notice-close { background: none; border: none; font-size: 1.2rem; cursor: pointer; color: #1565c0; padding: 0 0.25rem; margin-left: auto; line-height: 1; }
+    .filter-notice .notice-close:hover { color: #0d47a1; }
+
     /* Toggle visibility */
     .grid-view { display: grid; }
     .grid-view.hidden-view { display: none; }
@@ -272,33 +279,71 @@
     <div class="no-results">No pages match the selected filters.</div>
   </div>
 
+  <div class="filter-notice" id="filter-notice" style="display:none">
+    <span id="filter-notice-text"></span>
+    <button class="notice-btn" id="notice-reset">Show All</button>
+    <button class="notice-close" id="notice-close">&times;</button>
+  </div>
+
   <script>
   (function() {
-    // View toggle
     var listView = document.querySelector('.list-view');
     var gridView = document.querySelector('.grid-view');
-    document.querySelector('.view-toggle').addEventListener('click', function(e) {
-      var btn = e.target.closest('.view-btn');
-      if (!btn) return;
-      document.querySelectorAll('.view-btn').forEach(function(b) { b.classList.remove('active'); });
-      btn.classList.add('active');
-      if (btn.dataset.view === 'list') {
+    var cards = document.querySelectorAll('.card');
+    var listOrgs = document.querySelectorAll('.list-org');
+    var totalPages = cards.length;
+    var notice = document.getElementById('filter-notice');
+    var noticeText = document.getElementById('filter-notice-text');
+    var activeView = 'list';
+    var activeOrg = 'all', activeType = 'all', activeStatus = 'all';
+    var fromUrl = false;
+
+    // --- URL state ---
+    function readUrl() {
+      var p = new URLSearchParams(location.search);
+      activeView = p.get('view') || 'list';
+      activeOrg = p.get('org') || 'all';
+      activeType = p.get('type') || 'all';
+      activeStatus = p.get('status') || 'all';
+      fromUrl = p.has('org') || p.has('type') || p.has('status');
+    }
+
+    function writeUrl() {
+      var p = new URLSearchParams();
+      if (activeView !== 'list') p.set('view', activeView);
+      if (activeOrg !== 'all') p.set('org', activeOrg);
+      if (activeType !== 'all') p.set('type', activeType);
+      if (activeStatus !== 'all') p.set('status', activeStatus);
+      var qs = p.toString();
+      var url = location.pathname + (qs ? '?' + qs : '');
+      history.replaceState(null, '', url);
+    }
+
+    // --- View toggle ---
+    function setView(view) {
+      activeView = view;
+      document.querySelectorAll('.view-btn').forEach(function(b) {
+        b.classList.toggle('active', b.dataset.view === view);
+      });
+      if (view === 'list') {
         listView.classList.add('active');
         gridView.classList.add('hidden-view');
       } else {
         listView.classList.remove('active');
         gridView.classList.remove('hidden-view');
       }
+    }
+
+    document.querySelector('.view-toggle').addEventListener('click', function(e) {
+      var btn = e.target.closest('.view-btn');
+      if (!btn) return;
+      setView(btn.dataset.view);
+      writeUrl();
     });
 
-    // Build filter buttons from card data attributes
-    var cards = document.querySelectorAll('.card');
-    var listOrgs = document.querySelectorAll('.list-org');
+    // --- Build filter buttons ---
     var orgs = new Set(), types = new Set();
-    cards.forEach(function(c) {
-      orgs.add(c.dataset.org);
-      types.add(c.dataset.type);
-    });
+    cards.forEach(function(c) { orgs.add(c.dataset.org); types.add(c.dataset.type); });
     var orgGroup = document.getElementById('org-filters');
     Array.from(orgs).sort().forEach(function(o) {
       var btn = document.createElement('button');
@@ -318,11 +363,19 @@
       typeGroup.appendChild(btn);
     });
 
-    // Filter state
-    var activeOrg = 'all', activeType = 'all', activeStatus = 'all';
+    // --- Sync button active states ---
+    function syncButtons() {
+      document.querySelectorAll('.filter-btn').forEach(function(b) {
+        var f = b.dataset.filter, v = b.dataset.value;
+        var active = (f === 'org' && v === activeOrg) ||
+                     (f === 'type' && v === activeType) ||
+                     (f === 'status' && v === activeStatus);
+        b.classList.toggle('active', active);
+      });
+    }
 
+    // --- Apply filters ---
     function applyFilters() {
-      // Filter grid cards
       var visible = 0;
       cards.forEach(function(c) {
         var matchOrg = activeOrg === 'all' || c.dataset.org === activeOrg;
@@ -337,12 +390,9 @@
         }
       });
 
-      // Filter list view bullets and org cards
       listOrgs.forEach(function(li) {
         var matchOrg = activeOrg === 'all' || li.dataset.org === activeOrg;
         if (!matchOrg) { li.classList.add('hidden'); return; }
-
-        // Filter individual page bullets within this org
         var bullets = li.querySelectorAll('ul.list-pages li');
         var anyVisible = false;
         bullets.forEach(function(b) {
@@ -363,31 +413,53 @@
             b.style.display = 'none';
           }
         });
-
-        if (anyVisible) {
-          li.classList.remove('hidden');
-        } else {
-          li.classList.add('hidden');
-        }
+        li.classList.toggle('hidden', !anyVisible);
       });
+
       var nr = document.querySelector('.no-results');
-      if (visible === 0) nr.classList.add('visible');
-      else nr.classList.remove('visible');
+      nr.classList.toggle('visible', visible === 0);
+
+      // Show notice if filtered via URL
+      var isFiltered = activeOrg !== 'all' || activeType !== 'all' || activeStatus !== 'all';
+      if (isFiltered && fromUrl) {
+        noticeText.textContent = 'Filtered view: showing ' + visible + ' of ' + totalPages + ' pages.';
+        notice.style.display = '';
+      } else {
+        notice.style.display = 'none';
+      }
     }
 
+    // --- Filter clicks ---
     document.addEventListener('click', function(e) {
       var btn = e.target.closest('.filter-btn');
       if (!btn) return;
-      var filter = btn.dataset.filter;
-      var value = btn.dataset.value;
-      var group = btn.parentElement;
-      group.querySelectorAll('.filter-btn').forEach(function(b) { b.classList.remove('active'); });
-      btn.classList.add('active');
-      if (filter === 'org') activeOrg = value;
-      if (filter === 'type') activeType = value;
-      if (filter === 'status') activeStatus = value;
+      fromUrl = false;
+      var f = btn.dataset.filter, v = btn.dataset.value;
+      if (f === 'org') activeOrg = v;
+      if (f === 'type') activeType = v;
+      if (f === 'status') activeStatus = v;
+      syncButtons();
       applyFilters();
+      writeUrl();
     });
+
+    // --- Notice buttons ---
+    document.getElementById('notice-reset').addEventListener('click', function() {
+      fromUrl = false;
+      activeOrg = 'all'; activeType = 'all'; activeStatus = 'all';
+      syncButtons();
+      applyFilters();
+      writeUrl();
+    });
+    document.getElementById('notice-close').addEventListener('click', function() {
+      notice.style.display = 'none';
+    });
+
+    // --- Init from URL ---
+    readUrl();
+    setView(activeView);
+    syncButtons();
+    applyFilters();
   })();
   </script>
 </body>
