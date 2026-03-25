@@ -22,7 +22,7 @@ PAGE_TYPE_LABELS = {
     "subscription": "Subscription Management",
 }
 
-def get_link_label(title, pagetype, layout, is_multistep):
+def get_link_label(title, pagetype, layout, is_multistep, has_dtd=False):
     """Generate a short descriptive link label like the markdown examples."""
     pt = PAGE_TYPE_LABELS.get(pagetype, pagetype.title() if pagetype else "Page")
 
@@ -53,6 +53,9 @@ def get_link_label(title, pagetype, layout, is_multistep):
         label = "Subscription Management"
     if "survey" in pagetype:
         label = "Survey"
+
+    if has_dtd:
+        label += " with Double the Donation"
 
     return label
 
@@ -88,6 +91,9 @@ def extract_page_info(filepath):
 
     # Multistep
     info["is_multistep"] = bool(re.search(r'multistep-stepper', html))
+
+    # Double the Donation
+    info["has_dtd"] = bool(re.search(r'dd360search', html))
 
     # Origin
     m = re.search(r'rel="canonical"[^>]*href="(https://[^/"]*)', html)
@@ -145,7 +151,7 @@ def find_all_pages():
             info["pageid"] = pageid
 
         info["link_label"] = get_link_label(
-            info["title"], info["pagetype_raw"], info["layout"], info["is_multistep"]
+            info["title"], info["pagetype_raw"], info["layout"], info["is_multistep"], info["has_dtd"]
         )
 
         pages.append(info)
