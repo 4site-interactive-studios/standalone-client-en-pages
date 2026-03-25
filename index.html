@@ -8,101 +8,190 @@
     * { box-sizing: border-box; margin: 0; padding: 0; }
     body { font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif; background: #f5f5f5; color: #333; padding: 2rem; }
     h1 { margin-bottom: 0.5rem; font-size: 1.75rem; }
-    p.subtitle { color: #666; margin-bottom: 2rem; }
+    p.subtitle { color: #666; margin-bottom: 1.5rem; }
+    .filters { display: flex; flex-wrap: wrap; gap: 0.5rem; margin-bottom: 1.5rem; }
+    .filters label { font-size: 0.8rem; font-weight: 600; color: #555; padding-top: 0.4rem; margin-right: 0.25rem; }
+    .filter-group { display: flex; flex-wrap: wrap; gap: 0.35rem; align-items: center; }
+    .filter-group + .filter-group { margin-left: 1.5rem; }
+    .filter-btn { padding: 0.3rem 0.7rem; border-radius: 999px; border: 1px solid #ddd; background: #fff; font-size: 0.78rem; cursor: pointer; color: #555; transition: all 0.15s; }
+    .filter-btn:hover { border-color: #aaa; }
+    .filter-btn.active { background: #1a73e8; color: #fff; border-color: #1a73e8; }
     .grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(320px, 1fr)); gap: 1.5rem; }
     .card { background: #fff; border-radius: 8px; padding: 1.5rem; box-shadow: 0 1px 3px rgba(0,0,0,0.1); transition: box-shadow 0.2s; }
     .card:hover { box-shadow: 0 4px 12px rgba(0,0,0,0.15); }
-    .card .org { text-transform: uppercase; font-size: 0.75rem; font-weight: 600; color: #888; letter-spacing: 0.05em; margin-bottom: 0.5rem; }
+    .card.hidden { display: none; }
+    .card .org { display: flex; align-items: center; gap: 0.4rem; text-transform: uppercase; font-size: 0.75rem; font-weight: 600; color: #888; letter-spacing: 0.05em; margin-bottom: 0.5rem; }
+    .card .org img.favicon { width: 16px; height: 16px; border-radius: 2px; flex-shrink: 0; }
+    .card .type-badge { display: inline-block; font-size: 0.65rem; font-weight: 600; text-transform: uppercase; letter-spacing: 0.04em; padding: 0.15rem 0.5rem; border-radius: 999px; margin-left: 0.5rem; }
+    .card .type-badge.donate { background: #e8f5e9; color: #2e7d32; }
+    .card .type-badge.petition { background: #e3f2fd; color: #1565c0; }
+    .card .type-badge.action { background: #fff3e0; color: #e65100; }
+    .card .type-badge.data { background: #f3e5f5; color: #7b1fa2; }
+    .card .type-badge.subscriptions { background: #fce4ec; color: #c62828; }
+    .card .type-badge.survey { background: #e0f7fa; color: #00695c; }
     .card h2 { font-size: 1.1rem; margin-bottom: 0.75rem; line-height: 1.3; }
     .card h2 a { color: #1a73e8; text-decoration: none; }
     .card h2 a:hover { text-decoration: underline; }
     .card .meta { font-size: 0.8rem; color: #999; }
+    .card .meta a { color: #999; }
+    .card .meta a:hover { color: #1a73e8; }
+    .no-results { display: none; grid-column: 1 / -1; text-align: center; padding: 3rem; color: #999; font-size: 1rem; }
+    .no-results.visible { display: block; }
   </style>
 </head>
 <body>
   <h1>Standalone EN Pages</h1>
-  <p class="subtitle">Local mirrors of Engaging Networks donation pages for development and testing.</p>
-  <div class="grid">
-    <div class="card">
-      <div class="org">aiusa</div>
-      <h2><a href="aiusa/page/137174/action/1.html">Amnesty International USA | Amnesty International USA</a></h2>
-      <div class="meta">Page 137174 &middot; action &middot; <a href="https://act.amnestyusa.org/page/137174/action/1" target="_blank" rel="noopener">Live page</a></div>
+  <p class="subtitle">Local mirrors of Engaging Networks pages for development and testing.</p>
+  <div class="filters">
+    <div class="filter-group" id="org-filters">
+      <label>Client:</label>
+      <button class="filter-btn active" data-filter="org" data-value="all">All</button>
     </div>
-    <div class="card">
-      <div class="org">aiusa</div>
-      <h2><a href="aiusa/page/92978/donate/1.html">Amnesty International USA | Amnesty International USA</a></h2>
-      <div class="meta">Page 92978 &middot; donate &middot; <a href="https://donate.amnestyusa.org/page/92978/donate/1" target="_blank" rel="noopener">Live page</a></div>
-    </div>
-    <div class="card">
-      <div class="org">nwf</div>
-      <h2><a href="nwf/page/58307/donate/1.html">Help Protect America's Wildlife! | National Wildlife Federation</a></h2>
-      <div class="meta">Page 58307 &middot; donate &middot; <a href="https://support.nwf.org/page/58307/donate/1" target="_blank" rel="noopener">Live page</a></div>
-    </div>
-    <div class="card">
-      <div class="org">oceana</div>
-      <h2><a href="oceana/page/138576/petition/1.html">Take Action and Tell Drink Companies to Refill Again | Oceana | OCEANA - Protecting the World's Oceans</a></h2>
-      <div class="meta">Page 138576 &middot; petition &middot; <a href="https://act.oceana.org/page/138576/petition/1" target="_blank" rel="noopener">Live page</a></div>
-    </div>
-    <div class="card">
-      <div class="org">oceana</div>
-      <h2><a href="oceana/page/141584/donate/1.html">Donate to Oceana | Ocean Conservation Nonprofit | OCEANA - Protecting the World's Oceans</a></h2>
-      <div class="meta">Page 141584 &middot; donate &middot; <a href="https://act.oceana.org/page/141584/donate/1" target="_blank" rel="noopener">Live page</a></div>
-    </div>
-    <div class="card">
-      <div class="org">oceanconservancy</div>
-      <h2><a href="oceanconservancy/page/178857/donate/1.html">Protect Our Ocean | Ocean Conservancy</a></h2>
-      <div class="meta">Page 178857 &middot; donate &middot; <a href="https://donate.oceanconservancy.org/page/178857/donate/1" target="_blank" rel="noopener">Live page</a></div>
-    </div>
-    <div class="card">
-      <div class="org">oxfam</div>
-      <h2><a href="oxfam/page/20905/donate/1.html">Donate Now | Oxfam Canada</a></h2>
-      <div class="meta">Page 20905 &middot; donate &middot; <a href="https://secured.oxfam.ca/page/20905/donate/1" target="_blank" rel="noopener">Live page</a></div>
-    </div>
-    <div class="card">
-      <div class="org">peta</div>
-      <h2><a href="peta/page/53017/subscriptions/1.html">Manage Your E-Mail Subscriptions | PETA</a></h2>
-      <div class="meta">Page 53017 &middot; subscriptions &middot; <a href="https://support.peta.org/page/53017/subscriptions/1" target="_blank" rel="noopener">Live page</a></div>
-    </div>
-    <div class="card">
-      <div class="org">ran</div>
-      <h2><a href="ran/page/57120/petition/1.html">Sign the Petition: Protect Critical Rainforests Now! | Rainforest Action Network - Fighting for People and Planet</a></h2>
-      <div class="meta">Page 57120 &middot; petition &middot; <a href="https://act.ran.org/page/57120/petition/1" target="_blank" rel="noopener">Live page</a></div>
-    </div>
-    <div class="card">
-      <div class="org">ran</div>
-      <h2><a href="ran/page/90802/donate/1.html">Donate Now and Help Protect the Planet | Rainforest Action Network - Fighting for People and Planet</a></h2>
-      <div class="meta">Page 90802 &middot; donate &middot; <a href="https://act.ran.org/page/90802/donate/1" target="_blank" rel="noopener">Live page</a></div>
-    </div>
-    <div class="card">
-      <div class="org">shatterproof</div>
-      <h2><a href="shatterproof/page/92701/donate/1.html">Recovery changes everything | Shatterproof - Reversing the Addiction Crisis in the U.S.</a></h2>
-      <div class="meta">Page 92701 &middot; donate &middot; <a href="https://donate.shatterproof.org/page/92701/donate/1" target="_blank" rel="noopener">Live page</a></div>
-    </div>
-    <div class="card">
-      <div class="org">tnc</div>
-      <h2><a href="tnc/page/111595/data/1.html">Download the Free Nature Getaways Guide | The Nature Conservancy</a></h2>
-      <div class="meta">Page 111595 &middot; data &middot; <a href="https://preserve.nature.org/page/111595/data/1" target="_blank" rel="noopener">Live page</a></div>
-    </div>
-    <div class="card">
-      <div class="org">tnc</div>
-      <h2><a href="tnc/page/80429/donate/1.html">Donate Now to Protect Nature | The Nature Conservancy</a></h2>
-      <div class="meta">Page 80429 &middot; donate &middot; <a href="https://preserve.nature.org/page/80429/donate/1" target="_blank" rel="noopener">Live page</a></div>
-    </div>
-    <div class="card">
-      <div class="org">wwf</div>
-      <h2><a href="wwf/page/64200/petition/1.html">${page~title} | World Wildlife Fund</a></h2>
-      <div class="meta">Page 64200 &middot; petition &middot; <a href="/page/64200/petition/1" target="_blank" rel="noopener">Live page</a></div>
-    </div>
-    <div class="card">
-      <div class="org">wwf</div>
-      <h2><a href="wwf/page/65220/donate/1.html">Donate + Protect Nature | World Wildlife Fund</a></h2>
-      <div class="meta">Page 65220 &middot; donate &middot; <a href="https://protect.worldwildlife.org/page/65220/donate/1" target="_blank" rel="noopener">Live page</a></div>
-    </div>
-    <div class="card">
-      <div class="org">wwf</div>
-      <h2><a href="wwf/page/92206/donate/1.html">Donate + Protect Nature | World Wildlife Fund</a></h2>
-      <div class="meta">Page 92206 &middot; donate &middot; <a href="https://protect.worldwildlife.org/page/92206/donate/1" target="_blank" rel="noopener">Live page</a></div>
+    <div class="filter-group" id="type-filters">
+      <label>Type:</label>
+      <button class="filter-btn active" data-filter="type" data-value="all">All</button>
     </div>
   </div>
+  <div class="grid">
+    <div class="card" data-org="aiusa" data-type="action">
+      <div class="org"><img class="favicon" src="https://www.google.com/s2/favicons?domain=act.amnestyusa.org&sz=32" alt="" onerror="this.style.display='none'">aiusa<span class="type-badge action">action</span></div>
+      <h2><a href="aiusa/page/137174/action/1.html">Amnesty International USA | Amnesty International USA</a></h2>
+      <div class="meta">Page 137174 &middot; <a href="https://act.amnestyusa.org/page/137174/action/1" target="_blank" rel="noopener">Live page ↗</a></div>
+    </div>
+    <div class="card" data-org="aiusa" data-type="donate">
+      <div class="org"><img class="favicon" src="https://www.google.com/s2/favicons?domain=donate.amnestyusa.org&sz=32" alt="" onerror="this.style.display='none'">aiusa<span class="type-badge donate">donate</span></div>
+      <h2><a href="aiusa/page/92978/donate/1.html">Amnesty International USA | Amnesty International USA</a></h2>
+      <div class="meta">Page 92978 &middot; <a href="https://donate.amnestyusa.org/page/92978/donate/1" target="_blank" rel="noopener">Live page ↗</a></div>
+    </div>
+    <div class="card" data-org="nwf" data-type="donate">
+      <div class="org"><img class="favicon" src="https://www.google.com/s2/favicons?domain=support.nwf.org&sz=32" alt="" onerror="this.style.display='none'">nwf<span class="type-badge donate">donate</span></div>
+      <h2><a href="nwf/page/58307/donate/1.html">Help Protect America's Wildlife! | National Wildlife Federation</a></h2>
+      <div class="meta">Page 58307 &middot; <a href="https://support.nwf.org/page/58307/donate/1" target="_blank" rel="noopener">Live page ↗</a></div>
+    </div>
+    <div class="card" data-org="oceana" data-type="petition">
+      <div class="org"><img class="favicon" src="https://www.google.com/s2/favicons?domain=act.oceana.org&sz=32" alt="" onerror="this.style.display='none'">oceana<span class="type-badge petition">petition</span></div>
+      <h2><a href="oceana/page/138576/petition/1.html">Take Action and Tell Drink Companies to Refill Again | Oceana | OCEANA - Protecting the World's Oceans</a></h2>
+      <div class="meta">Page 138576 &middot; <a href="https://act.oceana.org/page/138576/petition/1" target="_blank" rel="noopener">Live page ↗</a></div>
+    </div>
+    <div class="card" data-org="oceana" data-type="donate">
+      <div class="org"><img class="favicon" src="https://www.google.com/s2/favicons?domain=act.oceana.org&sz=32" alt="" onerror="this.style.display='none'">oceana<span class="type-badge donate">donate</span></div>
+      <h2><a href="oceana/page/141584/donate/1.html">Donate to Oceana | Ocean Conservation Nonprofit | OCEANA - Protecting the World's Oceans</a></h2>
+      <div class="meta">Page 141584 &middot; <a href="https://act.oceana.org/page/141584/donate/1" target="_blank" rel="noopener">Live page ↗</a></div>
+    </div>
+    <div class="card" data-org="oxfam" data-type="donate">
+      <div class="org"><img class="favicon" src="https://www.google.com/s2/favicons?domain=secured.oxfam.ca&sz=32" alt="" onerror="this.style.display='none'">oxfam<span class="type-badge donate">donate</span></div>
+      <h2><a href="oxfam/page/20905/donate/1.html">Donate Now | Oxfam Canada</a></h2>
+      <div class="meta">Page 20905 &middot; <a href="https://secured.oxfam.ca/page/20905/donate/1" target="_blank" rel="noopener">Live page ↗</a></div>
+    </div>
+    <div class="card" data-org="peta" data-type="subscriptions">
+      <div class="org"><img class="favicon" src="https://www.google.com/s2/favicons?domain=support.peta.org&sz=32" alt="" onerror="this.style.display='none'">peta<span class="type-badge subscriptions">subscriptions</span></div>
+      <h2><a href="peta/page/53017/subscriptions/1.html">Manage Your E-Mail Subscriptions | PETA</a></h2>
+      <div class="meta">Page 53017 &middot; <a href="https://support.peta.org/page/53017/subscriptions/1" target="_blank" rel="noopener">Live page ↗</a></div>
+    </div>
+    <div class="card" data-org="ran" data-type="petition">
+      <div class="org"><img class="favicon" src="https://www.google.com/s2/favicons?domain=act.ran.org&sz=32" alt="" onerror="this.style.display='none'">ran<span class="type-badge petition">petition</span></div>
+      <h2><a href="ran/page/57120/petition/1.html">Sign the Petition: Protect Critical Rainforests Now! | Rainforest Action Network - Fighting for People and Planet</a></h2>
+      <div class="meta">Page 57120 &middot; <a href="https://act.ran.org/page/57120/petition/1" target="_blank" rel="noopener">Live page ↗</a></div>
+    </div>
+    <div class="card" data-org="ran" data-type="donate">
+      <div class="org"><img class="favicon" src="https://www.google.com/s2/favicons?domain=act.ran.org&sz=32" alt="" onerror="this.style.display='none'">ran<span class="type-badge donate">donate</span></div>
+      <h2><a href="ran/page/90802/donate/1.html">Donate Now and Help Protect the Planet | Rainforest Action Network - Fighting for People and Planet</a></h2>
+      <div class="meta">Page 90802 &middot; <a href="https://act.ran.org/page/90802/donate/1" target="_blank" rel="noopener">Live page ↗</a></div>
+    </div>
+    <div class="card" data-org="shatterproof" data-type="donate">
+      <div class="org"><img class="favicon" src="https://www.google.com/s2/favicons?domain=donate.shatterproof.org&sz=32" alt="" onerror="this.style.display='none'">shatterproof<span class="type-badge donate">donate</span></div>
+      <h2><a href="shatterproof/page/92701/donate/1.html">Recovery changes everything | Shatterproof - Reversing the Addiction Crisis in the U.S.</a></h2>
+      <div class="meta">Page 92701 &middot; <a href="https://donate.shatterproof.org/page/92701/donate/1" target="_blank" rel="noopener">Live page ↗</a></div>
+    </div>
+    <div class="card" data-org="tnc" data-type="data">
+      <div class="org"><img class="favicon" src="https://www.google.com/s2/favicons?domain=preserve.nature.org&sz=32" alt="" onerror="this.style.display='none'">tnc<span class="type-badge data">data</span></div>
+      <h2><a href="tnc/page/111595/data/1.html">Download the Free Nature Getaways Guide | The Nature Conservancy</a></h2>
+      <div class="meta">Page 111595 &middot; <a href="https://preserve.nature.org/page/111595/data/1" target="_blank" rel="noopener">Live page ↗</a></div>
+    </div>
+    <div class="card" data-org="tnc" data-type="donate">
+      <div class="org"><img class="favicon" src="https://www.google.com/s2/favicons?domain=preserve.nature.org&sz=32" alt="" onerror="this.style.display='none'">tnc<span class="type-badge donate">donate</span></div>
+      <h2><a href="tnc/page/80429/donate/1.html">Donate Now to Protect Nature | The Nature Conservancy</a></h2>
+      <div class="meta">Page 80429 &middot; <a href="https://preserve.nature.org/page/80429/donate/1" target="_blank" rel="noopener">Live page ↗</a></div>
+    </div>
+    <div class="card" data-org="wwf" data-type="petition">
+      <div class="org"><img class="favicon" src="" alt="" onerror="this.style.display='none'">wwf<span class="type-badge petition">petition</span></div>
+      <h2><a href="wwf/page/64200/petition/1.html">${page~title} | World Wildlife Fund</a></h2>
+      <div class="meta">Page 64200 &middot; <a href="/page/64200/petition/1" target="_blank" rel="noopener">Live page ↗</a></div>
+    </div>
+    <div class="card" data-org="wwf" data-type="donate">
+      <div class="org"><img class="favicon" src="https://www.google.com/s2/favicons?domain=protect.worldwildlife.org&sz=32" alt="" onerror="this.style.display='none'">wwf<span class="type-badge donate">donate</span></div>
+      <h2><a href="wwf/page/65220/donate/1.html">Donate + Protect Nature | World Wildlife Fund</a></h2>
+      <div class="meta">Page 65220 &middot; <a href="https://protect.worldwildlife.org/page/65220/donate/1" target="_blank" rel="noopener">Live page ↗</a></div>
+    </div>
+    <div class="card" data-org="wwf" data-type="donate">
+      <div class="org"><img class="favicon" src="https://www.google.com/s2/favicons?domain=protect.worldwildlife.org&sz=32" alt="" onerror="this.style.display='none'">wwf<span class="type-badge donate">donate</span></div>
+      <h2><a href="wwf/page/92206/donate/1.html">Donate + Protect Nature | World Wildlife Fund</a></h2>
+      <div class="meta">Page 92206 &middot; <a href="https://protect.worldwildlife.org/page/92206/donate/1" target="_blank" rel="noopener">Live page ↗</a></div>
+    </div>
+    <div class="no-results">No pages match the selected filters.</div>
+  </div>
+  <script>
+  (function() {
+    // Build filter buttons from card data attributes
+    var cards = document.querySelectorAll('.card');
+    var orgs = new Set(), types = new Set();
+    cards.forEach(function(c) {
+      orgs.add(c.dataset.org);
+      types.add(c.dataset.type);
+    });
+    var orgGroup = document.getElementById('org-filters');
+    Array.from(orgs).sort().forEach(function(o) {
+      var btn = document.createElement('button');
+      btn.className = 'filter-btn';
+      btn.dataset.filter = 'org';
+      btn.dataset.value = o;
+      btn.textContent = o.toUpperCase();
+      orgGroup.appendChild(btn);
+    });
+    var typeGroup = document.getElementById('type-filters');
+    Array.from(types).sort().forEach(function(t) {
+      var btn = document.createElement('button');
+      btn.className = 'filter-btn';
+      btn.dataset.filter = 'type';
+      btn.dataset.value = t;
+      btn.textContent = t;
+      typeGroup.appendChild(btn);
+    });
+
+    // Filter state
+    var activeOrg = 'all', activeType = 'all';
+
+    function applyFilters() {
+      var visible = 0;
+      cards.forEach(function(c) {
+        var matchOrg = activeOrg === 'all' || c.dataset.org === activeOrg;
+        var matchType = activeType === 'all' || c.dataset.type === activeType;
+        if (matchOrg && matchType) {
+          c.classList.remove('hidden');
+          visible++;
+        } else {
+          c.classList.add('hidden');
+        }
+      });
+      var nr = document.querySelector('.no-results');
+      if (visible === 0) nr.classList.add('visible');
+      else nr.classList.remove('visible');
+    }
+
+    document.addEventListener('click', function(e) {
+      var btn = e.target.closest('.filter-btn');
+      if (!btn) return;
+      var filter = btn.dataset.filter;
+      var value = btn.dataset.value;
+      // Update active state in that group
+      var group = btn.parentElement;
+      group.querySelectorAll('.filter-btn').forEach(function(b) { b.classList.remove('active'); });
+      btn.classList.add('active');
+      if (filter === 'org') activeOrg = value;
+      if (filter === 'type') activeType = value;
+      applyFilters();
+    });
+  })();
+  </script>
 </body>
 </html>
