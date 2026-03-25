@@ -214,10 +214,22 @@ def generate_list_html(pages):
     return "\n".join(lines)
 
 
+def build_org_label_map():
+    """Build a JS-embeddable map of org key -> short filter label."""
+    labels = {}
+    for key, config in ORG_CONFIG.items():
+        name = config.get("name", key.upper())
+        # Extract abbreviation in parens if present, otherwise use full name
+        m = re.search(r'\(([^)]+)\)', name)
+        labels[key] = m.group(1) if m else name
+    return json.dumps(labels)
+
+
 def main():
     pages = find_all_pages()
     cards_html = "\n".join(generate_card_html(p) for p in pages)
     list_html = generate_list_html(pages)
+    org_labels_json = build_org_label_map()
 
     html = f"""<!DOCTYPE html>
 <html lang="en">
@@ -395,6 +407,7 @@ def main():
     }});
 
     // --- Build filter buttons ---
+    var orgLabels = {org_labels_json};
     var orgs = new Set(), types = new Set();
     cards.forEach(function(c) {{ orgs.add(c.dataset.org); types.add(c.dataset.type); }});
     var orgGroup = document.getElementById('org-filters');
@@ -403,7 +416,7 @@ def main():
       btn.className = 'filter-btn';
       btn.dataset.filter = 'org';
       btn.dataset.value = o;
-      btn.textContent = o.toUpperCase();
+      btn.textContent = orgLabels[o] || o.toUpperCase();
       orgGroup.appendChild(btn);
     }});
     var typeGroup = document.getElementById('type-filters');
@@ -472,9 +485,9 @@ def main():
       var nr = document.querySelector('.no-results');
       nr.classList.toggle('visible', visible === 0);
 
-      // Show notice if filtered via URL
+      // Show notice whenever results are filtered
       var isFiltered = activeOrg !== 'all' || activeType !== 'all' || activeStatus !== 'all';
-      if (isFiltered && fromUrl) {{
+      if (isFiltered) {{
         noticeText.textContent = 'Filtered view: showing ' + visible + ' of ' + totalPages + ' pages.';
         notice.style.display = '';
       }} else {{

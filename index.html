@@ -341,6 +341,7 @@
     });
 
     // --- Build filter buttons ---
+    var orgLabels = {"aiusa": "AIUSA", "nwf": "NWF", "nwfactionfund": "NWF Action Fund", "oceana": "Oceana", "oxfam": "Oxfam Canada", "peta": "PETA", "ran": "RAN", "shatterproof": "Shatterproof", "tnc": "TNC", "wwf": "WWF"};
     var orgs = new Set(), types = new Set();
     cards.forEach(function(c) { orgs.add(c.dataset.org); types.add(c.dataset.type); });
     var orgGroup = document.getElementById('org-filters');
@@ -349,7 +350,7 @@
       btn.className = 'filter-btn';
       btn.dataset.filter = 'org';
       btn.dataset.value = o;
-      btn.textContent = o.toUpperCase();
+      btn.textContent = orgLabels[o] || o.toUpperCase();
       orgGroup.appendChild(btn);
     });
     var typeGroup = document.getElementById('type-filters');
@@ -418,9 +419,9 @@
       var nr = document.querySelector('.no-results');
       nr.classList.toggle('visible', visible === 0);
 
-      // Show notice if filtered via URL
+      // Show notice whenever results are filtered
       var isFiltered = activeOrg !== 'all' || activeType !== 'all' || activeStatus !== 'all';
-      if (isFiltered && fromUrl) {
+      if (isFiltered) {
         noticeText.textContent = 'Filtered view: showing ' + visible + ' of ' + totalPages + ' pages.';
         notice.style.display = '';
       } else {
