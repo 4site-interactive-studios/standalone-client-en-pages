@@ -322,6 +322,12 @@ def main():
     </div>
   </div>
 
+  <div class="filter-notice" id="filter-notice" style="display:none">
+    <span id="filter-notice-text"></span>
+    <button class="notice-btn" id="notice-reset">Show All</button>
+    <button class="notice-close" id="notice-close">&times;</button>
+  </div>
+
   <div class="list-view active">
     <ul>
 {list_html}
@@ -331,12 +337,6 @@ def main():
   <div class="grid grid-view hidden-view">
 {cards_html}
     <div class="no-results">No pages match the selected filters.</div>
-  </div>
-
-  <div class="filter-notice" id="filter-notice" style="display:none">
-    <span id="filter-notice-text"></span>
-    <button class="notice-btn" id="notice-reset">Show All</button>
-    <button class="notice-close" id="notice-close">&times;</button>
   </div>
 
   <script>
