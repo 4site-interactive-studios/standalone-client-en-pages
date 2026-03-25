@@ -167,7 +167,7 @@ def generate_card_html(page):
 
 
 def generate_list_html(pages):
-    """Generate the markdown-style list view grouped by org."""
+    """Generate the markdown-style list view grouped by org with bullet sub-items."""
     grouped = defaultdict(list)
     for p in pages:
         grouped[p["org"]].append(p)
@@ -186,22 +186,26 @@ def generate_list_html(pages):
             if fav_url:
                 favicon = f'<img class="list-favicon" src="{fav_url}" alt="" onerror="this.style.display=\'none\'">'
 
-        # Build links for this org
-        links = []
+        # Build bullet items for this org
+        bullets = []
         for p in grouped[org]:
             label = p["link_label"]
-            if p["is_test"]:
-                label += ' <span class="demo-badge">Test</span>'
-            links.append(f'<a href="{p["relpath"]}">{label}</a>')
+            badge = ' <span class="demo-badge">Test</span>' if p["is_test"] else ""
+            bullets.append(f'        <li><a href="{p["relpath"]}">{label}</a>{badge}</li>')
 
         # Add external links from config
         for ext in config.get("externalLinks", []):
             label = ext["label"]
             note = f' <span class="list-note">— {ext["note"]}</span>' if ext.get("note") else ""
-            links.append(f'<a href="{ext["url"]}" target="_blank" rel="noopener">{label} &#8599;</a>{note}')
+            bullets.append(f'        <li><a href="{ext["url"]}" target="_blank" rel="noopener">{label} &#8599;</a>{note}</li>')
 
-        link_str = " / ".join(links)
-        lines.append(f'    <li class="list-org" data-org="{org}">{favicon}<strong>{org_name}</strong> — {link_str}</li>')
+        bullet_html = "\n".join(bullets)
+        lines.append(f"""    <li class="list-org" data-org="{org}">
+      <div class="list-org-header">{favicon}<strong>{org_name}</strong></div>
+      <ul class="list-pages">
+{bullet_html}
+      </ul>
+    </li>""")
 
     return "\n".join(lines)
 
@@ -264,11 +268,13 @@ def main():
     /* List view */
     .list-view {{ display: none; }}
     .list-view.active {{ display: block; }}
-    .list-view ul {{ list-style: disc; padding-left: 1.5rem; }}
-    .list-view li.list-org {{ background: #fff; border-radius: 8px; padding: 1rem 1.25rem; margin-bottom: 0.6rem; box-shadow: 0 1px 3px rgba(0,0,0,0.08); line-height: 1.7; list-style: none; display: flex; align-items: baseline; flex-wrap: wrap; gap: 0.15rem; }}
+    .list-view > ul {{ list-style: none; padding: 0; }}
+    .list-view li.list-org {{ background: #fff; border-radius: 8px; padding: 1rem 1.25rem; margin-bottom: 0.6rem; box-shadow: 0 1px 3px rgba(0,0,0,0.08); }}
     .list-view li.list-org.hidden {{ display: none; }}
-    .list-view img.list-favicon {{ width: 16px; height: 16px; border-radius: 2px; margin-right: 0.4rem; vertical-align: text-bottom; flex-shrink: 0; position: relative; top: 2px; }}
-    .list-view li strong {{ margin-right: 0.15rem; }}
+    .list-view .list-org-header {{ display: flex; align-items: center; font-size: 0.95rem; margin-bottom: 0.5rem; }}
+    .list-view img.list-favicon {{ width: 16px; height: 16px; border-radius: 2px; margin-right: 0.5rem; flex-shrink: 0; }}
+    .list-view ul.list-pages {{ list-style: disc; padding-left: 1.5rem; margin: 0; }}
+    .list-view ul.list-pages li {{ padding: 0.15rem 0; font-size: 0.9rem; line-height: 1.5; }}
     .list-view li a {{ color: #1a73e8; text-decoration: none; }}
     .list-view li a:hover {{ text-decoration: underline; }}
     .list-view .list-note {{ font-size: 0.82rem; color: #888; font-style: italic; }}
@@ -277,7 +283,6 @@ def main():
     /* Toggle visibility */
     .grid-view {{ display: grid; }}
     .grid-view.hidden-view {{ display: none; }}
-    .filters.hidden-view {{ display: none; }}
   </style>
 </head>
 <body>
@@ -289,7 +294,7 @@ def main():
     <button class="view-btn" data-view="grid">Grid</button>
   </div>
 
-  <div class="filters hidden-view">
+  <div class="filters">
     <div class="filter-group" id="org-filters">
       <label>Client:</label>
       <button class="filter-btn active" data-filter="org" data-value="all">All</button>
@@ -322,7 +327,6 @@ def main():
     // View toggle
     var listView = document.querySelector('.list-view');
     var gridView = document.querySelector('.grid-view');
-    var filters = document.querySelector('.filters');
     document.querySelector('.view-toggle').addEventListener('click', function(e) {{
       var btn = e.target.closest('.view-btn');
       if (!btn) return;
@@ -331,16 +335,15 @@ def main():
       if (btn.dataset.view === 'list') {{
         listView.classList.add('active');
         gridView.classList.add('hidden-view');
-        filters.classList.add('hidden-view');
       }} else {{
         listView.classList.remove('active');
         gridView.classList.remove('hidden-view');
-        filters.classList.remove('hidden-view');
       }}
     }});
 
     // Build filter buttons from card data attributes
     var cards = document.querySelectorAll('.card');
+    var listOrgs = document.querySelectorAll('.list-org');
     var orgs = new Set(), types = new Set();
     cards.forEach(function(c) {{
       orgs.add(c.dataset.org);
@@ -369,6 +372,7 @@ def main():
     var activeOrg = 'all', activeType = 'all', activeStatus = 'all';
 
     function applyFilters() {{
+      // Filter grid cards
       var visible = 0;
       cards.forEach(function(c) {{
         var matchOrg = activeOrg === 'all' || c.dataset.org === activeOrg;
@@ -380,6 +384,16 @@ def main():
           visible++;
         }} else {{
           c.classList.add('hidden');
+        }}
+      }});
+
+      // Filter list view orgs
+      listOrgs.forEach(function(li) {{
+        var matchOrg = activeOrg === 'all' || li.dataset.org === activeOrg;
+        if (matchOrg) {{
+          li.classList.remove('hidden');
+        }} else {{
+          li.classList.add('hidden');
         }}
       }});
       var nr = document.querySelector('.no-results');
