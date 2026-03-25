@@ -77,10 +77,11 @@ find . \( -path './*/page/*/donate/*.html' -o -path './*/page/*/petition/*.html'
   pagetype=$(echo "$relpath" | sed "s|.*page/[0-9]*/||;s|/[^/]*$||")
   pagenum=$(basename "$relpath" .html)
 
-  # Get favicon URL from origin domain
+  # Get favicon URL — use parent domain (strip subdomains like donate., act., support., etc.)
   favicon=""
   if [ -n "$origin" ]; then
-    favicon="https://www.google.com/s2/favicons?domain=$(echo "$origin" | sed 's|https://||')&sz=32"
+    domain=$(echo "$origin" | sed 's|https://||' | sed 's/^[^.]*\.//')
+    favicon="https://www.google.com/s2/favicons?domain=${domain}&sz=32"
   fi
 
   if [ -n "$title" ]; then
