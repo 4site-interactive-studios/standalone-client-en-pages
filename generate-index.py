@@ -237,10 +237,9 @@ def main():
     .view-btn.active {{ background: #fff; color: #333; box-shadow: 0 1px 3px rgba(0,0,0,0.12); }}
 
     /* Filters */
-    .filters {{ display: flex; flex-wrap: wrap; gap: 0.5rem; margin-bottom: 1.5rem; }}
-    .filters label {{ font-size: 0.8rem; font-weight: 600; color: #555; padding-top: 0.4rem; margin-right: 0.25rem; }}
+    .filters {{ display: flex; flex-direction: column; gap: 0.5rem; margin-bottom: 1.5rem; }}
+    .filters label {{ font-size: 0.8rem; font-weight: 600; color: #555; padding-top: 0.4rem; margin-right: 0.25rem; min-width: 3.5rem; }}
     .filter-group {{ display: flex; flex-wrap: wrap; gap: 0.35rem; align-items: center; }}
-    .filter-group + .filter-group {{ margin-left: 1.5rem; }}
     .filter-btn {{ padding: 0.3rem 0.7rem; border-radius: 999px; border: 1px solid #ddd; background: #fff; font-size: 0.78rem; cursor: pointer; color: #555; transition: all 0.15s; }}
     .filter-btn:hover {{ border-color: #aaa; }}
     .filter-btn.active {{ background: #1a73e8; color: #fff; border-color: #1a73e8; }}
