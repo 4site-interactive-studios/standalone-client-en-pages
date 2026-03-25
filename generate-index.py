@@ -186,18 +186,22 @@ def generate_list_html(pages):
             if fav_url:
                 favicon = f'<img class="list-favicon" src="{fav_url}" alt="" onerror="this.style.display=\'none\'">'
 
-        # Build bullet items for this org
-        bullets = []
-        for p in grouped[org]:
+        # Build bullet items for this org, sorted alphabetically by label
+        page_bullets = []
+        for p in sorted(grouped[org], key=lambda x: x["link_label"].lower()):
             label = p["link_label"]
             badge = ' <span class="demo-badge">Test</span>' if p["is_test"] else ""
-            bullets.append(f'        <li><a href="{p["relpath"]}">{label}</a>{badge}</li>')
+            status = "true" if p["is_test"] else "false"
+            page_bullets.append(f'        <li data-type="{p["url_pagetype"]}" data-status="{status}"><a href="{p["relpath"]}">{label}</a>{badge}</li>')
 
-        # Add external links from config
+        # Add external links from config (no data attrs — always visible)
+        ext_bullets = []
         for ext in config.get("externalLinks", []):
             label = ext["label"]
             note = f' <span class="list-note">— {ext["note"]}</span>' if ext.get("note") else ""
-            bullets.append(f'        <li><a href="{ext["url"]}" target="_blank" rel="noopener">{label} &#8599;</a>{note}</li>')
+            ext_bullets.append(f'        <li class="list-external"><a href="{ext["url"]}" target="_blank" rel="noopener">{label} &#8599;</a>{note}</li>')
+
+        bullets = page_bullets + ext_bullets
 
         bullet_html = "\n".join(bullets)
         lines.append(f"""    <li class="list-org" data-org="{org}">
@@ -220,7 +224,7 @@ def main():
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Standalone EN Pages</title>
+  <title>ENgrid Pages</title>
   <style>
     * {{ box-sizing: border-box; margin: 0; padding: 0; }}
     body {{ font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif; background: #f5f5f5; color: #333; padding: 2rem; }}
@@ -286,8 +290,8 @@ def main():
   </style>
 </head>
 <body>
-  <h1>Standalone EN Pages</h1>
-  <p class="subtitle">Local mirrors of Engaging Networks pages for development and testing.</p>
+  <h1>ENgrid Pages</h1>
+  <p class="subtitle">Local mirrors of Engaging Networks ENgrid pages for development, testing, and sharing.</p>
 
   <div class="view-toggle">
     <button class="view-btn active" data-view="list">List</button>
@@ -387,10 +391,34 @@ def main():
         }}
       }});
 
-      // Filter list view orgs
+      // Filter list view bullets and org cards
       listOrgs.forEach(function(li) {{
         var matchOrg = activeOrg === 'all' || li.dataset.org === activeOrg;
-        if (matchOrg) {{
+        if (!matchOrg) {{ li.classList.add('hidden'); return; }}
+
+        // Filter individual page bullets within this org
+        var bullets = li.querySelectorAll('ul.list-pages li');
+        var anyVisible = false;
+        bullets.forEach(function(b) {{
+          if (b.classList.contains('list-external')) {{
+            var show = activeType === 'all' && activeStatus === 'all';
+            b.style.display = show ? '' : 'none';
+            if (show) anyVisible = true;
+            return;
+          }}
+          var bType = b.dataset.type;
+          var bStatus = b.dataset.status === 'true';
+          var matchType = activeType === 'all' || bType === activeType;
+          var matchStatus = activeStatus === 'all' || (activeStatus === 'test' && bStatus) || (activeStatus === 'live' && !bStatus);
+          if (matchType && matchStatus) {{
+            b.style.display = '';
+            anyVisible = true;
+          }} else {{
+            b.style.display = 'none';
+          }}
+        }});
+
+        if (anyVisible) {{
           li.classList.remove('hidden');
         }} else {{
           li.classList.add('hidden');

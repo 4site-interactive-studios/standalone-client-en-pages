@@ -3,7 +3,7 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Standalone EN Pages</title>
+  <title>ENgrid Pages</title>
   <style>
     * { box-sizing: border-box; margin: 0; padding: 0; }
     body { font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif; background: #f5f5f5; color: #333; padding: 2rem; }
@@ -69,8 +69,8 @@
   </style>
 </head>
 <body>
-  <h1>Standalone EN Pages</h1>
-  <p class="subtitle">Local mirrors of Engaging Networks pages for development and testing.</p>
+  <h1>ENgrid Pages</h1>
+  <p class="subtitle">Local mirrors of Engaging Networks ENgrid pages for development, testing, and sharing.</p>
 
   <div class="view-toggle">
     <button class="view-btn active" data-view="list">List</button>
@@ -99,70 +99,70 @@
     <li class="list-org" data-org="aiusa">
       <div class="list-org-header"><img class="list-favicon" src="https://www.google.com/s2/favicons?domain=amnestyusa.org&sz=32" alt="" onerror="this.style.display='none'"><strong>Amnesty International USA (AIUSA)</strong></div>
       <ul class="list-pages">
-        <li><a href="aiusa/page/137174/action/1.html">Side-By-Side Action</a></li>
-        <li><a href="aiusa/page/138911/donate/1.html">Multistep Donation</a></li>
-        <li><a href="aiusa/page/92978/donate/1.html">Donation</a></li>
-        <li><a href="https://www.amnestyusa.org/" target="_blank" rel="noopener">Multistep Donation Lightbox &#8599;</a></li>
+        <li data-type="donate" data-status="false"><a href="aiusa/page/92978/donate/1.html">Donation</a></li>
+        <li data-type="donate" data-status="false"><a href="aiusa/page/138911/donate/1.html">Multistep Donation</a></li>
+        <li data-type="action" data-status="false"><a href="aiusa/page/137174/action/1.html">Side-By-Side Action</a></li>
+        <li class="list-external"><a href="https://www.amnestyusa.org/" target="_blank" rel="noopener">Multistep Donation Lightbox &#8599;</a></li>
       </ul>
     </li>
     <li class="list-org" data-org="nwf">
       <div class="list-org-header"><img class="list-favicon" src="https://www.google.com/s2/favicons?domain=nwf.org&sz=32" alt="" onerror="this.style.display='none'"><strong>National Wildlife Federation (NWF)</strong></div>
       <ul class="list-pages">
-        <li><a href="nwf/page/58307/donate/1.html">Donation</a></li>
+        <li data-type="donate" data-status="false"><a href="nwf/page/58307/donate/1.html">Donation</a></li>
       </ul>
     </li>
     <li class="list-org" data-org="oceana">
       <div class="list-org-header"><img class="list-favicon" src="https://www.google.com/s2/favicons?domain=oceana.org&sz=32" alt="" onerror="this.style.display='none'"><strong>Oceana</strong></div>
       <ul class="list-pages">
-        <li><a href="oceana/page/138576/petition/1.html">Side-By-Side Action</a></li>
-        <li><a href="oceana/page/141584/donate/1.html">Side-By-Side Donation</a></li>
+        <li data-type="petition" data-status="false"><a href="oceana/page/138576/petition/1.html">Side-By-Side Action</a></li>
+        <li data-type="donate" data-status="false"><a href="oceana/page/141584/donate/1.html">Side-By-Side Donation</a></li>
       </ul>
     </li>
     <li class="list-org" data-org="oxfam">
       <div class="list-org-header"><img class="list-favicon" src="https://www.google.com/s2/favicons?domain=oxfam.ca&sz=32" alt="" onerror="this.style.display='none'"><strong>Oxfam Canada</strong></div>
       <ul class="list-pages">
-        <li><a href="oxfam/page/20905/donate/1.html">Donation</a></li>
+        <li data-type="donate" data-status="false"><a href="oxfam/page/20905/donate/1.html">Donation</a></li>
       </ul>
     </li>
     <li class="list-org" data-org="peta">
       <div class="list-org-header"><img class="list-favicon" src="https://www.google.com/s2/favicons?domain=peta.org&sz=32" alt="" onerror="this.style.display='none'"><strong>People for the Ethical Treatment of Animals (PETA)</strong></div>
       <ul class="list-pages">
-        <li><a href="peta/page/53017/subscriptions/1.html">Subscription Management</a></li>
-        <li><a href="https://apps.4sitestudios.com/fernando/peta/multistep-lightbox/video/" target="_blank" rel="noopener">Multistep Donation Lightbox Demo &#8599;</a></li>
+        <li data-type="subscriptions" data-status="false"><a href="peta/page/53017/subscriptions/1.html">Subscription Management</a></li>
+        <li class="list-external"><a href="https://apps.4sitestudios.com/fernando/peta/multistep-lightbox/video/" target="_blank" rel="noopener">Multistep Donation Lightbox Demo &#8599;</a></li>
       </ul>
     </li>
     <li class="list-org" data-org="ran">
       <div class="list-org-header"><img class="list-favicon" src="https://www.google.com/s2/favicons?domain=ran.org&sz=32" alt="" onerror="this.style.display='none'"><strong>Rainforest Action Network (RAN)</strong></div>
       <ul class="list-pages">
-        <li><a href="ran/page/57120/petition/1.html">Action</a></li>
-        <li><a href="ran/page/90802/donate/1.html">Donation</a></li>
+        <li data-type="petition" data-status="false"><a href="ran/page/57120/petition/1.html">Action</a></li>
+        <li data-type="donate" data-status="false"><a href="ran/page/90802/donate/1.html">Donation</a></li>
       </ul>
     </li>
     <li class="list-org" data-org="shatterproof">
       <div class="list-org-header"><img class="list-favicon" src="https://www.google.com/s2/favicons?domain=shatterproof.org&sz=32" alt="" onerror="this.style.display='none'"><strong>Shatterproof</strong></div>
       <ul class="list-pages">
-        <li><a href="shatterproof/page/92701/donate/1.html">Donation</a></li>
-        <li><a href="https://www.shatterproof.org/nationalmemorial/william-mathis" target="_blank" rel="noopener">Integrated Memorial Giving &#8599;</a> <span class="list-note">— Click "Donate Now"</span></li>
+        <li data-type="donate" data-status="false"><a href="shatterproof/page/92701/donate/1.html">Donation</a></li>
+        <li class="list-external"><a href="https://www.shatterproof.org/nationalmemorial/william-mathis" target="_blank" rel="noopener">Integrated Memorial Giving &#8599;</a> <span class="list-note">— Click "Donate Now"</span></li>
       </ul>
     </li>
     <li class="list-org" data-org="tnc">
       <div class="list-org-header"><img class="list-favicon" src="https://www.google.com/s2/favicons?domain=nature.org&sz=32" alt="" onerror="this.style.display='none'"><strong>The Nature Conservancy (TNC)</strong></div>
       <ul class="list-pages">
-        <li><a href="tnc/page/111595/data/1.html">Data Capture</a></li>
-        <li><a href="tnc/page/143771/survey/1.html">Survey</a></li>
-        <li><a href="tnc/page/163871/data/1.html">Side-By-Side Data Capture</a> <span class="demo-badge">Test</span></li>
-        <li><a href="tnc/page/188704/donate/1.html">Donation</a> <span class="demo-badge">Test</span></li>
-        <li><a href="tnc/page/80429/donate/1.html">Donation</a></li>
+        <li data-type="data" data-status="false"><a href="tnc/page/111595/data/1.html">Data Capture</a></li>
+        <li data-type="donate" data-status="true"><a href="tnc/page/188704/donate/1.html">Donation</a> <span class="demo-badge">Test</span></li>
+        <li data-type="donate" data-status="false"><a href="tnc/page/80429/donate/1.html">Donation</a></li>
+        <li data-type="data" data-status="true"><a href="tnc/page/163871/data/1.html">Side-By-Side Data Capture</a> <span class="demo-badge">Test</span></li>
+        <li data-type="survey" data-status="false"><a href="tnc/page/143771/survey/1.html">Survey</a></li>
       </ul>
     </li>
     <li class="list-org" data-org="wwf">
       <div class="list-org-header"><img class="list-favicon" src="https://www.google.com/s2/favicons?domain=worldwildlife.org&sz=32" alt="" onerror="this.style.display='none'"><strong>World Wildlife Fund (WWF)</strong></div>
       <ul class="list-pages">
-        <li><a href="wwf/page/64200/petition/1.html">Side-By-Side Action</a></li>
-        <li><a href="wwf/page/65220/donate/1.html">Side-By-Side Donation</a></li>
-        <li><a href="wwf/page/83142/donate/1.html">Side-By-Side Multistep Donation</a> <span class="demo-badge">Test</span></li>
-        <li><a href="wwf/page/92206/donate/1.html">Side-By-Side Donation</a></li>
-        <li><a href="https://apps.4sitestudios.com/fernando/wwf/" target="_blank" rel="noopener">Multistep Donation Lightbox Demo &#8599;</a></li>
+        <li data-type="petition" data-status="false"><a href="wwf/page/64200/petition/1.html">Side-By-Side Action</a></li>
+        <li data-type="donate" data-status="false"><a href="wwf/page/65220/donate/1.html">Side-By-Side Donation</a></li>
+        <li data-type="donate" data-status="false"><a href="wwf/page/92206/donate/1.html">Side-By-Side Donation</a></li>
+        <li data-type="donate" data-status="true"><a href="wwf/page/83142/donate/1.html">Side-By-Side Multistep Donation</a> <span class="demo-badge">Test</span></li>
+        <li class="list-external"><a href="https://apps.4sitestudios.com/fernando/wwf/" target="_blank" rel="noopener">Multistep Donation Lightbox Demo &#8599;</a></li>
       </ul>
     </li>
     </ul>
@@ -337,10 +337,34 @@
         }
       });
 
-      // Filter list view orgs
+      // Filter list view bullets and org cards
       listOrgs.forEach(function(li) {
         var matchOrg = activeOrg === 'all' || li.dataset.org === activeOrg;
-        if (matchOrg) {
+        if (!matchOrg) { li.classList.add('hidden'); return; }
+
+        // Filter individual page bullets within this org
+        var bullets = li.querySelectorAll('ul.list-pages li');
+        var anyVisible = false;
+        bullets.forEach(function(b) {
+          if (b.classList.contains('list-external')) {
+            var show = activeType === 'all' && activeStatus === 'all';
+            b.style.display = show ? '' : 'none';
+            if (show) anyVisible = true;
+            return;
+          }
+          var bType = b.dataset.type;
+          var bStatus = b.dataset.status === 'true';
+          var matchType = activeType === 'all' || bType === activeType;
+          var matchStatus = activeStatus === 'all' || (activeStatus === 'test' && bStatus) || (activeStatus === 'live' && !bStatus);
+          if (matchType && matchStatus) {
+            b.style.display = '';
+            anyVisible = true;
+          } else {
+            b.style.display = 'none';
+          }
+        });
+
+        if (anyVisible) {
           li.classList.remove('hidden');
         } else {
           li.classList.add('hidden');
