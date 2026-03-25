@@ -36,6 +36,7 @@ cat > index.html << 'HEADER'
     .card .type-badge.data { background: #f3e5f5; color: #7b1fa2; }
     .card .type-badge.subscriptions { background: #fce4ec; color: #c62828; }
     .card .type-badge.survey { background: #e0f7fa; color: #00695c; }
+    .card .demo-badge { display: inline-block; font-size: 0.6rem; font-weight: 700; text-transform: uppercase; letter-spacing: 0.04em; padding: 0.15rem 0.45rem; border-radius: 999px; margin-left: 0.35rem; background: #fff8e1; color: #f57f17; border: 1px solid #ffe082; }
     .card h2 { font-size: 1.1rem; margin-bottom: 0.75rem; line-height: 1.3; }
     .card h2 a { color: #1a73e8; text-decoration: none; }
     .card h2 a:hover { text-decoration: underline; }
@@ -57,6 +58,12 @@ cat > index.html << 'HEADER'
     <div class="filter-group" id="type-filters">
       <label>Type:</label>
       <button class="filter-btn active" data-filter="type" data-value="all">All</button>
+    </div>
+    <div class="filter-group" id="status-filters">
+      <label>Status:</label>
+      <button class="filter-btn active" data-filter="status" data-value="all">All</button>
+      <button class="filter-btn" data-filter="status" data-value="live">Live</button>
+      <button class="filter-btn" data-filter="status" data-value="test">Test / Demo</button>
     </div>
   </div>
   <div class="grid">
@@ -84,10 +91,18 @@ find . \( -path './*/page/*/donate/*.html' -o -path './*/page/*/petition/*.html'
     favicon="https://www.google.com/s2/favicons?domain=${domain}&sz=32"
   fi
 
+  # Detect test/reference/demo pages
+  is_test="false"
+  demo_badge=""
+  if echo "$title" | grep -qi 'test\|reference\|demo'; then
+    is_test="true"
+    demo_badge='<span class="demo-badge">Test</span>'
+  fi
+
   if [ -n "$title" ]; then
     cat >> index.html << CARD
-    <div class="card" data-org="${org}" data-type="${pagetype}">
-      <div class="org"><img class="favicon" src="${favicon}" alt="" onerror="this.style.display='none'">${org}<span class="type-badge ${pagetype}">${pagetype}</span></div>
+    <div class="card" data-org="${org}" data-type="${pagetype}" data-status="${is_test}">
+      <div class="org"><img class="favicon" src="${favicon}" alt="" onerror="this.style.display='none'">${org}<span class="type-badge ${pagetype}">${pagetype}</span>${demo_badge}</div>
       <h2><a href="${relpath}">${title}</a></h2>
       <div class="meta">Page ${pageid} &middot; <a href="${origin}/page/${pageid}/${pagetype}/${pagenum}" target="_blank" rel="noopener">Live page ↗</a></div>
     </div>
@@ -127,14 +142,16 @@ cat >> index.html << 'FOOTER'
     });
 
     // Filter state
-    var activeOrg = 'all', activeType = 'all';
+    var activeOrg = 'all', activeType = 'all', activeStatus = 'all';
 
     function applyFilters() {
       var visible = 0;
       cards.forEach(function(c) {
         var matchOrg = activeOrg === 'all' || c.dataset.org === activeOrg;
         var matchType = activeType === 'all' || c.dataset.type === activeType;
-        if (matchOrg && matchType) {
+        var isTest = c.dataset.status === 'true';
+        var matchStatus = activeStatus === 'all' || (activeStatus === 'test' && isTest) || (activeStatus === 'live' && !isTest);
+        if (matchOrg && matchType && matchStatus) {
           c.classList.remove('hidden');
           visible++;
         } else {
@@ -157,6 +174,7 @@ cat >> index.html << 'FOOTER'
       btn.classList.add('active');
       if (filter === 'org') activeOrg = value;
       if (filter === 'type') activeType = value;
+      if (filter === 'status') activeStatus = value;
       applyFilters();
     });
   })();
