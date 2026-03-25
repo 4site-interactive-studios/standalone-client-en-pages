@@ -1,42 +1,42 @@
 {
   "aiusa": {
-    "name": "Amnesty International USA (AIUSA)*",
+    "name": "Amnesty International USA (AIUSA)",
     "externalLinks": [
       { "label": "Multistep Donation Lightbox", "url": "https://www.amnestyusa.org/" }
     ]
   },
   "nwf": {
-    "name": "National Wildlife Federation (NWF)*"
+    "name": "National Wildlife Federation (NWF)"
   },
   "nwfactionfund": {
     "name": "NWF Action Fund"
   },
   "oceana": {
-    "name": "Oceana*"
+    "name": "Oceana"
   },
   "oxfam": {
     "name": "Oxfam Canada"
   },
   "peta": {
-    "name": "People for the Ethical Treatment of Animals (PETA)*",
+    "name": "People for the Ethical Treatment of Animals (PETA)",
     "externalLinks": [
       { "label": "Multistep Donation Lightbox Demo", "url": "https://apps.4sitestudios.com/fernando/peta/multistep-lightbox/video/" }
     ]
   },
   "ran": {
-    "name": "Rainforest Action Network (RAN)*"
+    "name": "Rainforest Action Network (RAN)"
   },
   "shatterproof": {
-    "name": "Shatterproof*",
+    "name": "Shatterproof",
     "externalLinks": [
       { "label": "Integrated Memorial Giving", "url": "https://www.shatterproof.org/nationalmemorial/william-mathis", "note": "Click \"Donate Now\"" }
     ]
   },
   "tnc": {
-    "name": "The Nature Conservancy (TNC)*"
+    "name": "The Nature Conservancy (TNC)"
   },
   "wwf": {
-    "name": "World Wildlife Fund (WWF)*",
+    "name": "World Wildlife Fund (WWF)",
     "externalLinks": [
       { "label": "Multistep Donation Lightbox Demo", "url": "https://apps.4sitestudios.com/fernando/wwf/" }
     ]
