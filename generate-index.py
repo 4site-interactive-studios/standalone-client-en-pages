@@ -261,6 +261,7 @@ def main():
     .filter-btn {{ padding: 0.3rem 0.7rem; border-radius: 999px; border: 1px solid #ddd; background: #fff; font-size: 0.78rem; cursor: pointer; color: #555; transition: all 0.15s; }}
     .filter-btn:hover {{ border-color: #aaa; }}
     .filter-btn.active {{ background: #1a73e8; color: #fff; border-color: #1a73e8; }}
+    .filter-btn.disabled {{ opacity: 0.35; cursor: default; pointer-events: none; }}
 
     /* Grid view */
     .grid {{ display: grid; grid-template-columns: repeat(auto-fill, minmax(320px, 1fr)); gap: 1.5rem; }}
@@ -490,6 +491,29 @@ def main():
 
       var nr = document.querySelector('.no-results');
       nr.classList.toggle('visible', visible === 0);
+
+      // Compute available filter values from currently visible cards
+      var availOrgs = new Set(), availTypes = new Set(), availStatuses = new Set();
+      cards.forEach(function(c) {{
+        var o = c.dataset.org, t = c.dataset.type, s = c.dataset.status === 'true';
+        // Check if card would match if only this dimension changed
+        var mType = activeType === 'all' || t === activeType;
+        var mStatus = activeStatus === 'all' || (activeStatus === 'test' && s) || (activeStatus === 'live' && !s);
+        var mOrg = activeOrg === 'all' || o === activeOrg;
+        if (mType && mStatus) availOrgs.add(o);
+        if (mOrg && mStatus) availTypes.add(t);
+        if (mOrg && mType) {{ availStatuses.add(s ? 'test' : 'live'); }}
+      }});
+      document.querySelectorAll('.filter-btn').forEach(function(b) {{
+        var f = b.dataset.filter, v = b.dataset.value;
+        if (v === 'all') {{ b.disabled = false; b.classList.remove('disabled'); return; }}
+        var avail = true;
+        if (f === 'org') avail = availOrgs.has(v);
+        else if (f === 'type') avail = availTypes.has(v);
+        else if (f === 'status') avail = availStatuses.has(v);
+        b.disabled = !avail;
+        b.classList.toggle('disabled', !avail);
+      }});
 
       // Show notice whenever results are filtered
       var isFiltered = activeOrg !== 'all' || activeType !== 'all' || activeStatus !== 'all';
