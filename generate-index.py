@@ -167,15 +167,23 @@ def find_all_pages():
     return pages
 
 
+def get_screenshot_path(page):
+    """Get the viewport screenshot path for a page."""
+    reldir = os.path.dirname(page["relpath"])
+    base = os.path.basename(page["relpath"]).replace(".html", "")
+    return f'{reldir}/{base}.viewport.jpg'
+
+
 def generate_card_html(page):
     """Generate a card div for the grid view."""
     is_test = "true" if page["is_test"] else "false"
     demo_badge = '<span class="demo-badge">Test</span>' if page["is_test"] else ""
     favicon = f'<img class="favicon" src="{page["favicon"]}" alt="" onerror="this.style.display=\'none\'">' if page["favicon"] else ""
+    ss_path = get_screenshot_path(page)
 
     return f"""    <div class="card" data-org="{page['org']}" data-type="{page['url_pagetype']}" data-status="{is_test}" data-layout="{page['layout_tag']}">
       <div class="org">{favicon}{page['org']}<span class="type-badge {page['url_pagetype']}">{page['url_pagetype']}</span>{demo_badge}</div>
-      <h2><a href="{page['relpath']}">{page['title']}</a></h2>
+      <h2><a href="{page['relpath']}" data-screenshot="{ss_path}">{page['title']}</a></h2>
       <div class="meta">Page {page['pageid']} &middot; <a href="{page['origin']}/page/{page['pageid']}/{page['url_pagetype']}/{page['pagenum']}" target="_blank" rel="noopener">Live page &#8599;</a></div>
     </div>"""
 
@@ -227,7 +235,8 @@ def generate_list_html(pages):
             label = p["link_label"]
             badge = ' <span class="demo-badge">Test</span>' if p["is_test"] else ""
             status = "true" if p["is_test"] else "false"
-            page_bullets.append(f'        <li data-type="{p["url_pagetype"]}" data-status="{status}" data-layout="{p["layout_tag"]}"><a href="{p["relpath"]}">{label}</a>{badge}</li>')
+            ss_path = get_screenshot_path(p)
+            page_bullets.append(f'        <li data-type="{p["url_pagetype"]}" data-status="{status}" data-layout="{p["layout_tag"]}"><a href="{p["relpath"]}" data-screenshot="{ss_path}">{label}</a>{badge}</li>')
 
         # Add external links from config (no data attrs — always visible)
         ext_bullets = []
@@ -367,6 +376,16 @@ def main():
     /* Toggle visibility */
     .grid-view {{ display: grid; }}
     .grid-view.hidden-view {{ display: none; }}
+
+    /* Hover preview */
+    .hover-preview {{ position: absolute; z-index: 1000; pointer-events: none; background: #fff; border-radius: 6px; box-shadow: 0 8px 30px rgba(0,0,0,0.25); overflow: hidden; max-width: 380px; opacity: 0; transition: opacity 0.15s; }}
+    .hover-preview.visible {{ opacity: 1; }}
+    .hover-preview img {{ display: block; width: 100%; height: auto; }}
+
+    /* Preview toggle */
+    .preview-toggle {{ display: flex; align-items: center; gap: 0.5rem; margin-bottom: 1.5rem; font-size: 0.8rem; color: #666; user-select: none; }}
+    .preview-toggle label {{ display: flex; align-items: center; gap: 0.35rem; cursor: pointer; }}
+    .preview-toggle input {{ cursor: pointer; }}
   </style>
 </head>
 <body>
@@ -377,6 +396,10 @@ def main():
     <button class="view-btn active" data-view="list">List</button>
     <button class="view-btn" data-view="grid">Grid</button>
     <button class="view-btn" data-view="screenshots">Screenshots</button>
+  </div>
+
+  <div class="preview-toggle">
+    <label><input type="checkbox" id="preview-check" checked> Show screenshot on hover</label>
   </div>
 
   <div class="filters">
@@ -659,6 +682,56 @@ def main():
       document.querySelectorAll('.ss-full').forEach(function(img) {{
         img.style.display = showViewport ? 'none' : '';
       }});
+    }});
+
+    // --- Hover preview ---
+    var previewEl = document.createElement('div');
+    previewEl.className = 'hover-preview';
+    var previewImg = document.createElement('img');
+    previewEl.appendChild(previewImg);
+    document.body.appendChild(previewEl);
+    var previewCheck = document.getElementById('preview-check');
+    var previewEnabled = localStorage.getItem('hover-preview') !== 'false';
+    previewCheck.checked = previewEnabled;
+
+    previewCheck.addEventListener('change', function() {{
+      previewEnabled = previewCheck.checked;
+      localStorage.setItem('hover-preview', previewEnabled ? 'true' : 'false');
+      if (!previewEnabled) previewEl.classList.remove('visible');
+    }});
+
+    var hoverTimer = null;
+    document.addEventListener('mouseover', function(e) {{
+      if (!previewEnabled) return;
+      if (activeView === 'screenshots') return;
+      var link = e.target.closest('a[data-screenshot]');
+      if (!link) return;
+      var src = link.getAttribute('data-screenshot');
+      if (!src) return;
+      previewImg.src = src;
+      hoverTimer = setTimeout(function() {{
+        previewEl.classList.add('visible');
+      }}, 200);
+    }});
+
+    document.addEventListener('mousemove', function(e) {{
+      if (!previewEl.classList.contains('visible') && !hoverTimer) return;
+      var x = e.clientX + 16;
+      var y = e.clientY + 16;
+      // Keep within viewport
+      var pw = 380, ph = 240;
+      if (x + pw > window.innerWidth) x = e.clientX - pw - 16;
+      if (y + ph > window.innerHeight) y = e.clientY - ph - 16;
+      previewEl.style.left = x + 'px';
+      previewEl.style.top = y + 'px';
+    }});
+
+    document.addEventListener('mouseout', function(e) {{
+      var link = e.target.closest('a[data-screenshot]');
+      if (!link) return;
+      clearTimeout(hoverTimer);
+      hoverTimer = null;
+      previewEl.classList.remove('visible');
     }});
 
     // --- Init from URL ---
