@@ -378,7 +378,7 @@ def main():
     .grid-view.hidden-view {{ display: none; }}
 
     /* Hover preview */
-    .hover-preview {{ position: absolute; z-index: 1000; pointer-events: none; background: #fff; border-radius: 6px; box-shadow: 0 8px 30px rgba(0,0,0,0.25); overflow: hidden; max-width: 380px; opacity: 0; transition: opacity 0.15s; }}
+    .hover-preview {{ position: fixed; z-index: 1000; pointer-events: none; background: #fff; border-radius: 6px; box-shadow: 0 8px 30px rgba(0,0,0,0.25); overflow: hidden; max-width: 380px; opacity: 0; transition: opacity 0.15s; }}
     .hover-preview.visible {{ opacity: 1; }}
     .hover-preview img {{ display: block; width: 100%; height: auto; }}
 
