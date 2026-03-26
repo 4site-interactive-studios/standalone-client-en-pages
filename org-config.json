@@ -1,4 +1,7 @@
 {
+  "ats": {
+    "name": "American Technion Society (ATS)"
+  },
   "aiusa": {
     "name": "Amnesty International USA (AIUSA)",
     "externalLinks": [
@@ -25,6 +28,9 @@
   },
   "ran": {
     "name": "Rainforest Action Network (RAN)"
+  },
+  "savingplaces": {
+    "name": "National Trust for Historic Preservation (NTHP)"
   },
   "shatterproof": {
     "name": "Shatterproof",
