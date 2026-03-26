@@ -154,6 +154,14 @@ def find_all_pages():
             info["title"], info["pagetype_raw"], info["layout"], info["is_multistep"], info["has_dtd"]
         )
 
+        # Compute layout tag for filtering
+        if info["is_multistep"]:
+            info["layout_tag"] = "multistep"
+        elif info["layout"] and "2col" in info["layout"]:
+            info["layout_tag"] = "side-by-side"
+        else:
+            info["layout_tag"] = "one-column"
+
         pages.append(info)
 
     return pages
@@ -165,7 +173,7 @@ def generate_card_html(page):
     demo_badge = '<span class="demo-badge">Test</span>' if page["is_test"] else ""
     favicon = f'<img class="favicon" src="{page["favicon"]}" alt="" onerror="this.style.display=\'none\'">' if page["favicon"] else ""
 
-    return f"""    <div class="card" data-org="{page['org']}" data-type="{page['url_pagetype']}" data-status="{is_test}">
+    return f"""    <div class="card" data-org="{page['org']}" data-type="{page['url_pagetype']}" data-status="{is_test}" data-layout="{page['layout_tag']}">
       <div class="org">{favicon}{page['org']}<span class="type-badge {page['url_pagetype']}">{page['url_pagetype']}</span>{demo_badge}</div>
       <h2><a href="{page['relpath']}">{page['title']}</a></h2>
       <div class="meta">Page {page['pageid']} &middot; <a href="{page['origin']}/page/{page['pageid']}/{page['url_pagetype']}/{page['pagenum']}" target="_blank" rel="noopener">Live page &#8599;</a></div>
@@ -198,7 +206,7 @@ def generate_list_html(pages):
             label = p["link_label"]
             badge = ' <span class="demo-badge">Test</span>' if p["is_test"] else ""
             status = "true" if p["is_test"] else "false"
-            page_bullets.append(f'        <li data-type="{p["url_pagetype"]}" data-status="{status}"><a href="{p["relpath"]}">{label}</a>{badge}</li>')
+            page_bullets.append(f'        <li data-type="{p["url_pagetype"]}" data-status="{status}" data-layout="{p["layout_tag"]}"><a href="{p["relpath"]}">{label}</a>{badge}</li>')
 
         # Add external links from config (no data attrs — always visible)
         ext_bullets = []
@@ -332,6 +340,13 @@ def main():
       <label>Type:</label>
       <button class="filter-btn active" data-filter="type" data-value="all">All</button>
     </div>
+    <div class="filter-group" id="layout-filters">
+      <label>Layout:</label>
+      <button class="filter-btn active" data-filter="layout" data-value="all">All</button>
+      <button class="filter-btn" data-filter="layout" data-value="one-column">One Column</button>
+      <button class="filter-btn" data-filter="layout" data-value="side-by-side">Side-by-Side</button>
+      <button class="filter-btn" data-filter="layout" data-value="multistep">Multistep</button>
+    </div>
     <div class="filter-group" id="status-filters">
       <label>Status:</label>
       <button class="filter-btn active" data-filter="status" data-value="all">All</button>
@@ -367,7 +382,7 @@ def main():
     var notice = document.getElementById('filter-notice');
     var noticeText = document.getElementById('filter-notice-text');
     var activeView = 'list';
-    var activeOrg = 'all', activeType = 'all', activeStatus = 'all';
+    var activeOrg = 'all', activeType = 'all', activeLayout = 'all', activeStatus = 'all';
     var fromUrl = false;
 
     // --- URL state ---
@@ -376,8 +391,9 @@ def main():
       activeView = p.get('view') || 'list';
       activeOrg = p.get('org') || 'all';
       activeType = p.get('type') || 'all';
+      activeLayout = p.get('layout') || 'all';
       activeStatus = p.get('status') || 'all';
-      fromUrl = p.has('org') || p.has('type') || p.has('status');
+      fromUrl = p.has('org') || p.has('type') || p.has('layout') || p.has('status');
     }}
 
     function writeUrl() {{
@@ -385,6 +401,7 @@ def main():
       if (activeView !== 'list') p.set('view', activeView);
       if (activeOrg !== 'all') p.set('org', activeOrg);
       if (activeType !== 'all') p.set('type', activeType);
+      if (activeLayout !== 'all') p.set('layout', activeLayout);
       if (activeStatus !== 'all') p.set('status', activeStatus);
       var qs = p.toString();
       var url = location.pathname + (qs ? '?' + qs : '');
@@ -442,6 +459,7 @@ def main():
         var f = b.dataset.filter, v = b.dataset.value;
         var active = (f === 'org' && v === activeOrg) ||
                      (f === 'type' && v === activeType) ||
+                     (f === 'layout' && v === activeLayout) ||
                      (f === 'status' && v === activeStatus);
         b.classList.toggle('active', active);
       }});
@@ -453,9 +471,10 @@ def main():
       cards.forEach(function(c) {{
         var matchOrg = activeOrg === 'all' || c.dataset.org === activeOrg;
         var matchType = activeType === 'all' || c.dataset.type === activeType;
+        var matchLayout = activeLayout === 'all' || c.dataset.layout === activeLayout;
         var isTest = c.dataset.status === 'true';
         var matchStatus = activeStatus === 'all' || (activeStatus === 'test' && isTest) || (activeStatus === 'live' && !isTest);
-        if (matchOrg && matchType && matchStatus) {{
+        if (matchOrg && matchType && matchLayout && matchStatus) {{
           c.classList.remove('hidden');
           visible++;
         }} else {{
@@ -470,16 +489,18 @@ def main():
         var anyVisible = false;
         bullets.forEach(function(b) {{
           if (b.classList.contains('list-external')) {{
-            var show = activeType === 'all' && activeStatus === 'all';
+            var show = activeType === 'all' && activeLayout === 'all' && activeStatus === 'all';
             b.style.display = show ? '' : 'none';
             if (show) anyVisible = true;
             return;
           }}
           var bType = b.dataset.type;
+          var bLayout = b.dataset.layout;
           var bStatus = b.dataset.status === 'true';
           var matchType = activeType === 'all' || bType === activeType;
+          var matchLayout = activeLayout === 'all' || bLayout === activeLayout;
           var matchStatus = activeStatus === 'all' || (activeStatus === 'test' && bStatus) || (activeStatus === 'live' && !bStatus);
-          if (matchType && matchStatus) {{
+          if (matchType && matchLayout && matchStatus) {{
             b.style.display = '';
             anyVisible = true;
           }} else {{
@@ -493,16 +514,17 @@ def main():
       nr.classList.toggle('visible', visible === 0);
 
       // Compute available filter values from currently visible cards
-      var availOrgs = new Set(), availTypes = new Set(), availStatuses = new Set();
+      var availOrgs = new Set(), availTypes = new Set(), availLayouts = new Set(), availStatuses = new Set();
       cards.forEach(function(c) {{
-        var o = c.dataset.org, t = c.dataset.type, s = c.dataset.status === 'true';
-        // Check if card would match if only this dimension changed
-        var mType = activeType === 'all' || t === activeType;
-        var mStatus = activeStatus === 'all' || (activeStatus === 'test' && s) || (activeStatus === 'live' && !s);
+        var o = c.dataset.org, t = c.dataset.type, l = c.dataset.layout, s = c.dataset.status === 'true';
         var mOrg = activeOrg === 'all' || o === activeOrg;
-        if (mType && mStatus) availOrgs.add(o);
-        if (mOrg && mStatus) availTypes.add(t);
-        if (mOrg && mType) {{ availStatuses.add(s ? 'test' : 'live'); }}
+        var mType = activeType === 'all' || t === activeType;
+        var mLayout = activeLayout === 'all' || l === activeLayout;
+        var mStatus = activeStatus === 'all' || (activeStatus === 'test' && s) || (activeStatus === 'live' && !s);
+        if (mType && mLayout && mStatus) availOrgs.add(o);
+        if (mOrg && mLayout && mStatus) availTypes.add(t);
+        if (mOrg && mType && mStatus) availLayouts.add(l);
+        if (mOrg && mType && mLayout) availStatuses.add(s ? 'test' : 'live');
       }});
       document.querySelectorAll('.filter-btn').forEach(function(b) {{
         var f = b.dataset.filter, v = b.dataset.value;
@@ -510,13 +532,14 @@ def main():
         var avail = true;
         if (f === 'org') avail = availOrgs.has(v);
         else if (f === 'type') avail = availTypes.has(v);
+        else if (f === 'layout') avail = availLayouts.has(v);
         else if (f === 'status') avail = availStatuses.has(v);
         b.disabled = !avail;
         b.classList.toggle('disabled', !avail);
       }});
 
       // Show notice whenever results are filtered
-      var isFiltered = activeOrg !== 'all' || activeType !== 'all' || activeStatus !== 'all';
+      var isFiltered = activeOrg !== 'all' || activeType !== 'all' || activeLayout !== 'all' || activeStatus !== 'all';
       if (isFiltered) {{
         noticeText.textContent = 'Filtered view: showing ' + visible + ' of ' + totalPages + ' pages.';
         notice.style.display = '';
@@ -533,6 +556,7 @@ def main():
       var f = btn.dataset.filter, v = btn.dataset.value;
       if (f === 'org') activeOrg = v;
       if (f === 'type') activeType = v;
+      if (f === 'layout') activeLayout = v;
       if (f === 'status') activeStatus = v;
       syncButtons();
       applyFilters();
@@ -542,7 +566,7 @@ def main():
     // --- Notice buttons ---
     document.getElementById('notice-reset').addEventListener('click', function() {{
       fromUrl = false;
-      activeOrg = 'all'; activeType = 'all'; activeStatus = 'all';
+      activeOrg = 'all'; activeType = 'all'; activeLayout = 'all'; activeStatus = 'all';
       syncButtons();
       applyFilters();
       writeUrl();

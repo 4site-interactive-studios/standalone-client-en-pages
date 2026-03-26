@@ -93,6 +93,13 @@
       <label>Type:</label>
       <button class="filter-btn active" data-filter="type" data-value="all">All</button>
     </div>
+    <div class="filter-group" id="layout-filters">
+      <label>Layout:</label>
+      <button class="filter-btn active" data-filter="layout" data-value="all">All</button>
+      <button class="filter-btn" data-filter="layout" data-value="one-column">One Column</button>
+      <button class="filter-btn" data-filter="layout" data-value="side-by-side">Side-by-Side</button>
+      <button class="filter-btn" data-filter="layout" data-value="multistep">Multistep</button>
+    </div>
     <div class="filter-group" id="status-filters">
       <label>Status:</label>
       <button class="filter-btn active" data-filter="status" data-value="all">All</button>
@@ -112,69 +119,69 @@
     <li class="list-org" data-org="aiusa">
       <div class="list-org-header"><img class="list-favicon" src="https://www.google.com/s2/favicons?domain=amnestyusa.org&sz=32" alt="" onerror="this.style.display='none'"><strong>Amnesty International USA (AIUSA)</strong></div>
       <ul class="list-pages">
-        <li data-type="donate" data-status="false"><a href="aiusa/page/92978/donate/1.html">Donation with Double the Donation</a></li>
-        <li data-type="donate" data-status="false"><a href="aiusa/page/138911/donate/1.html">Multistep Donation</a></li>
-        <li data-type="action" data-status="false"><a href="aiusa/page/137174/action/1.html">Side-By-Side Action</a></li>
+        <li data-type="donate" data-status="false" data-layout="one-column"><a href="aiusa/page/92978/donate/1.html">Donation with Double the Donation</a></li>
+        <li data-type="donate" data-status="false" data-layout="multistep"><a href="aiusa/page/138911/donate/1.html">Multistep Donation</a></li>
+        <li data-type="action" data-status="false" data-layout="side-by-side"><a href="aiusa/page/137174/action/1.html">Side-By-Side Action</a></li>
         <li class="list-external"><a href="https://www.amnestyusa.org/" target="_blank" rel="noopener">Multistep Donation Lightbox &#8599;</a></li>
       </ul>
     </li>
     <li class="list-org" data-org="nwf">
       <div class="list-org-header"><img class="list-favicon" src="https://www.google.com/s2/favicons?domain=nwf.org&sz=32" alt="" onerror="this.style.display='none'"><strong>National Wildlife Federation (NWF)</strong></div>
       <ul class="list-pages">
-        <li data-type="donate" data-status="false"><a href="nwf/page/58307/donate/1.html">Donation with Double the Donation</a></li>
+        <li data-type="donate" data-status="false" data-layout="one-column"><a href="nwf/page/58307/donate/1.html">Donation with Double the Donation</a></li>
       </ul>
     </li>
     <li class="list-org" data-org="oceana">
       <div class="list-org-header"><img class="list-favicon" src="https://www.google.com/s2/favicons?domain=oceana.org&sz=32" alt="" onerror="this.style.display='none'"><strong>Oceana</strong></div>
       <ul class="list-pages">
-        <li data-type="petition" data-status="false"><a href="oceana/page/138576/petition/1.html">Side-By-Side Action</a></li>
-        <li data-type="donate" data-status="false"><a href="oceana/page/141584/donate/1.html">Side-By-Side Donation</a></li>
+        <li data-type="petition" data-status="false" data-layout="side-by-side"><a href="oceana/page/138576/petition/1.html">Side-By-Side Action</a></li>
+        <li data-type="donate" data-status="false" data-layout="side-by-side"><a href="oceana/page/141584/donate/1.html">Side-By-Side Donation</a></li>
       </ul>
     </li>
     <li class="list-org" data-org="oxfam">
       <div class="list-org-header"><img class="list-favicon" src="https://www.google.com/s2/favicons?domain=oxfam.ca&sz=32" alt="" onerror="this.style.display='none'"><strong>Oxfam Canada</strong></div>
       <ul class="list-pages">
-        <li data-type="donate" data-status="false"><a href="oxfam/page/20905/donate/1.html">Donation</a></li>
+        <li data-type="donate" data-status="false" data-layout="one-column"><a href="oxfam/page/20905/donate/1.html">Donation</a></li>
       </ul>
     </li>
     <li class="list-org" data-org="peta">
       <div class="list-org-header"><img class="list-favicon" src="https://www.google.com/s2/favicons?domain=peta.org&sz=32" alt="" onerror="this.style.display='none'"><strong>People for the Ethical Treatment of Animals (PETA)</strong></div>
       <ul class="list-pages">
-        <li data-type="subscriptions" data-status="false"><a href="peta/page/53017/subscriptions/1.html">Subscription Management</a></li>
+        <li data-type="subscriptions" data-status="false" data-layout="one-column"><a href="peta/page/53017/subscriptions/1.html">Subscription Management</a></li>
         <li class="list-external"><a href="https://apps.4sitestudios.com/fernando/peta/multistep-lightbox/video/" target="_blank" rel="noopener">Multistep Donation Lightbox Demo &#8599;</a></li>
       </ul>
     </li>
     <li class="list-org" data-org="ran">
       <div class="list-org-header"><img class="list-favicon" src="https://www.google.com/s2/favicons?domain=ran.org&sz=32" alt="" onerror="this.style.display='none'"><strong>Rainforest Action Network (RAN)</strong></div>
       <ul class="list-pages">
-        <li data-type="petition" data-status="false"><a href="ran/page/57120/petition/1.html">Action</a></li>
-        <li data-type="donate" data-status="false"><a href="ran/page/90802/donate/1.html">Donation</a></li>
+        <li data-type="petition" data-status="false" data-layout="one-column"><a href="ran/page/57120/petition/1.html">Action</a></li>
+        <li data-type="donate" data-status="false" data-layout="one-column"><a href="ran/page/90802/donate/1.html">Donation</a></li>
       </ul>
     </li>
     <li class="list-org" data-org="shatterproof">
       <div class="list-org-header"><img class="list-favicon" src="https://www.google.com/s2/favicons?domain=shatterproof.org&sz=32" alt="" onerror="this.style.display='none'"><strong>Shatterproof</strong></div>
       <ul class="list-pages">
-        <li data-type="donate" data-status="false"><a href="shatterproof/page/92701/donate/1.html">Donation with Double the Donation</a></li>
+        <li data-type="donate" data-status="false" data-layout="one-column"><a href="shatterproof/page/92701/donate/1.html">Donation with Double the Donation</a></li>
         <li class="list-external"><a href="https://www.shatterproof.org/nationalmemorial/william-mathis" target="_blank" rel="noopener">Integrated Memorial Giving &#8599;</a> <span class="list-note">— Click "Donate Now"</span></li>
       </ul>
     </li>
     <li class="list-org" data-org="tnc">
       <div class="list-org-header"><img class="list-favicon" src="https://www.google.com/s2/favicons?domain=nature.org&sz=32" alt="" onerror="this.style.display='none'"><strong>The Nature Conservancy (TNC)</strong></div>
       <ul class="list-pages">
-        <li data-type="data" data-status="false"><a href="tnc/page/111595/data/1.html">Data Capture</a></li>
-        <li data-type="donate" data-status="true"><a href="tnc/page/188704/donate/1.html">Donation</a> <span class="demo-badge">Test</span></li>
-        <li data-type="donate" data-status="false"><a href="tnc/page/80429/donate/1.html">Donation</a></li>
-        <li data-type="data" data-status="true"><a href="tnc/page/163871/data/1.html">Side-By-Side Data Capture</a> <span class="demo-badge">Test</span></li>
-        <li data-type="survey" data-status="false"><a href="tnc/page/143771/survey/1.html">Survey</a></li>
+        <li data-type="data" data-status="false" data-layout="one-column"><a href="tnc/page/111595/data/1.html">Data Capture</a></li>
+        <li data-type="donate" data-status="true" data-layout="one-column"><a href="tnc/page/188704/donate/1.html">Donation</a> <span class="demo-badge">Test</span></li>
+        <li data-type="donate" data-status="false" data-layout="one-column"><a href="tnc/page/80429/donate/1.html">Donation</a></li>
+        <li data-type="data" data-status="true" data-layout="side-by-side"><a href="tnc/page/163871/data/1.html">Side-By-Side Data Capture</a> <span class="demo-badge">Test</span></li>
+        <li data-type="survey" data-status="false" data-layout="one-column"><a href="tnc/page/143771/survey/1.html">Survey</a></li>
       </ul>
     </li>
     <li class="list-org" data-org="wwf">
       <div class="list-org-header"><img class="list-favicon" src="https://www.google.com/s2/favicons?domain=worldwildlife.org&sz=32" alt="" onerror="this.style.display='none'"><strong>World Wildlife Fund (WWF)</strong></div>
       <ul class="list-pages">
-        <li data-type="petition" data-status="false"><a href="wwf/page/64200/petition/1.html">Side-By-Side Action</a></li>
-        <li data-type="donate" data-status="false"><a href="wwf/page/65220/donate/1.html">Side-By-Side Donation</a></li>
-        <li data-type="donate" data-status="false"><a href="wwf/page/92206/donate/1.html">Side-By-Side Donation with Double the Donation</a></li>
-        <li data-type="donate" data-status="true"><a href="wwf/page/83142/donate/1.html">Side-By-Side Multistep Donation</a> <span class="demo-badge">Test</span></li>
+        <li data-type="petition" data-status="false" data-layout="side-by-side"><a href="wwf/page/64200/petition/1.html">Side-By-Side Action</a></li>
+        <li data-type="donate" data-status="false" data-layout="side-by-side"><a href="wwf/page/65220/donate/1.html">Side-By-Side Donation</a></li>
+        <li data-type="donate" data-status="false" data-layout="side-by-side"><a href="wwf/page/92206/donate/1.html">Side-By-Side Donation with Double the Donation</a></li>
+        <li data-type="donate" data-status="true" data-layout="multistep"><a href="wwf/page/83142/donate/1.html">Side-By-Side Multistep Donation</a> <span class="demo-badge">Test</span></li>
         <li class="list-external"><a href="https://apps.4sitestudios.com/fernando/wwf/" target="_blank" rel="noopener">Multistep Donation Lightbox Demo &#8599;</a></li>
       </ul>
     </li>
@@ -182,102 +189,102 @@
   </div>
 
   <div class="grid grid-view hidden-view">
-    <div class="card" data-org="aiusa" data-type="action" data-status="false">
+    <div class="card" data-org="aiusa" data-type="action" data-status="false" data-layout="side-by-side">
       <div class="org"><img class="favicon" src="https://www.google.com/s2/favicons?domain=amnestyusa.org&sz=32" alt="" onerror="this.style.display='none'">aiusa<span class="type-badge action">action</span></div>
       <h2><a href="aiusa/page/137174/action/1.html">Amnesty International USA | Amnesty International USA</a></h2>
       <div class="meta">Page 137174 &middot; <a href="https://act.amnestyusa.org/page/137174/action/1" target="_blank" rel="noopener">Live page &#8599;</a></div>
     </div>
-    <div class="card" data-org="aiusa" data-type="donate" data-status="false">
+    <div class="card" data-org="aiusa" data-type="donate" data-status="false" data-layout="multistep">
       <div class="org"><img class="favicon" src="https://www.google.com/s2/favicons?domain=amnestyusa.org&sz=32" alt="" onerror="this.style.display='none'">aiusa<span class="type-badge donate">donate</span></div>
       <h2><a href="aiusa/page/138911/donate/1.html">Multistep development | Amnesty International USA</a></h2>
       <div class="meta">Page 138911 &middot; <a href="https://donate.amnestyusa.org/page/138911/donate/1" target="_blank" rel="noopener">Live page &#8599;</a></div>
     </div>
-    <div class="card" data-org="aiusa" data-type="donate" data-status="false">
+    <div class="card" data-org="aiusa" data-type="donate" data-status="false" data-layout="one-column">
       <div class="org"><img class="favicon" src="https://www.google.com/s2/favicons?domain=amnestyusa.org&sz=32" alt="" onerror="this.style.display='none'">aiusa<span class="type-badge donate">donate</span></div>
       <h2><a href="aiusa/page/92978/donate/1.html">Amnesty International USA | Amnesty International USA</a></h2>
       <div class="meta">Page 92978 &middot; <a href="https://donate.amnestyusa.org/page/92978/donate/1" target="_blank" rel="noopener">Live page &#8599;</a></div>
     </div>
-    <div class="card" data-org="nwf" data-type="donate" data-status="false">
+    <div class="card" data-org="nwf" data-type="donate" data-status="false" data-layout="one-column">
       <div class="org"><img class="favicon" src="https://www.google.com/s2/favicons?domain=nwf.org&sz=32" alt="" onerror="this.style.display='none'">nwf<span class="type-badge donate">donate</span></div>
       <h2><a href="nwf/page/58307/donate/1.html">Help Protect America's Wildlife! | National Wildlife Federation</a></h2>
       <div class="meta">Page 58307 &middot; <a href="https://support.nwf.org/page/58307/donate/1" target="_blank" rel="noopener">Live page &#8599;</a></div>
     </div>
-    <div class="card" data-org="oceana" data-type="petition" data-status="false">
+    <div class="card" data-org="oceana" data-type="petition" data-status="false" data-layout="side-by-side">
       <div class="org"><img class="favicon" src="https://www.google.com/s2/favicons?domain=oceana.org&sz=32" alt="" onerror="this.style.display='none'">oceana<span class="type-badge petition">petition</span></div>
       <h2><a href="oceana/page/138576/petition/1.html">Take Action and Tell Drink Companies to Refill Again | Oceana | OCEANA - Protecting the World's Oceans</a></h2>
       <div class="meta">Page 138576 &middot; <a href="https://act.oceana.org/page/138576/petition/1" target="_blank" rel="noopener">Live page &#8599;</a></div>
     </div>
-    <div class="card" data-org="oceana" data-type="donate" data-status="false">
+    <div class="card" data-org="oceana" data-type="donate" data-status="false" data-layout="side-by-side">
       <div class="org"><img class="favicon" src="https://www.google.com/s2/favicons?domain=oceana.org&sz=32" alt="" onerror="this.style.display='none'">oceana<span class="type-badge donate">donate</span></div>
       <h2><a href="oceana/page/141584/donate/1.html">Donate to Oceana | Ocean Conservation Nonprofit | OCEANA - Protecting the World's Oceans</a></h2>
       <div class="meta">Page 141584 &middot; <a href="https://act.oceana.org/page/141584/donate/1" target="_blank" rel="noopener">Live page &#8599;</a></div>
     </div>
-    <div class="card" data-org="oxfam" data-type="donate" data-status="false">
+    <div class="card" data-org="oxfam" data-type="donate" data-status="false" data-layout="one-column">
       <div class="org"><img class="favicon" src="https://www.google.com/s2/favicons?domain=oxfam.ca&sz=32" alt="" onerror="this.style.display='none'">oxfam<span class="type-badge donate">donate</span></div>
       <h2><a href="oxfam/page/20905/donate/1.html">Donate Now | Oxfam Canada</a></h2>
       <div class="meta">Page 20905 &middot; <a href="https://secured.oxfam.ca/page/20905/donate/1" target="_blank" rel="noopener">Live page &#8599;</a></div>
     </div>
-    <div class="card" data-org="peta" data-type="subscriptions" data-status="false">
+    <div class="card" data-org="peta" data-type="subscriptions" data-status="false" data-layout="one-column">
       <div class="org"><img class="favicon" src="https://www.google.com/s2/favicons?domain=peta.org&sz=32" alt="" onerror="this.style.display='none'">peta<span class="type-badge subscriptions">subscriptions</span></div>
       <h2><a href="peta/page/53017/subscriptions/1.html">Manage Your E-Mail Subscriptions | PETA</a></h2>
       <div class="meta">Page 53017 &middot; <a href="https://support.peta.org/page/53017/subscriptions/1" target="_blank" rel="noopener">Live page &#8599;</a></div>
     </div>
-    <div class="card" data-org="ran" data-type="petition" data-status="false">
+    <div class="card" data-org="ran" data-type="petition" data-status="false" data-layout="one-column">
       <div class="org"><img class="favicon" src="https://www.google.com/s2/favicons?domain=ran.org&sz=32" alt="" onerror="this.style.display='none'">ran<span class="type-badge petition">petition</span></div>
       <h2><a href="ran/page/57120/petition/1.html">Sign the Petition: Protect Critical Rainforests Now! | Rainforest Action Network - Fighting for People and Planet</a></h2>
       <div class="meta">Page 57120 &middot; <a href="https://act.ran.org/page/57120/petition/1" target="_blank" rel="noopener">Live page &#8599;</a></div>
     </div>
-    <div class="card" data-org="ran" data-type="donate" data-status="false">
+    <div class="card" data-org="ran" data-type="donate" data-status="false" data-layout="one-column">
       <div class="org"><img class="favicon" src="https://www.google.com/s2/favicons?domain=ran.org&sz=32" alt="" onerror="this.style.display='none'">ran<span class="type-badge donate">donate</span></div>
       <h2><a href="ran/page/90802/donate/1.html">Donate Now and Help Protect the Planet | Rainforest Action Network - Fighting for People and Planet</a></h2>
       <div class="meta">Page 90802 &middot; <a href="https://act.ran.org/page/90802/donate/1" target="_blank" rel="noopener">Live page &#8599;</a></div>
     </div>
-    <div class="card" data-org="shatterproof" data-type="donate" data-status="false">
+    <div class="card" data-org="shatterproof" data-type="donate" data-status="false" data-layout="one-column">
       <div class="org"><img class="favicon" src="https://www.google.com/s2/favicons?domain=shatterproof.org&sz=32" alt="" onerror="this.style.display='none'">shatterproof<span class="type-badge donate">donate</span></div>
       <h2><a href="shatterproof/page/92701/donate/1.html">Recovery changes everything | Shatterproof - Reversing the Addiction Crisis in the U.S.</a></h2>
       <div class="meta">Page 92701 &middot; <a href="https://donate.shatterproof.org/page/92701/donate/1" target="_blank" rel="noopener">Live page &#8599;</a></div>
     </div>
-    <div class="card" data-org="tnc" data-type="data" data-status="false">
+    <div class="card" data-org="tnc" data-type="data" data-status="false" data-layout="one-column">
       <div class="org"><img class="favicon" src="https://www.google.com/s2/favicons?domain=nature.org&sz=32" alt="" onerror="this.style.display='none'">tnc<span class="type-badge data">data</span></div>
       <h2><a href="tnc/page/111595/data/1.html">Download the Free Nature Getaways Guide | The Nature Conservancy</a></h2>
       <div class="meta">Page 111595 &middot; <a href="https://preserve.nature.org/page/111595/data/1" target="_blank" rel="noopener">Live page &#8599;</a></div>
     </div>
-    <div class="card" data-org="tnc" data-type="survey" data-status="false">
+    <div class="card" data-org="tnc" data-type="survey" data-status="false" data-layout="one-column">
       <div class="org"><img class="favicon" src="https://www.google.com/s2/favicons?domain=nature.org&sz=32" alt="" onerror="this.style.display='none'">tnc<span class="type-badge survey">survey</span></div>
       <h2><a href="tnc/page/143771/survey/1.html">ENgrid - survey development | The Nature Conservancy</a></h2>
       <div class="meta">Page 143771 &middot; <a href="https://preserve.nature.org/page/143771/survey/1" target="_blank" rel="noopener">Live page &#8599;</a></div>
     </div>
-    <div class="card" data-org="tnc" data-type="data" data-status="true">
+    <div class="card" data-org="tnc" data-type="data" data-status="true" data-layout="side-by-side">
       <div class="org"><img class="favicon" src="https://www.google.com/s2/favicons?domain=nature.org&sz=32" alt="" onerror="this.style.display='none'">tnc<span class="type-badge data">data</span><span class="demo-badge">Test</span></div>
       <h2><a href="tnc/page/163871/data/1.html">REFERENCE - ENgrid Data Capture (Subtheme: 2 col w/ Hero banner) | The Nature Conservancy</a></h2>
       <div class="meta">Page 163871 &middot; <a href="https://preserve.nature.org/page/163871/data/1" target="_blank" rel="noopener">Live page &#8599;</a></div>
     </div>
-    <div class="card" data-org="tnc" data-type="donate" data-status="true">
+    <div class="card" data-org="tnc" data-type="donate" data-status="true" data-layout="one-column">
       <div class="org"><img class="favicon" src="https://www.google.com/s2/favicons?domain=nature.org&sz=32" alt="" onerror="this.style.display='none'">tnc<span class="type-badge donate">donate</span><span class="demo-badge">Test</span></div>
       <h2><a href="tnc/page/188704/donate/1.html">REFERENCE - Left-aligned ENgrid IHMO donation page (Test Gateway) | The Nature Conservancy</a></h2>
       <div class="meta">Page 188704 &middot; <a href="https://preserve.nature.org/page/188704/donate/1" target="_blank" rel="noopener">Live page &#8599;</a></div>
     </div>
-    <div class="card" data-org="tnc" data-type="donate" data-status="false">
+    <div class="card" data-org="tnc" data-type="donate" data-status="false" data-layout="one-column">
       <div class="org"><img class="favicon" src="https://www.google.com/s2/favicons?domain=nature.org&sz=32" alt="" onerror="this.style.display='none'">tnc<span class="type-badge donate">donate</span></div>
       <h2><a href="tnc/page/80429/donate/1.html">Donate Now to Protect Nature | The Nature Conservancy</a></h2>
       <div class="meta">Page 80429 &middot; <a href="https://preserve.nature.org/page/80429/donate/1" target="_blank" rel="noopener">Live page &#8599;</a></div>
     </div>
-    <div class="card" data-org="wwf" data-type="petition" data-status="false">
+    <div class="card" data-org="wwf" data-type="petition" data-status="false" data-layout="side-by-side">
       <div class="org"><img class="favicon" src="https://www.google.com/s2/favicons?domain=worldwildlife.org&sz=32" alt="" onerror="this.style.display='none'">wwf<span class="type-badge petition">petition</span></div>
       <h2><a href="wwf/page/64200/petition/1.html">No Plastic in Nature | World Wildlife Fund</a></h2>
       <div class="meta">Page 64200 &middot; <a href="https://protect.worldwildlife.org/page/64200/petition/1" target="_blank" rel="noopener">Live page &#8599;</a></div>
     </div>
-    <div class="card" data-org="wwf" data-type="donate" data-status="false">
+    <div class="card" data-org="wwf" data-type="donate" data-status="false" data-layout="side-by-side">
       <div class="org"><img class="favicon" src="https://www.google.com/s2/favicons?domain=worldwildlife.org&sz=32" alt="" onerror="this.style.display='none'">wwf<span class="type-badge donate">donate</span></div>
       <h2><a href="wwf/page/65220/donate/1.html">Donate + Protect Nature | World Wildlife Fund</a></h2>
       <div class="meta">Page 65220 &middot; <a href="https://protect.worldwildlife.org/page/65220/donate/1" target="_blank" rel="noopener">Live page &#8599;</a></div>
     </div>
-    <div class="card" data-org="wwf" data-type="donate" data-status="true">
+    <div class="card" data-org="wwf" data-type="donate" data-status="true" data-layout="multistep">
       <div class="org"><img class="favicon" src="https://www.google.com/s2/favicons?domain=worldwildlife.org&sz=32" alt="" onerror="this.style.display='none'">wwf<span class="type-badge donate">donate</span><span class="demo-badge">Test</span></div>
       <h2><a href="wwf/page/83142/donate/1.html">REFERENCE - One Column Multistep (expand variant) | World Wildlife Fund</a></h2>
       <div class="meta">Page 83142 &middot; <a href="https://protect.worldwildlife.org/page/83142/donate/1" target="_blank" rel="noopener">Live page &#8599;</a></div>
     </div>
-    <div class="card" data-org="wwf" data-type="donate" data-status="false">
+    <div class="card" data-org="wwf" data-type="donate" data-status="false" data-layout="side-by-side">
       <div class="org"><img class="favicon" src="https://www.google.com/s2/favicons?domain=worldwildlife.org&sz=32" alt="" onerror="this.style.display='none'">wwf<span class="type-badge donate">donate</span></div>
       <h2><a href="wwf/page/92206/donate/1.html">Donate + Protect Nature | World Wildlife Fund</a></h2>
       <div class="meta">Page 92201 &middot; <a href="https://protect.worldwildlife.org/page/92201/donate/1" target="_blank" rel="noopener">Live page &#8599;</a></div>
@@ -295,7 +302,7 @@
     var notice = document.getElementById('filter-notice');
     var noticeText = document.getElementById('filter-notice-text');
     var activeView = 'list';
-    var activeOrg = 'all', activeType = 'all', activeStatus = 'all';
+    var activeOrg = 'all', activeType = 'all', activeLayout = 'all', activeStatus = 'all';
     var fromUrl = false;
 
     // --- URL state ---
@@ -304,8 +311,9 @@
       activeView = p.get('view') || 'list';
       activeOrg = p.get('org') || 'all';
       activeType = p.get('type') || 'all';
+      activeLayout = p.get('layout') || 'all';
       activeStatus = p.get('status') || 'all';
-      fromUrl = p.has('org') || p.has('type') || p.has('status');
+      fromUrl = p.has('org') || p.has('type') || p.has('layout') || p.has('status');
     }
 
     function writeUrl() {
@@ -313,6 +321,7 @@
       if (activeView !== 'list') p.set('view', activeView);
       if (activeOrg !== 'all') p.set('org', activeOrg);
       if (activeType !== 'all') p.set('type', activeType);
+      if (activeLayout !== 'all') p.set('layout', activeLayout);
       if (activeStatus !== 'all') p.set('status', activeStatus);
       var qs = p.toString();
       var url = location.pathname + (qs ? '?' + qs : '');
@@ -370,6 +379,7 @@
         var f = b.dataset.filter, v = b.dataset.value;
         var active = (f === 'org' && v === activeOrg) ||
                      (f === 'type' && v === activeType) ||
+                     (f === 'layout' && v === activeLayout) ||
                      (f === 'status' && v === activeStatus);
         b.classList.toggle('active', active);
       });
@@ -381,9 +391,10 @@
       cards.forEach(function(c) {
         var matchOrg = activeOrg === 'all' || c.dataset.org === activeOrg;
         var matchType = activeType === 'all' || c.dataset.type === activeType;
+        var matchLayout = activeLayout === 'all' || c.dataset.layout === activeLayout;
         var isTest = c.dataset.status === 'true';
         var matchStatus = activeStatus === 'all' || (activeStatus === 'test' && isTest) || (activeStatus === 'live' && !isTest);
-        if (matchOrg && matchType && matchStatus) {
+        if (matchOrg && matchType && matchLayout && matchStatus) {
           c.classList.remove('hidden');
           visible++;
         } else {
@@ -398,16 +409,18 @@
         var anyVisible = false;
         bullets.forEach(function(b) {
           if (b.classList.contains('list-external')) {
-            var show = activeType === 'all' && activeStatus === 'all';
+            var show = activeType === 'all' && activeLayout === 'all' && activeStatus === 'all';
             b.style.display = show ? '' : 'none';
             if (show) anyVisible = true;
             return;
           }
           var bType = b.dataset.type;
+          var bLayout = b.dataset.layout;
           var bStatus = b.dataset.status === 'true';
           var matchType = activeType === 'all' || bType === activeType;
+          var matchLayout = activeLayout === 'all' || bLayout === activeLayout;
           var matchStatus = activeStatus === 'all' || (activeStatus === 'test' && bStatus) || (activeStatus === 'live' && !bStatus);
-          if (matchType && matchStatus) {
+          if (matchType && matchLayout && matchStatus) {
             b.style.display = '';
             anyVisible = true;
           } else {
@@ -421,16 +434,17 @@
       nr.classList.toggle('visible', visible === 0);
 
       // Compute available filter values from currently visible cards
-      var availOrgs = new Set(), availTypes = new Set(), availStatuses = new Set();
+      var availOrgs = new Set(), availTypes = new Set(), availLayouts = new Set(), availStatuses = new Set();
       cards.forEach(function(c) {
-        var o = c.dataset.org, t = c.dataset.type, s = c.dataset.status === 'true';
-        // Check if card would match if only this dimension changed
-        var mType = activeType === 'all' || t === activeType;
-        var mStatus = activeStatus === 'all' || (activeStatus === 'test' && s) || (activeStatus === 'live' && !s);
+        var o = c.dataset.org, t = c.dataset.type, l = c.dataset.layout, s = c.dataset.status === 'true';
         var mOrg = activeOrg === 'all' || o === activeOrg;
-        if (mType && mStatus) availOrgs.add(o);
-        if (mOrg && mStatus) availTypes.add(t);
-        if (mOrg && mType) { availStatuses.add(s ? 'test' : 'live'); }
+        var mType = activeType === 'all' || t === activeType;
+        var mLayout = activeLayout === 'all' || l === activeLayout;
+        var mStatus = activeStatus === 'all' || (activeStatus === 'test' && s) || (activeStatus === 'live' && !s);
+        if (mType && mLayout && mStatus) availOrgs.add(o);
+        if (mOrg && mLayout && mStatus) availTypes.add(t);
+        if (mOrg && mType && mStatus) availLayouts.add(l);
+        if (mOrg && mType && mLayout) availStatuses.add(s ? 'test' : 'live');
       });
       document.querySelectorAll('.filter-btn').forEach(function(b) {
         var f = b.dataset.filter, v = b.dataset.value;
@@ -438,13 +452,14 @@
         var avail = true;
         if (f === 'org') avail = availOrgs.has(v);
         else if (f === 'type') avail = availTypes.has(v);
+        else if (f === 'layout') avail = availLayouts.has(v);
         else if (f === 'status') avail = availStatuses.has(v);
         b.disabled = !avail;
         b.classList.toggle('disabled', !avail);
       });
 
       // Show notice whenever results are filtered
-      var isFiltered = activeOrg !== 'all' || activeType !== 'all' || activeStatus !== 'all';
+      var isFiltered = activeOrg !== 'all' || activeType !== 'all' || activeLayout !== 'all' || activeStatus !== 'all';
       if (isFiltered) {
         noticeText.textContent = 'Filtered view: showing ' + visible + ' of ' + totalPages + ' pages.';
         notice.style.display = '';
@@ -461,6 +476,7 @@
       var f = btn.dataset.filter, v = btn.dataset.value;
       if (f === 'org') activeOrg = v;
       if (f === 'type') activeType = v;
+      if (f === 'layout') activeLayout = v;
       if (f === 'status') activeStatus = v;
       syncButtons();
       applyFilters();
@@ -470,7 +486,7 @@
     // --- Notice buttons ---
     document.getElementById('notice-reset').addEventListener('click', function() {
       fromUrl = false;
-      activeOrg = 'all'; activeType = 'all'; activeStatus = 'all';
+      activeOrg = 'all'; activeType = 'all'; activeLayout = 'all'; activeStatus = 'all';
       syncButtons();
       applyFilters();
       writeUrl();
