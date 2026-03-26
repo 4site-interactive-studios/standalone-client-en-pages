@@ -180,6 +180,27 @@ def generate_card_html(page):
     </div>"""
 
 
+def generate_screenshot_html(page):
+    """Generate a screenshot card for the screenshots view."""
+    is_test = "true" if page["is_test"] else "false"
+    demo_badge = '<span class="demo-badge">Test</span>' if page["is_test"] else ""
+    reldir = os.path.dirname(page["relpath"])
+    base = os.path.basename(page["relpath"], ).replace(".html", "")
+    vp_img = f'{reldir}/{base}.viewport.jpg'
+    full_img = f'{reldir}/{base}.full.jpg'
+
+    return f"""    <div class="ss-card" data-org="{page['org']}" data-type="{page['url_pagetype']}" data-status="{is_test}" data-layout="{page['layout_tag']}">
+      <a href="{page['relpath']}" class="ss-link">
+        <img class="ss-img ss-viewport" src="{vp_img}" alt="{page['title']}" loading="lazy">
+        <img class="ss-img ss-full" src="{full_img}" alt="{page['title']}" loading="lazy" style="display:none">
+      </a>
+      <div class="ss-caption">
+        <span class="ss-label"><a href="{page['relpath']}">{page['link_label']}</a>{demo_badge}</span>
+        <span class="ss-org">{page['org'].upper()}</span>
+      </div>
+    </div>"""
+
+
 def generate_list_html(pages):
     """Generate the markdown-style list view grouped by org with bullet sub-items."""
     grouped = defaultdict(list)
@@ -242,6 +263,7 @@ def build_org_label_map():
 def main():
     pages = find_all_pages()
     cards_html = "\n".join(generate_card_html(p) for p in pages)
+    screenshots_html = "\n".join(generate_screenshot_html(p) for p in pages)
     list_html = generate_list_html(pages)
     org_labels_json = build_org_label_map()
 
@@ -317,6 +339,31 @@ def main():
     .filter-notice .notice-close {{ background: none; border: none; font-size: 1.2rem; cursor: pointer; color: #1565c0; padding: 0 0.25rem; margin-left: auto; line-height: 1; }}
     .filter-notice .notice-close:hover {{ color: #0d47a1; }}
 
+    /* Screenshots view */
+    .ss-view {{ display: none; }}
+    .ss-view.active {{ display: block; }}
+    .ss-toggle {{ display: none; margin-bottom: 1rem; }}
+    .ss-view.active ~ .ss-toggle, .ss-toggle.active {{ display: flex; }}
+    .ss-toggle {{ display: flex; gap: 0.25rem; background: #e0e0e0; border-radius: 6px; padding: 3px; width: fit-content; margin-bottom: 1rem; }}
+    .ss-toggle.hidden-view {{ display: none; }}
+    .ss-toggle-btn {{ padding: 0.3rem 0.8rem; border-radius: 4px; border: none; background: transparent; font-size: 0.78rem; cursor: pointer; color: #555; font-weight: 500; transition: all 0.15s; }}
+    .ss-toggle-btn.active {{ background: #fff; color: #333; box-shadow: 0 1px 3px rgba(0,0,0,0.12); }}
+    .ss-masonry {{ columns: 4; column-gap: 1rem; }}
+    @media (max-width: 1200px) {{ .ss-masonry {{ columns: 3; }} }}
+    @media (max-width: 900px) {{ .ss-masonry {{ columns: 2; }} }}
+    @media (max-width: 600px) {{ .ss-masonry {{ columns: 1; }} }}
+    .ss-card {{ break-inside: avoid; margin-bottom: 1rem; background: #fff; border-radius: 8px; overflow: hidden; box-shadow: 0 1px 3px rgba(0,0,0,0.1); transition: box-shadow 0.2s; }}
+    .ss-card:hover {{ box-shadow: 0 4px 12px rgba(0,0,0,0.15); }}
+    .ss-card.hidden {{ display: none; }}
+    .ss-link {{ display: block; }}
+    .ss-img {{ width: 100%; height: auto; display: block; }}
+    .ss-caption {{ padding: 0.6rem 0.75rem; }}
+    .ss-label {{ font-size: 0.8rem; }}
+    .ss-label a {{ color: #1a73e8; text-decoration: none; }}
+    .ss-label a:hover {{ text-decoration: underline; }}
+    .ss-label .demo-badge {{ font-size: 0.5rem; vertical-align: middle; }}
+    .ss-org {{ display: block; font-size: 0.65rem; text-transform: uppercase; color: #999; letter-spacing: 0.04em; margin-top: 0.2rem; }}
+
     /* Toggle visibility */
     .grid-view {{ display: grid; }}
     .grid-view.hidden-view {{ display: none; }}
@@ -329,6 +376,7 @@ def main():
   <div class="view-toggle">
     <button class="view-btn active" data-view="list">List</button>
     <button class="view-btn" data-view="grid">Grid</button>
+    <button class="view-btn" data-view="screenshots">Screenshots</button>
   </div>
 
   <div class="filters">
@@ -372,13 +420,27 @@ def main():
     <div class="no-results">No pages match the selected filters.</div>
   </div>
 
+  <div class="ss-toggle hidden-view" id="ss-toggle">
+    <button class="ss-toggle-btn active" data-ss="viewport">Viewport</button>
+    <button class="ss-toggle-btn" data-ss="full">Full Page</button>
+  </div>
+  <div class="ss-view">
+    <div class="ss-masonry">
+{screenshots_html}
+    </div>
+  </div>
+
   <script>
   (function() {{
     var listView = document.querySelector('.list-view');
     var gridView = document.querySelector('.grid-view');
+    var ssView = document.querySelector('.ss-view');
+    var ssToggle = document.getElementById('ss-toggle');
     var cards = document.querySelectorAll('.card');
+    var ssCards = document.querySelectorAll('.ss-card');
     var listOrgs = document.querySelectorAll('.list-org');
     var totalPages = cards.length;
+    var activeSS = 'viewport';
     var notice = document.getElementById('filter-notice');
     var noticeText = document.getElementById('filter-notice-text');
     var activeView = 'list';
@@ -414,13 +476,10 @@ def main():
       document.querySelectorAll('.view-btn').forEach(function(b) {{
         b.classList.toggle('active', b.dataset.view === view);
       }});
-      if (view === 'list') {{
-        listView.classList.add('active');
-        gridView.classList.add('hidden-view');
-      }} else {{
-        listView.classList.remove('active');
-        gridView.classList.remove('hidden-view');
-      }}
+      listView.classList.toggle('active', view === 'list');
+      gridView.classList.toggle('hidden-view', view !== 'grid');
+      ssView.classList.toggle('active', view === 'screenshots');
+      ssToggle.classList.toggle('hidden-view', view !== 'screenshots');
     }}
 
     document.querySelector('.view-toggle').addEventListener('click', function(e) {{
@@ -510,6 +569,16 @@ def main():
         li.classList.toggle('hidden', !anyVisible);
       }});
 
+      // Screenshots view filtering
+      ssCards.forEach(function(c) {{
+        var matchOrg = activeOrg === 'all' || c.dataset.org === activeOrg;
+        var matchType = activeType === 'all' || c.dataset.type === activeType;
+        var matchLayout = activeLayout === 'all' || c.dataset.layout === activeLayout;
+        var isTest = c.dataset.status === 'true';
+        var matchStatus = activeStatus === 'all' || (activeStatus === 'test' && isTest) || (activeStatus === 'live' && !isTest);
+        c.classList.toggle('hidden', !(matchOrg && matchType && matchLayout && matchStatus));
+      }});
+
       var nr = document.querySelector('.no-results');
       nr.classList.toggle('visible', visible === 0);
 
@@ -573,6 +642,23 @@ def main():
     }});
     document.getElementById('notice-close').addEventListener('click', function() {{
       notice.style.display = 'none';
+    }});
+
+    // --- Screenshot viewport/full toggle ---
+    ssToggle.addEventListener('click', function(e) {{
+      var btn = e.target.closest('.ss-toggle-btn');
+      if (!btn) return;
+      activeSS = btn.dataset.ss;
+      document.querySelectorAll('.ss-toggle-btn').forEach(function(b) {{
+        b.classList.toggle('active', b.dataset.ss === activeSS);
+      }});
+      var showViewport = activeSS === 'viewport';
+      document.querySelectorAll('.ss-viewport').forEach(function(img) {{
+        img.style.display = showViewport ? '' : 'none';
+      }});
+      document.querySelectorAll('.ss-full').forEach(function(img) {{
+        img.style.display = showViewport ? 'none' : '';
+      }});
     }});
 
     // --- Init from URL ---

@@ -70,6 +70,31 @@
     .filter-notice .notice-close { background: none; border: none; font-size: 1.2rem; cursor: pointer; color: #1565c0; padding: 0 0.25rem; margin-left: auto; line-height: 1; }
     .filter-notice .notice-close:hover { color: #0d47a1; }
 
+    /* Screenshots view */
+    .ss-view { display: none; }
+    .ss-view.active { display: block; }
+    .ss-toggle { display: none; margin-bottom: 1rem; }
+    .ss-view.active ~ .ss-toggle, .ss-toggle.active { display: flex; }
+    .ss-toggle { display: flex; gap: 0.25rem; background: #e0e0e0; border-radius: 6px; padding: 3px; width: fit-content; margin-bottom: 1rem; }
+    .ss-toggle.hidden-view { display: none; }
+    .ss-toggle-btn { padding: 0.3rem 0.8rem; border-radius: 4px; border: none; background: transparent; font-size: 0.78rem; cursor: pointer; color: #555; font-weight: 500; transition: all 0.15s; }
+    .ss-toggle-btn.active { background: #fff; color: #333; box-shadow: 0 1px 3px rgba(0,0,0,0.12); }
+    .ss-masonry { columns: 4; column-gap: 1rem; }
+    @media (max-width: 1200px) { .ss-masonry { columns: 3; } }
+    @media (max-width: 900px) { .ss-masonry { columns: 2; } }
+    @media (max-width: 600px) { .ss-masonry { columns: 1; } }
+    .ss-card { break-inside: avoid; margin-bottom: 1rem; background: #fff; border-radius: 8px; overflow: hidden; box-shadow: 0 1px 3px rgba(0,0,0,0.1); transition: box-shadow 0.2s; }
+    .ss-card:hover { box-shadow: 0 4px 12px rgba(0,0,0,0.15); }
+    .ss-card.hidden { display: none; }
+    .ss-link { display: block; }
+    .ss-img { width: 100%; height: auto; display: block; }
+    .ss-caption { padding: 0.6rem 0.75rem; }
+    .ss-label { font-size: 0.8rem; }
+    .ss-label a { color: #1a73e8; text-decoration: none; }
+    .ss-label a:hover { text-decoration: underline; }
+    .ss-label .demo-badge { font-size: 0.5rem; vertical-align: middle; }
+    .ss-org { display: block; font-size: 0.65rem; text-transform: uppercase; color: #999; letter-spacing: 0.04em; margin-top: 0.2rem; }
+
     /* Toggle visibility */
     .grid-view { display: grid; }
     .grid-view.hidden-view { display: none; }
@@ -82,6 +107,7 @@
   <div class="view-toggle">
     <button class="view-btn active" data-view="list">List</button>
     <button class="view-btn" data-view="grid">Grid</button>
+    <button class="view-btn" data-view="screenshots">Screenshots</button>
   </div>
 
   <div class="filters">
@@ -374,13 +400,346 @@
     <div class="no-results">No pages match the selected filters.</div>
   </div>
 
+  <div class="ss-toggle hidden-view" id="ss-toggle">
+    <button class="ss-toggle-btn active" data-ss="viewport">Viewport</button>
+    <button class="ss-toggle-btn" data-ss="full">Full Page</button>
+  </div>
+  <div class="ss-view">
+    <div class="ss-masonry">
+    <div class="ss-card" data-org="aiusa" data-type="action" data-status="false" data-layout="side-by-side">
+      <a href="aiusa/page/137174/action/1.html" class="ss-link">
+        <img class="ss-img ss-viewport" src="aiusa/page/137174/action/1.viewport.jpg" alt="Amnesty International USA | Amnesty International USA" loading="lazy">
+        <img class="ss-img ss-full" src="aiusa/page/137174/action/1.full.jpg" alt="Amnesty International USA | Amnesty International USA" loading="lazy" style="display:none">
+      </a>
+      <div class="ss-caption">
+        <span class="ss-label"><a href="aiusa/page/137174/action/1.html">Side-By-Side Action</a></span>
+        <span class="ss-org">AIUSA</span>
+      </div>
+    </div>
+    <div class="ss-card" data-org="aiusa" data-type="donate" data-status="false" data-layout="multistep">
+      <a href="aiusa/page/138911/donate/1.html" class="ss-link">
+        <img class="ss-img ss-viewport" src="aiusa/page/138911/donate/1.viewport.jpg" alt="Multistep development | Amnesty International USA" loading="lazy">
+        <img class="ss-img ss-full" src="aiusa/page/138911/donate/1.full.jpg" alt="Multistep development | Amnesty International USA" loading="lazy" style="display:none">
+      </a>
+      <div class="ss-caption">
+        <span class="ss-label"><a href="aiusa/page/138911/donate/1.html">Multistep Donation</a></span>
+        <span class="ss-org">AIUSA</span>
+      </div>
+    </div>
+    <div class="ss-card" data-org="aiusa" data-type="donate" data-status="false" data-layout="one-column">
+      <a href="aiusa/page/92978/donate/1.html" class="ss-link">
+        <img class="ss-img ss-viewport" src="aiusa/page/92978/donate/1.viewport.jpg" alt="Amnesty International USA | Amnesty International USA" loading="lazy">
+        <img class="ss-img ss-full" src="aiusa/page/92978/donate/1.full.jpg" alt="Amnesty International USA | Amnesty International USA" loading="lazy" style="display:none">
+      </a>
+      <div class="ss-caption">
+        <span class="ss-label"><a href="aiusa/page/92978/donate/1.html">Donation with Double the Donation</a></span>
+        <span class="ss-org">AIUSA</span>
+      </div>
+    </div>
+    <div class="ss-card" data-org="ats" data-type="donate" data-status="true" data-layout="multistep">
+      <a href="ats/page/87882/donate/1.html" class="ss-link">
+        <img class="ss-img ss-viewport" src="ats/page/87882/donate/1.viewport.jpg" alt="REFERENCE - Multistep Side-By-Side (Live Gateway) - American Technion Society" loading="lazy">
+        <img class="ss-img ss-full" src="ats/page/87882/donate/1.full.jpg" alt="REFERENCE - Multistep Side-By-Side (Live Gateway) - American Technion Society" loading="lazy" style="display:none">
+      </a>
+      <div class="ss-caption">
+        <span class="ss-label"><a href="ats/page/87882/donate/1.html">Side-By-Side Multistep Donation with Double the Donation</a><span class="demo-badge">Test</span></span>
+        <span class="ss-org">ATS</span>
+      </div>
+    </div>
+    <div class="ss-card" data-org="ats" data-type="donate" data-status="true" data-layout="side-by-side">
+      <a href="ats/page/87883/donate/1.html" class="ss-link">
+        <img class="ss-img ss-viewport" src="ats/page/87883/donate/1.viewport.jpg" alt="REFERENCE - Side-By-Side (Live Gateway) - American Technion Society" loading="lazy">
+        <img class="ss-img ss-full" src="ats/page/87883/donate/1.full.jpg" alt="REFERENCE - Side-By-Side (Live Gateway) - American Technion Society" loading="lazy" style="display:none">
+      </a>
+      <div class="ss-caption">
+        <span class="ss-label"><a href="ats/page/87883/donate/1.html">Side-By-Side Donation with Double the Donation</a><span class="demo-badge">Test</span></span>
+        <span class="ss-org">ATS</span>
+      </div>
+    </div>
+    <div class="ss-card" data-org="ats" data-type="donate" data-status="false" data-layout="multistep">
+      <a href="ats/page/92966/donate/1.html" class="ss-link">
+        <img class="ss-img ss-viewport" src="ats/page/92966/donate/1.viewport.jpg" alt="Donate to the Technion: Support Israel's future - American Technion Society" loading="lazy">
+        <img class="ss-img ss-full" src="ats/page/92966/donate/1.full.jpg" alt="Donate to the Technion: Support Israel's future - American Technion Society" loading="lazy" style="display:none">
+      </a>
+      <div class="ss-caption">
+        <span class="ss-label"><a href="ats/page/92966/donate/1.html">Side-By-Side Multistep Donation with Double the Donation</a></span>
+        <span class="ss-org">ATS</span>
+      </div>
+    </div>
+    <div class="ss-card" data-org="nwf" data-type="donate" data-status="false" data-layout="one-column">
+      <a href="nwf/page/58307/donate/1.html" class="ss-link">
+        <img class="ss-img ss-viewport" src="nwf/page/58307/donate/1.viewport.jpg" alt="Help Protect America's Wildlife! | National Wildlife Federation" loading="lazy">
+        <img class="ss-img ss-full" src="nwf/page/58307/donate/1.full.jpg" alt="Help Protect America's Wildlife! | National Wildlife Federation" loading="lazy" style="display:none">
+      </a>
+      <div class="ss-caption">
+        <span class="ss-label"><a href="nwf/page/58307/donate/1.html">Donation with Double the Donation</a></span>
+        <span class="ss-org">NWF</span>
+      </div>
+    </div>
+    <div class="ss-card" data-org="oceana" data-type="petition" data-status="false" data-layout="side-by-side">
+      <a href="oceana/page/138576/petition/1.html" class="ss-link">
+        <img class="ss-img ss-viewport" src="oceana/page/138576/petition/1.viewport.jpg" alt="Take Action and Tell Drink Companies to Refill Again | Oceana | OCEANA - Protecting the World's Oceans" loading="lazy">
+        <img class="ss-img ss-full" src="oceana/page/138576/petition/1.full.jpg" alt="Take Action and Tell Drink Companies to Refill Again | Oceana | OCEANA - Protecting the World's Oceans" loading="lazy" style="display:none">
+      </a>
+      <div class="ss-caption">
+        <span class="ss-label"><a href="oceana/page/138576/petition/1.html">Side-By-Side Action</a></span>
+        <span class="ss-org">OCEANA</span>
+      </div>
+    </div>
+    <div class="ss-card" data-org="oceana" data-type="donate" data-status="false" data-layout="side-by-side">
+      <a href="oceana/page/141584/donate/1.html" class="ss-link">
+        <img class="ss-img ss-viewport" src="oceana/page/141584/donate/1.viewport.jpg" alt="Donate to Oceana | Ocean Conservation Nonprofit | OCEANA - Protecting the World's Oceans" loading="lazy">
+        <img class="ss-img ss-full" src="oceana/page/141584/donate/1.full.jpg" alt="Donate to Oceana | Ocean Conservation Nonprofit | OCEANA - Protecting the World's Oceans" loading="lazy" style="display:none">
+      </a>
+      <div class="ss-caption">
+        <span class="ss-label"><a href="oceana/page/141584/donate/1.html">Side-By-Side Donation</a></span>
+        <span class="ss-org">OCEANA</span>
+      </div>
+    </div>
+    <div class="ss-card" data-org="oxfam" data-type="donate" data-status="false" data-layout="one-column">
+      <a href="oxfam/page/20905/donate/1.html" class="ss-link">
+        <img class="ss-img ss-viewport" src="oxfam/page/20905/donate/1.viewport.jpg" alt="Donate Now | Oxfam Canada" loading="lazy">
+        <img class="ss-img ss-full" src="oxfam/page/20905/donate/1.full.jpg" alt="Donate Now | Oxfam Canada" loading="lazy" style="display:none">
+      </a>
+      <div class="ss-caption">
+        <span class="ss-label"><a href="oxfam/page/20905/donate/1.html">Donation</a></span>
+        <span class="ss-org">OXFAM</span>
+      </div>
+    </div>
+    <div class="ss-card" data-org="peta" data-type="subscriptions" data-status="false" data-layout="one-column">
+      <a href="peta/page/53017/subscriptions/1.html" class="ss-link">
+        <img class="ss-img ss-viewport" src="peta/page/53017/subscriptions/1.viewport.jpg" alt="Manage Your E-Mail Subscriptions | PETA" loading="lazy">
+        <img class="ss-img ss-full" src="peta/page/53017/subscriptions/1.full.jpg" alt="Manage Your E-Mail Subscriptions | PETA" loading="lazy" style="display:none">
+      </a>
+      <div class="ss-caption">
+        <span class="ss-label"><a href="peta/page/53017/subscriptions/1.html">Subscription Management</a></span>
+        <span class="ss-org">PETA</span>
+      </div>
+    </div>
+    <div class="ss-card" data-org="ran" data-type="donate" data-status="true" data-layout="one-column">
+      <a href="ran/page/14297/donate/1.html" class="ss-link">
+        <img class="ss-img ss-viewport" src="ran/page/14297/donate/1.viewport.jpg" alt="Reference Donation Page | Rainforest Action Network - Fighting for People and Planet" loading="lazy">
+        <img class="ss-img ss-full" src="ran/page/14297/donate/1.full.jpg" alt="Reference Donation Page | Rainforest Action Network - Fighting for People and Planet" loading="lazy" style="display:none">
+      </a>
+      <div class="ss-caption">
+        <span class="ss-label"><a href="ran/page/14297/donate/1.html">Donation</a><span class="demo-badge">Test</span></span>
+        <span class="ss-org">RAN</span>
+      </div>
+    </div>
+    <div class="ss-card" data-org="ran" data-type="petition" data-status="true" data-layout="one-column">
+      <a href="ran/page/16168/petition/1.html" class="ss-link">
+        <img class="ss-img ss-viewport" src="ran/page/16168/petition/1.viewport.jpg" alt="Ω Reference Petition Page - centercenter1col | Rainforest Action Network - Fighting for People and Planet" loading="lazy">
+        <img class="ss-img ss-full" src="ran/page/16168/petition/1.full.jpg" alt="Ω Reference Petition Page - centercenter1col | Rainforest Action Network - Fighting for People and Planet" loading="lazy" style="display:none">
+      </a>
+      <div class="ss-caption">
+        <span class="ss-label"><a href="ran/page/16168/petition/1.html">Action</a><span class="demo-badge">Test</span></span>
+        <span class="ss-org">RAN</span>
+      </div>
+    </div>
+    <div class="ss-card" data-org="ran" data-type="petition" data-status="false" data-layout="one-column">
+      <a href="ran/page/55582/petition/1.html" class="ss-link">
+        <img class="ss-img ss-viewport" src="ran/page/55582/petition/1.viewport.jpg" alt="Join RAN | Rainforest Action Network - Fighting for People and Planet" loading="lazy">
+        <img class="ss-img ss-full" src="ran/page/55582/petition/1.full.jpg" alt="Join RAN | Rainforest Action Network - Fighting for People and Planet" loading="lazy" style="display:none">
+      </a>
+      <div class="ss-caption">
+        <span class="ss-label"><a href="ran/page/55582/petition/1.html">Action</a></span>
+        <span class="ss-org">RAN</span>
+      </div>
+    </div>
+    <div class="ss-card" data-org="ran" data-type="petition" data-status="false" data-layout="one-column">
+      <a href="ran/page/57120/petition/1.html" class="ss-link">
+        <img class="ss-img ss-viewport" src="ran/page/57120/petition/1.viewport.jpg" alt="Sign the Petition: Protect Critical Rainforests Now! | Rainforest Action Network - Fighting for People and Planet" loading="lazy">
+        <img class="ss-img ss-full" src="ran/page/57120/petition/1.full.jpg" alt="Sign the Petition: Protect Critical Rainforests Now! | Rainforest Action Network - Fighting for People and Planet" loading="lazy" style="display:none">
+      </a>
+      <div class="ss-caption">
+        <span class="ss-label"><a href="ran/page/57120/petition/1.html">Action</a></span>
+        <span class="ss-org">RAN</span>
+      </div>
+    </div>
+    <div class="ss-card" data-org="ran" data-type="action" data-status="true" data-layout="one-column">
+      <a href="ran/page/64071/action/1.html" class="ss-link">
+        <img class="ss-img ss-viewport" src="ran/page/64071/action/1.viewport.jpg" alt="REFERENCE - Ecard To Target | Rainforest Action Network - Fighting for People and Planet" loading="lazy">
+        <img class="ss-img ss-full" src="ran/page/64071/action/1.full.jpg" alt="REFERENCE - Ecard To Target | Rainforest Action Network - Fighting for People and Planet" loading="lazy" style="display:none">
+      </a>
+      <div class="ss-caption">
+        <span class="ss-label"><a href="ran/page/64071/action/1.html">E-Card</a><span class="demo-badge">Test</span></span>
+        <span class="ss-org">RAN</span>
+      </div>
+    </div>
+    <div class="ss-card" data-org="ran" data-type="donate" data-status="false" data-layout="one-column">
+      <a href="ran/page/90802/donate/1.html" class="ss-link">
+        <img class="ss-img ss-viewport" src="ran/page/90802/donate/1.viewport.jpg" alt="Donate Now and Help Protect the Planet | Rainforest Action Network - Fighting for People and Planet" loading="lazy">
+        <img class="ss-img ss-full" src="ran/page/90802/donate/1.full.jpg" alt="Donate Now and Help Protect the Planet | Rainforest Action Network - Fighting for People and Planet" loading="lazy" style="display:none">
+      </a>
+      <div class="ss-caption">
+        <span class="ss-label"><a href="ran/page/90802/donate/1.html">Donation</a></span>
+        <span class="ss-org">RAN</span>
+      </div>
+    </div>
+    <div class="ss-card" data-org="savingplaces" data-type="donate" data-status="false" data-layout="one-column">
+      <a href="savingplaces/page/80870/donate/1.html" class="ss-link">
+        <img class="ss-img ss-viewport" src="savingplaces/page/80870/donate/1.viewport.jpg" alt="Donate to the National Trust for Historic Preservation - National Trust for Historic Preservation | National Trust for Historic Preservation" loading="lazy">
+        <img class="ss-img ss-full" src="savingplaces/page/80870/donate/1.full.jpg" alt="Donate to the National Trust for Historic Preservation - National Trust for Historic Preservation | National Trust for Historic Preservation" loading="lazy" style="display:none">
+      </a>
+      <div class="ss-caption">
+        <span class="ss-label"><a href="savingplaces/page/80870/donate/1.html">Donation with Double the Donation</a></span>
+        <span class="ss-org">SAVINGPLACES</span>
+      </div>
+    </div>
+    <div class="ss-card" data-org="shatterproof" data-type="donate" data-status="false" data-layout="one-column">
+      <a href="shatterproof/page/92701/donate/1.html" class="ss-link">
+        <img class="ss-img ss-viewport" src="shatterproof/page/92701/donate/1.viewport.jpg" alt="Recovery changes everything | Shatterproof - Reversing the Addiction Crisis in the U.S." loading="lazy">
+        <img class="ss-img ss-full" src="shatterproof/page/92701/donate/1.full.jpg" alt="Recovery changes everything | Shatterproof - Reversing the Addiction Crisis in the U.S." loading="lazy" style="display:none">
+      </a>
+      <div class="ss-caption">
+        <span class="ss-label"><a href="shatterproof/page/92701/donate/1.html">Donation with Double the Donation</a></span>
+        <span class="ss-org">SHATTERPROOF</span>
+      </div>
+    </div>
+    <div class="ss-card" data-org="tnc" data-type="data" data-status="false" data-layout="one-column">
+      <a href="tnc/page/111595/data/1.html" class="ss-link">
+        <img class="ss-img ss-viewport" src="tnc/page/111595/data/1.viewport.jpg" alt="Download the Free Nature Getaways Guide | The Nature Conservancy" loading="lazy">
+        <img class="ss-img ss-full" src="tnc/page/111595/data/1.full.jpg" alt="Download the Free Nature Getaways Guide | The Nature Conservancy" loading="lazy" style="display:none">
+      </a>
+      <div class="ss-caption">
+        <span class="ss-label"><a href="tnc/page/111595/data/1.html">Data Capture</a></span>
+        <span class="ss-org">TNC</span>
+      </div>
+    </div>
+    <div class="ss-card" data-org="tnc" data-type="survey" data-status="false" data-layout="one-column">
+      <a href="tnc/page/143771/survey/1.html" class="ss-link">
+        <img class="ss-img ss-viewport" src="tnc/page/143771/survey/1.viewport.jpg" alt="ENgrid - survey development | The Nature Conservancy" loading="lazy">
+        <img class="ss-img ss-full" src="tnc/page/143771/survey/1.full.jpg" alt="ENgrid - survey development | The Nature Conservancy" loading="lazy" style="display:none">
+      </a>
+      <div class="ss-caption">
+        <span class="ss-label"><a href="tnc/page/143771/survey/1.html">Survey</a></span>
+        <span class="ss-org">TNC</span>
+      </div>
+    </div>
+    <div class="ss-card" data-org="tnc" data-type="action" data-status="true" data-layout="one-column">
+      <a href="tnc/page/146188/action/1.html" class="ss-link">
+        <img class="ss-img ss-viewport" src="tnc/page/146188/action/1.viewport.jpg" alt="REFERENCE - ENgrid Ecard | The Nature Conservancy" loading="lazy">
+        <img class="ss-img ss-full" src="tnc/page/146188/action/1.full.jpg" alt="REFERENCE - ENgrid Ecard | The Nature Conservancy" loading="lazy" style="display:none">
+      </a>
+      <div class="ss-caption">
+        <span class="ss-label"><a href="tnc/page/146188/action/1.html">E-Card</a><span class="demo-badge">Test</span></span>
+        <span class="ss-org">TNC</span>
+      </div>
+    </div>
+    <div class="ss-card" data-org="tnc" data-type="action" data-status="true" data-layout="side-by-side">
+      <a href="tnc/page/156852/action/1.html" class="ss-link">
+        <img class="ss-img ss-viewport" src="tnc/page/156852/action/1.viewport.jpg" alt="REFERENCE - ENgrid - Email To Target (Single Page, Automatically Selected Target) | The Nature Conservancy" loading="lazy">
+        <img class="ss-img ss-full" src="tnc/page/156852/action/1.full.jpg" alt="REFERENCE - ENgrid - Email To Target (Single Page, Automatically Selected Target) | The Nature Conservancy" loading="lazy" style="display:none">
+      </a>
+      <div class="ss-caption">
+        <span class="ss-label"><a href="tnc/page/156852/action/1.html">Side-By-Side Action</a><span class="demo-badge">Test</span></span>
+        <span class="ss-org">TNC</span>
+      </div>
+    </div>
+    <div class="ss-card" data-org="tnc" data-type="data" data-status="true" data-layout="side-by-side">
+      <a href="tnc/page/163871/data/1.html" class="ss-link">
+        <img class="ss-img ss-viewport" src="tnc/page/163871/data/1.viewport.jpg" alt="REFERENCE - ENgrid Data Capture (Subtheme: 2 col w/ Hero banner) | The Nature Conservancy" loading="lazy">
+        <img class="ss-img ss-full" src="tnc/page/163871/data/1.full.jpg" alt="REFERENCE - ENgrid Data Capture (Subtheme: 2 col w/ Hero banner) | The Nature Conservancy" loading="lazy" style="display:none">
+      </a>
+      <div class="ss-caption">
+        <span class="ss-label"><a href="tnc/page/163871/data/1.html">Side-By-Side Data Capture</a><span class="demo-badge">Test</span></span>
+        <span class="ss-org">TNC</span>
+      </div>
+    </div>
+    <div class="ss-card" data-org="tnc" data-type="donate" data-status="true" data-layout="one-column">
+      <a href="tnc/page/188704/donate/1.html" class="ss-link">
+        <img class="ss-img ss-viewport" src="tnc/page/188704/donate/1.viewport.jpg" alt="REFERENCE - Left-aligned ENgrid IHMO donation page (Test Gateway) | The Nature Conservancy" loading="lazy">
+        <img class="ss-img ss-full" src="tnc/page/188704/donate/1.full.jpg" alt="REFERENCE - Left-aligned ENgrid IHMO donation page (Test Gateway) | The Nature Conservancy" loading="lazy" style="display:none">
+      </a>
+      <div class="ss-caption">
+        <span class="ss-label"><a href="tnc/page/188704/donate/1.html">Donation</a><span class="demo-badge">Test</span></span>
+        <span class="ss-org">TNC</span>
+      </div>
+    </div>
+    <div class="ss-card" data-org="tnc" data-type="donate" data-status="false" data-layout="one-column">
+      <a href="tnc/page/80429/donate/1.html" class="ss-link">
+        <img class="ss-img ss-viewport" src="tnc/page/80429/donate/1.viewport.jpg" alt="Donate Now to Protect Nature | The Nature Conservancy" loading="lazy">
+        <img class="ss-img ss-full" src="tnc/page/80429/donate/1.full.jpg" alt="Donate Now to Protect Nature | The Nature Conservancy" loading="lazy" style="display:none">
+      </a>
+      <div class="ss-caption">
+        <span class="ss-label"><a href="tnc/page/80429/donate/1.html">Donation</a></span>
+        <span class="ss-org">TNC</span>
+      </div>
+    </div>
+    <div class="ss-card" data-org="wwf" data-type="petition" data-status="false" data-layout="side-by-side">
+      <a href="wwf/page/53484/petition/1.html" class="ss-link">
+        <img class="ss-img ss-viewport" src="wwf/page/53484/petition/1.viewport.jpg" alt="Stop Wildlife Crime  | World Wildlife Fund" loading="lazy">
+        <img class="ss-img ss-full" src="wwf/page/53484/petition/1.full.jpg" alt="Stop Wildlife Crime  | World Wildlife Fund" loading="lazy" style="display:none">
+      </a>
+      <div class="ss-caption">
+        <span class="ss-label"><a href="wwf/page/53484/petition/1.html">Side-By-Side Action</a></span>
+        <span class="ss-org">WWF</span>
+      </div>
+    </div>
+    <div class="ss-card" data-org="wwf" data-type="petition" data-status="false" data-layout="side-by-side">
+      <a href="wwf/page/64200/petition/1.html" class="ss-link">
+        <img class="ss-img ss-viewport" src="wwf/page/64200/petition/1.viewport.jpg" alt="No Plastic in Nature | World Wildlife Fund" loading="lazy">
+        <img class="ss-img ss-full" src="wwf/page/64200/petition/1.full.jpg" alt="No Plastic in Nature | World Wildlife Fund" loading="lazy" style="display:none">
+      </a>
+      <div class="ss-caption">
+        <span class="ss-label"><a href="wwf/page/64200/petition/1.html">Side-By-Side Action</a></span>
+        <span class="ss-org">WWF</span>
+      </div>
+    </div>
+    <div class="ss-card" data-org="wwf" data-type="donate" data-status="false" data-layout="side-by-side">
+      <a href="wwf/page/65220/donate/1.html" class="ss-link">
+        <img class="ss-img ss-viewport" src="wwf/page/65220/donate/1.viewport.jpg" alt="Donate + Protect Nature | World Wildlife Fund" loading="lazy">
+        <img class="ss-img ss-full" src="wwf/page/65220/donate/1.full.jpg" alt="Donate + Protect Nature | World Wildlife Fund" loading="lazy" style="display:none">
+      </a>
+      <div class="ss-caption">
+        <span class="ss-label"><a href="wwf/page/65220/donate/1.html">Side-By-Side Donation</a></span>
+        <span class="ss-org">WWF</span>
+      </div>
+    </div>
+    <div class="ss-card" data-org="wwf" data-type="donate" data-status="false" data-layout="multistep">
+      <a href="wwf/page/66762/donate/1.html" class="ss-link">
+        <img class="ss-img ss-viewport" src="wwf/page/66762/donate/1.viewport.jpg" alt="Donate + Protect Nature | World Wildlife Fund" loading="lazy">
+        <img class="ss-img ss-full" src="wwf/page/66762/donate/1.full.jpg" alt="Donate + Protect Nature | World Wildlife Fund" loading="lazy" style="display:none">
+      </a>
+      <div class="ss-caption">
+        <span class="ss-label"><a href="wwf/page/66762/donate/1.html">Side-By-Side Multistep Donation</a></span>
+        <span class="ss-org">WWF</span>
+      </div>
+    </div>
+    <div class="ss-card" data-org="wwf" data-type="donate" data-status="true" data-layout="multistep">
+      <a href="wwf/page/83142/donate/1.html" class="ss-link">
+        <img class="ss-img ss-viewport" src="wwf/page/83142/donate/1.viewport.jpg" alt="REFERENCE - One Column Multistep (expand variant) | World Wildlife Fund" loading="lazy">
+        <img class="ss-img ss-full" src="wwf/page/83142/donate/1.full.jpg" alt="REFERENCE - One Column Multistep (expand variant) | World Wildlife Fund" loading="lazy" style="display:none">
+      </a>
+      <div class="ss-caption">
+        <span class="ss-label"><a href="wwf/page/83142/donate/1.html">Side-By-Side Multistep Donation</a><span class="demo-badge">Test</span></span>
+        <span class="ss-org">WWF</span>
+      </div>
+    </div>
+    <div class="ss-card" data-org="wwf" data-type="donate" data-status="false" data-layout="side-by-side">
+      <a href="wwf/page/92206/donate/1.html" class="ss-link">
+        <img class="ss-img ss-viewport" src="wwf/page/92206/donate/1.viewport.jpg" alt="Donate + Protect Nature | World Wildlife Fund" loading="lazy">
+        <img class="ss-img ss-full" src="wwf/page/92206/donate/1.full.jpg" alt="Donate + Protect Nature | World Wildlife Fund" loading="lazy" style="display:none">
+      </a>
+      <div class="ss-caption">
+        <span class="ss-label"><a href="wwf/page/92206/donate/1.html">Side-By-Side Donation with Double the Donation</a></span>
+        <span class="ss-org">WWF</span>
+      </div>
+    </div>
+    </div>
+  </div>
+
   <script>
   (function() {
     var listView = document.querySelector('.list-view');
     var gridView = document.querySelector('.grid-view');
+    var ssView = document.querySelector('.ss-view');
+    var ssToggle = document.getElementById('ss-toggle');
     var cards = document.querySelectorAll('.card');
+    var ssCards = document.querySelectorAll('.ss-card');
     var listOrgs = document.querySelectorAll('.list-org');
     var totalPages = cards.length;
+    var activeSS = 'viewport';
     var notice = document.getElementById('filter-notice');
     var noticeText = document.getElementById('filter-notice-text');
     var activeView = 'list';
@@ -416,13 +775,10 @@
       document.querySelectorAll('.view-btn').forEach(function(b) {
         b.classList.toggle('active', b.dataset.view === view);
       });
-      if (view === 'list') {
-        listView.classList.add('active');
-        gridView.classList.add('hidden-view');
-      } else {
-        listView.classList.remove('active');
-        gridView.classList.remove('hidden-view');
-      }
+      listView.classList.toggle('active', view === 'list');
+      gridView.classList.toggle('hidden-view', view !== 'grid');
+      ssView.classList.toggle('active', view === 'screenshots');
+      ssToggle.classList.toggle('hidden-view', view !== 'screenshots');
     }
 
     document.querySelector('.view-toggle').addEventListener('click', function(e) {
@@ -512,6 +868,16 @@
         li.classList.toggle('hidden', !anyVisible);
       });
 
+      // Screenshots view filtering
+      ssCards.forEach(function(c) {
+        var matchOrg = activeOrg === 'all' || c.dataset.org === activeOrg;
+        var matchType = activeType === 'all' || c.dataset.type === activeType;
+        var matchLayout = activeLayout === 'all' || c.dataset.layout === activeLayout;
+        var isTest = c.dataset.status === 'true';
+        var matchStatus = activeStatus === 'all' || (activeStatus === 'test' && isTest) || (activeStatus === 'live' && !isTest);
+        c.classList.toggle('hidden', !(matchOrg && matchType && matchLayout && matchStatus));
+      });
+
       var nr = document.querySelector('.no-results');
       nr.classList.toggle('visible', visible === 0);
 
@@ -575,6 +941,23 @@
     });
     document.getElementById('notice-close').addEventListener('click', function() {
       notice.style.display = 'none';
+    });
+
+    // --- Screenshot viewport/full toggle ---
+    ssToggle.addEventListener('click', function(e) {
+      var btn = e.target.closest('.ss-toggle-btn');
+      if (!btn) return;
+      activeSS = btn.dataset.ss;
+      document.querySelectorAll('.ss-toggle-btn').forEach(function(b) {
+        b.classList.toggle('active', b.dataset.ss === activeSS);
+      });
+      var showViewport = activeSS === 'viewport';
+      document.querySelectorAll('.ss-viewport').forEach(function(img) {
+        img.style.display = showViewport ? '' : 'none';
+      });
+      document.querySelectorAll('.ss-full').forEach(function(img) {
+        img.style.display = showViewport ? 'none' : '';
+      });
     });
 
     // --- Init from URL ---
